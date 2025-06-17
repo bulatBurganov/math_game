@@ -1,4 +1,4 @@
-import 'package:digger_game/game.dart';
+import 'package:math_game/game.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +33,6 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('object 0 ');
     return Scaffold(
       body: Stack(
         children: [

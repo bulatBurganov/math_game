@@ -1,4 +1,4 @@
-# digger_game
+# math_game
 
 A new Flutter project.
 

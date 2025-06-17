@@ -1,4 +1,4 @@
-package com.example.digger_game
+package com.example.math_game
 
 import io.flutter.embedding.android.FlutterActivity
 
