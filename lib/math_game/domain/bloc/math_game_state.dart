@@ -1,0 +1,15 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:math_game/math_game/constants/game_constants.dart';
+import 'package:math_game/math_game/domain/model/problem_model.dart';
+
+part 'math_game_state.freezed.dart';
+
+@freezed
+class MathGameState with _$MathGameState {
+  factory MathGameState({
+    @Default(<ProblemModel>[]) List<ProblemModel> levelModel,
+    @Default(0) int scores,
+    @Default(defaultLivesCount) int lives,
+    @Default(false) isLevelFinished,
+  }) = _MathGameState;
+}
