@@ -21,7 +21,7 @@ class MainMenuScreen extends StatelessWidget {
               height: 50,
               child: BounceButton(
                 onTap: () {
-                  context.router.push(const MathGameRoute());
+                  context.router.push(const GameFlowWrapperRoute());
                 },
                 duration: const Duration(milliseconds: 200),
                 child: Text('Start game'),

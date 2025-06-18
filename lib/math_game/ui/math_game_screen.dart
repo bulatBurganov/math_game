@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.dart';
+import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
 import 'package:math_game/common/widgets/bounce_button.dart';
-import 'package:math_game/math_game/domain/model/game_settings_model.dart';
 import 'package:math_game/math_game/ui/widget/timer_widget.dart';
 
 @RoutePage()
@@ -26,40 +27,6 @@ class _MathGameScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<MathGameCubit, MathGameState>(
       listener: (context, state) {
-        if (state.gameSettings == null) {
-          // showDialog(
-          //   barrierDismissible: false,
-
-          //   context: context,
-          //   builder: (c) {
-          //     var model = GameSettingsModel();
-          //     return AlertDialog(
-          //       title: Text('Settings'),
-          //       content: Column(
-          //         children: [
-          //           Row(
-          //             children: [
-          //               Text('easy'),
-          //               Text('medium'),
-          //               Text('hard'),
-          //               Text('gemius'),
-          //             ],
-          //           ),
-          //         ],
-          //       ),
-          //       actions: [
-          //         TextButton(
-          //           onPressed: () {
-          //             context.read<MathGameCubit>().setSettings();
-          //             c.router.pop();
-          //           },
-          //           child: Text('Restart'),
-          //         ),
-          //       ],
-          //     );
-          //   },
-          // );
-        }
         if (state.isLevelFinished) {
           showDialog(
             barrierDismissible: false,
@@ -78,7 +45,9 @@ class _MathGameScreenView extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      context.router.pop();
+                      context.read<GameFlowBloc>().add(
+                        GameFlowEventFinishGame(),
+                      );
                       c.router.pop();
                     },
                     child: Text('Finish'),

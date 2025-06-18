@@ -20,6 +20,14 @@ final homeRutes = CustomRoute(
   path: 'home',
   children: [
     AutoRoute(initial: true, page: MainMenuRoute.page, path: 'main_menu'),
-    AutoRoute(page: MathGameRoute.page, path: 'math_game'),
+    AutoRoute(
+      page: GameFlowWrapperRoute.page,
+      path: 'game_wrapper',
+      children: [
+        AutoRoute(page: GameSetupRoute.page, path: 'game_setup'),
+        AutoRoute(page: GameOverRoute.page, path: 'game_over'),
+        AutoRoute(page: MathGameRoute.page, path: 'math_game'),
+      ],
+    ),
   ],
 );
