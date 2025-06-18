@@ -8,11 +8,11 @@ import 'package:math_game/math_game/domain/model/problem_model.dart';
 import 'package:math_game/math_game/utils/math_expression_parser.dart';
 
 class MathGameCubit extends Cubit<MathGameState> {
-  MathGameCubit(super.initialState);
+  MathGameCubit() : super(MathGameState());
   final _levelDuration = Duration(seconds: 10);
   Timer? _timer;
 
-  Future<void> init() async {
+  Future<void> startGame() async {
     final operators = ['+', '-'];
     final random = Random();
     int next(int min, int max) => min + random.nextInt(max - min);

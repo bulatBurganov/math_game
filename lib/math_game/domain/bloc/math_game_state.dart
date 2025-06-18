@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:math_game/math_game/constants/game_constants.dart';
+import 'package:math_game/math_game/domain/model/game_settings_model.dart';
 import 'package:math_game/math_game/domain/model/problem_model.dart';
 
 part 'math_game_state.freezed.dart';
@@ -12,5 +13,6 @@ class MathGameState with _$MathGameState {
     @Default(defaultLivesCount) int lives,
     @Default(false) isLevelFinished,
     @Default(Duration(seconds: 0)) Duration timer,
+    GameSettingsModel? gameSettings,
   }) = _MathGameState;
 }

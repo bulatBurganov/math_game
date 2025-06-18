@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:math_game/math_game/domain/bloc/math_game_cubit.dart';
-import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
-import 'package:math_game/math_game/ui/math_game_screen.dart';
+import 'package:math_game/router/app_router.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,24 +15,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final cubit = MathGameCubit(MathGameState());
-  @override
-  void initState() {
-    cubit.init();
-    super.initState();
-  }
+  final _appRouter = AppRouter();
+  final _routeProvider = PlatformRouteInformationProvider(
+    initialRouteInformation: RouteInformation(
+      location: Navigator.defaultRouteName,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: cubit,
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
-        ),
-        home: MathGameScreen(),
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
       ),
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
+      routeInformationProvider: _routeProvider,
     );
   }
 }
