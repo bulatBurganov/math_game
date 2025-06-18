@@ -5,9 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_game/math_game/constants/game_constants.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
 import 'package:math_game/math_game/domain/model/problem_model.dart';
+import 'package:math_game/math_game/utils/math_expression_parser.dart';
 
 class MathGameCubit extends Cubit<MathGameState> {
   MathGameCubit(super.initialState);
+  final _levelDuration = Duration(seconds: 10);
+  Timer? _timer;
 
   Future<void> init() async {
     final operators = ['+', '-'];
@@ -31,14 +34,18 @@ class MathGameCubit extends Cubit<MathGameState> {
 
       problems.add(problem);
     }
+
     emit(
       state.copyWith(
         levelModel: problems,
         scores: 0,
         lives: defaultLivesCount,
         isLevelFinished: false,
+        timer: _levelDuration,
       ),
     );
+
+    _startTimer();
   }
 
   Future<void> checkAnswer(double answer) async {
@@ -53,147 +60,37 @@ class MathGameCubit extends Cubit<MathGameState> {
           ),
         );
       } else {
-        emit(state.copyWith(isLevelFinished: true));
+        _finishGame(null);
       }
     } else {
       int lives = state.lives;
       lives--;
       if (lives == 0) {
-        emit(state.copyWith(lives: 0, isLevelFinished: true));
+        _finishGame(0);
       } else {
         emit(state.copyWith(lives: lives));
       }
     }
   }
-}
 
-class MathExpressionParser {
-  static double evaluate(String expression) {
-    // Удаляем пробелы и конвертируем в нижний регистр
-    expression = expression.replaceAll(' ', '').toLowerCase();
-
-    // Токенизация выражения
-    final tokens = _tokenize(expression);
-
-    // Конвертация в обратную польскую нотацию (RPN)
-    final rpn = _convertToRPN(tokens);
-
-    // Вычисление результата
-    return _evaluateRPN(rpn);
+  _finishGame(int? livesCount) {
+    _timer?.cancel();
+    emit(
+      state.copyWith(isLevelFinished: true, lives: livesCount ?? state.lives),
+    );
   }
 
-  static List<String> _tokenize(String expression) {
-    final tokens = <String>[];
-    final buffer = StringBuffer();
-    bool lastWasDigit = false;
-
-    for (int i = 0; i < expression.length; i++) {
-      final char = expression[i];
-
-      if (_isDigit(char) || char == '.') {
-        buffer.write(char);
-        lastWasDigit = true;
-      } else if (_isOperator(char)) {
-        if (buffer.isNotEmpty) {
-          tokens.add(buffer.toString());
-          buffer.clear();
-        }
-
-        // Обработка унарного минуса
-        if (char == '-' &&
-            (i == 0 ||
-                _isOperator(expression[i - 1]) ||
-                expression[i - 1] == '(')) {
-          tokens.add('0'); // Добавляем ноль перед унарным минусом
-        }
-
-        tokens.add(char);
-        lastWasDigit = false;
-      } else if (char == '(' || char == ')') {
-        if (buffer.isNotEmpty) {
-          tokens.add(buffer.toString());
-          buffer.clear();
-        }
-        tokens.add(char);
-        lastWasDigit = false;
-      } else {
-        throw FormatException('Недопустимый символ: $char');
-      }
-    }
-
-    if (buffer.isNotEmpty) {
-      tokens.add(buffer.toString());
-    }
-
-    return tokens;
+  _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), _timerCallback);
   }
 
-  static List<String> _convertToRPN(List<String> tokens) {
-    final output = <String>[];
-    final operators = <String>[];
-    final precedence = {'+': 1, '-': 1, '*': 2, '/': 2};
-
-    for (final token in tokens) {
-      if (double.tryParse(token) != null) {
-        output.add(token);
-      } else if (token == '(') {
-        operators.add(token);
-      } else if (token == ')') {
-        while (operators.isNotEmpty && operators.last != '(') {
-          output.add(operators.removeLast());
-        }
-        operators.removeLast(); // Удаляем '('
-      } else if (_isOperator(token)) {
-        while (operators.isNotEmpty &&
-            operators.last != '(' &&
-            precedence[token]! <= precedence[operators.last]!) {
-          output.add(operators.removeLast());
-        }
-        operators.add(token);
-      }
+  void _timerCallback(Timer? timer) {
+    print('timer callback');
+    final seconds = state.timer.inSeconds - 1;
+    if (seconds < 0) {
+      _finishGame(null);
+    } else {
+      emit(state.copyWith(timer: Duration(seconds: seconds)));
     }
-
-    while (operators.isNotEmpty) {
-      output.add(operators.removeLast());
-    }
-
-    return output;
   }
-
-  static double _evaluateRPN(List<String> rpn) {
-    final stack = <double>[];
-
-    for (final token in rpn) {
-      if (double.tryParse(token) != null) {
-        stack.add(double.parse(token));
-      } else {
-        final b = stack.removeLast();
-        final a = stack.isNotEmpty ? stack.removeLast() : 0;
-
-        switch (token) {
-          case '+':
-            stack.add(a + b);
-            break;
-          case '-':
-            stack.add(a - b);
-            break;
-          case '*':
-            stack.add(a * b);
-            break;
-          case '/':
-            if (b == 0) throw Exception('Деление на ноль');
-            stack.add(a / b);
-            break;
-          default:
-            throw Exception('Неизвестный оператор: $token');
-        }
-      }
-    }
-
-    return stack.last;
-  }
-
-  static bool _isDigit(String s) =>
-      s.codeUnitAt(0) >= 48 && s.codeUnitAt(0) <= 57;
-  static bool _isOperator(String s) => ['+', '-', '*', '/'].contains(s);
 }

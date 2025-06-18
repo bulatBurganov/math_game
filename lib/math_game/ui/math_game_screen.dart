@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
+import 'package:math_game/math_game/ui/widget/bounce_button.dart';
+import 'package:math_game/math_game/ui/widget/timer_widget.dart';
 
 class MathGameScreen extends StatefulWidget {
   const MathGameScreen({super.key});
@@ -63,6 +65,9 @@ class _MathGameScreenState extends State<MathGameScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 8),
+                TimerWidget(duration: state.timer),
+
                 Expanded(
                   child: Center(
                     child: Text(
@@ -90,6 +95,10 @@ class _MathGameScreenState extends State<MathGameScreen> {
                         state.levelModel.first.answers[index]
                             .toInt()
                             .toString(),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     );
                   },
@@ -105,74 +114,6 @@ class _MathGameScreenState extends State<MathGameScreen> {
           ),
         );
       },
-    );
-  }
-}
-
-class BounceButton extends StatefulWidget {
-  final Widget child;
-  final Function onTap;
-  final Duration duration;
-
-  const BounceButton({
-    super.key,
-    required this.child,
-    required this.onTap,
-    required this.duration,
-  });
-
-  @override
-  State<BounceButton> createState() => _BounceButtonState();
-}
-
-class _BounceButtonState extends State<BounceButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(duration: widget.duration, vsync: this);
-    _animation = Tween<double>(
-      begin: 1.0,
-      end: 0.9,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.onTap();
-        _controller.forward().then((_) {
-          _controller.reverse();
-        });
-      },
-      child: AnimatedBuilder(
-        animation: _animation,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: _animation.value,
-            child: AnimatedContainer(
-              alignment: Alignment.center,
-              duration: widget.duration,
-              decoration: BoxDecoration(
-                color: Theme.of(context).focusColor,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: child,
-            ),
-          );
-        },
-        child: widget.child,
-      ),
     );
   }
 }

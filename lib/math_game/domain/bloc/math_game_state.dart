@@ -11,5 +11,6 @@ class MathGameState with _$MathGameState {
     @Default(0) int scores,
     @Default(defaultLivesCount) int lives,
     @Default(false) isLevelFinished,
+    @Default(Duration(seconds: 0)) Duration timer,
   }) = _MathGameState;
 }

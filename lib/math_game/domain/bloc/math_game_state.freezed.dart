@@ -21,6 +21,7 @@ mixin _$MathGameState {
   int get scores => throw _privateConstructorUsedError;
   int get lives => throw _privateConstructorUsedError;
   dynamic get isLevelFinished => throw _privateConstructorUsedError;
+  Duration get timer => throw _privateConstructorUsedError;
 
   /// Create a copy of MathGameState
   /// with the given fields replaced by the non-null parameter values.
@@ -41,6 +42,7 @@ abstract class $MathGameStateCopyWith<$Res> {
     int scores,
     int lives,
     dynamic isLevelFinished,
+    Duration timer,
   });
 }
 
@@ -63,6 +65,7 @@ class _$MathGameStateCopyWithImpl<$Res, $Val extends MathGameState>
     Object? scores = null,
     Object? lives = null,
     Object? isLevelFinished = freezed,
+    Object? timer = null,
   }) {
     return _then(
       _value.copyWith(
@@ -82,6 +85,10 @@ class _$MathGameStateCopyWithImpl<$Res, $Val extends MathGameState>
                 ? _value.isLevelFinished
                 : isLevelFinished // ignore: cast_nullable_to_non_nullable
                       as dynamic,
+            timer: null == timer
+                ? _value.timer
+                : timer // ignore: cast_nullable_to_non_nullable
+                      as Duration,
           )
           as $Val,
     );
@@ -102,6 +109,7 @@ abstract class _$$MathGameStateImplCopyWith<$Res>
     int scores,
     int lives,
     dynamic isLevelFinished,
+    Duration timer,
   });
 }
 
@@ -123,6 +131,7 @@ class __$$MathGameStateImplCopyWithImpl<$Res>
     Object? scores = null,
     Object? lives = null,
     Object? isLevelFinished = freezed,
+    Object? timer = null,
   }) {
     return _then(
       _$MathGameStateImpl(
@@ -141,6 +150,10 @@ class __$$MathGameStateImplCopyWithImpl<$Res>
         isLevelFinished: freezed == isLevelFinished
             ? _value.isLevelFinished!
             : isLevelFinished,
+        timer: null == timer
+            ? _value.timer
+            : timer // ignore: cast_nullable_to_non_nullable
+                  as Duration,
       ),
     );
   }
@@ -154,6 +167,7 @@ class _$MathGameStateImpl implements _MathGameState {
     this.scores = 0,
     this.lives = defaultLivesCount,
     this.isLevelFinished = false,
+    this.timer = const Duration(seconds: 0),
   }) : _levelModel = levelModel;
 
   final List<ProblemModel> _levelModel;
@@ -174,10 +188,13 @@ class _$MathGameStateImpl implements _MathGameState {
   @override
   @JsonKey()
   final dynamic isLevelFinished;
+  @override
+  @JsonKey()
+  final Duration timer;
 
   @override
   String toString() {
-    return 'MathGameState(levelModel: $levelModel, scores: $scores, lives: $lives, isLevelFinished: $isLevelFinished)';
+    return 'MathGameState(levelModel: $levelModel, scores: $scores, lives: $lives, isLevelFinished: $isLevelFinished, timer: $timer)';
   }
 
   @override
@@ -194,7 +211,8 @@ class _$MathGameStateImpl implements _MathGameState {
             const DeepCollectionEquality().equals(
               other.isLevelFinished,
               isLevelFinished,
-            ));
+            ) &&
+            (identical(other.timer, timer) || other.timer == timer));
   }
 
   @override
@@ -204,6 +222,7 @@ class _$MathGameStateImpl implements _MathGameState {
     scores,
     lives,
     const DeepCollectionEquality().hash(isLevelFinished),
+    timer,
   );
 
   /// Create a copy of MathGameState
@@ -221,6 +240,7 @@ abstract class _MathGameState implements MathGameState {
     final int scores,
     final int lives,
     final dynamic isLevelFinished,
+    final Duration timer,
   }) = _$MathGameStateImpl;
 
   @override
@@ -231,6 +251,8 @@ abstract class _MathGameState implements MathGameState {
   int get lives;
   @override
   dynamic get isLevelFinished;
+  @override
+  Duration get timer;
 
   /// Create a copy of MathGameState
   /// with the given fields replaced by the non-null parameter values.
