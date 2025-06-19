@@ -9,6 +9,7 @@ class GameFlowBloc extends Bloc<GameFlowEvent, GameFlowState> {
     on<GameFlowEventShowSettings>(_showSettings);
     on<GameFlowEventStartGame>(_startGame);
     on<GameFlowEventFinishGame>(_finshGame);
+    on<GameFlowEventGameOver>(_overGame);
   }
 
   FutureOr<void> _showSettings(
@@ -30,5 +31,12 @@ class GameFlowBloc extends Bloc<GameFlowEvent, GameFlowState> {
     Emitter<GameFlowState> emit,
   ) {
     emit(const GameFlowStateFinishGame());
+  }
+
+  FutureOr<void> _overGame(
+    GameFlowEventGameOver event,
+    Emitter<GameFlowState> emit,
+  ) {
+    emit(const GameFlowStateGameOver());
   }
 }

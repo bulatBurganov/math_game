@@ -3,16 +3,23 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_game/math_game/constants/game_constants.dart';
+import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.dart';
+import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
+import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
 import 'package:math_game/math_game/domain/model/problem_model.dart';
 import 'package:math_game/math_game/utils/math_expression_parser.dart';
 
 class MathGameCubit extends Cubit<MathGameState> {
-  MathGameCubit() : super(MathGameState());
+  MathGameCubit({required this.gameFlowBloc, required this.gameSettingsCubit})
+    : super(MathGameState());
+  final GameFlowBloc gameFlowBloc;
+  final GameSettingsCubit gameSettingsCubit;
   final _levelDuration = Duration(seconds: 10);
   Timer? _timer;
 
   Future<void> startGame() async {
+    print(gameSettingsCubit.state.difficulty);
     final operators = ['+', '-'];
     final random = Random();
     int next(int min, int max) => min + random.nextInt(max - min);
@@ -40,7 +47,6 @@ class MathGameCubit extends Cubit<MathGameState> {
         levelModel: problems,
         scores: 0,
         lives: defaultLivesCount,
-        isLevelFinished: false,
         timer: _levelDuration,
       ),
     );
@@ -75,9 +81,8 @@ class MathGameCubit extends Cubit<MathGameState> {
 
   _finishGame(int? livesCount) {
     _timer?.cancel();
-    emit(
-      state.copyWith(isLevelFinished: true, lives: livesCount ?? state.lives),
-    );
+    emit(state.copyWith(lives: livesCount ?? state.lives));
+    gameFlowBloc.add(GameFlowEventGameOver());
   }
 
   _startTimer() {

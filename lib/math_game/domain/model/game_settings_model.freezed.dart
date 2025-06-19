@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GameSettingsModel {
-  Difficulty get level => throw _privateConstructorUsedError;
+  GameDifficulty get level => throw _privateConstructorUsedError;
   bool get isMultiplicationEnabled => throw _privateConstructorUsedError;
   bool get isDivisionEnabled => throw _privateConstructorUsedError;
 
@@ -36,7 +36,7 @@ abstract class $GameSettingsModelCopyWith<$Res> {
   ) = _$GameSettingsModelCopyWithImpl<$Res, GameSettingsModel>;
   @useResult
   $Res call({
-    Difficulty level,
+    GameDifficulty level,
     bool isMultiplicationEnabled,
     bool isDivisionEnabled,
   });
@@ -66,7 +66,7 @@ class _$GameSettingsModelCopyWithImpl<$Res, $Val extends GameSettingsModel>
             level: null == level
                 ? _value.level
                 : level // ignore: cast_nullable_to_non_nullable
-                      as Difficulty,
+                      as GameDifficulty,
             isMultiplicationEnabled: null == isMultiplicationEnabled
                 ? _value.isMultiplicationEnabled
                 : isMultiplicationEnabled // ignore: cast_nullable_to_non_nullable
@@ -91,7 +91,7 @@ abstract class _$$GameSettingsModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    Difficulty level,
+    GameDifficulty level,
     bool isMultiplicationEnabled,
     bool isDivisionEnabled,
   });
@@ -120,7 +120,7 @@ class __$$GameSettingsModelImplCopyWithImpl<$Res>
         level: null == level
             ? _value.level
             : level // ignore: cast_nullable_to_non_nullable
-                  as Difficulty,
+                  as GameDifficulty,
         isMultiplicationEnabled: null == isMultiplicationEnabled
             ? _value.isMultiplicationEnabled
             : isMultiplicationEnabled // ignore: cast_nullable_to_non_nullable
@@ -138,14 +138,14 @@ class __$$GameSettingsModelImplCopyWithImpl<$Res>
 
 class _$GameSettingsModelImpl implements _GameSettingsModel {
   _$GameSettingsModelImpl({
-    this.level = Difficulty.easy,
+    this.level = GameDifficulty.easy,
     this.isMultiplicationEnabled = false,
     this.isDivisionEnabled = false,
   });
 
   @override
   @JsonKey()
-  final Difficulty level;
+  final GameDifficulty level;
   @override
   @JsonKey()
   final bool isMultiplicationEnabled;
@@ -195,13 +195,13 @@ class _$GameSettingsModelImpl implements _GameSettingsModel {
 
 abstract class _GameSettingsModel implements GameSettingsModel {
   factory _GameSettingsModel({
-    final Difficulty level,
+    final GameDifficulty level,
     final bool isMultiplicationEnabled,
     final bool isDivisionEnabled,
   }) = _$GameSettingsModelImpl;
 
   @override
-  Difficulty get level;
+  GameDifficulty get level;
   @override
   bool get isMultiplicationEnabled;
   @override

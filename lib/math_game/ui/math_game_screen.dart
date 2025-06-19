@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.dart';
-import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
+import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
 import 'package:math_game/common/widgets/bounce_button.dart';
@@ -14,9 +14,11 @@ class MathGameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('build');
     return BlocProvider(
-      create: (context) => MathGameCubit()..startGame(),
+      create: (context) => MathGameCubit(
+        gameFlowBloc: context.read<GameFlowBloc>(),
+        gameSettingsCubit: context.read<GameSettingsCubit>(),
+      )..startGame(),
       child: _MathGameScreenView(),
     );
   }
@@ -25,39 +27,7 @@ class MathGameScreen extends StatelessWidget {
 class _MathGameScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MathGameCubit, MathGameState>(
-      listener: (context, state) {
-        if (state.isLevelFinished) {
-          showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (c) {
-              return AlertDialog(
-                title: Text('Game over'),
-                content: Text('You have ${state.scores} scores'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      context.read<MathGameCubit>().startGame();
-                      c.router.pop();
-                    },
-                    child: Text('Restart'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      context.read<GameFlowBloc>().add(
-                        GameFlowEventFinishGame(),
-                      );
-                      c.router.pop();
-                    },
-                    child: Text('Finish'),
-                  ),
-                ],
-              );
-            },
-          );
-        }
-      },
+    return BlocBuilder<MathGameCubit, MathGameState>(
       builder: (context, state) {
         return Scaffold(
           body: Builder(

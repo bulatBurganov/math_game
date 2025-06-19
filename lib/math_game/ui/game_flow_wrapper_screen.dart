@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_state.dart';
+import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_cubit.dart';
 import 'package:math_game/router/app_router.gr.dart';
 
 @RoutePage()
@@ -32,8 +33,13 @@ class GameFlowWrapperScreen extends StatelessWidget
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<GameFlowBloc>(
-      create: (_) => GameFlowBloc()..add(GameFlowEventShowSettings()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<GameFlowBloc>(
+          create: (_) => GameFlowBloc()..add(GameFlowEventShowSettings()),
+        ),
+        BlocProvider<GameSettingsCubit>(create: (_) => GameSettingsCubit()),
+      ],
       child: this,
     );
     // return BlocListener<GameFlowBloc, GameFlowState>(

@@ -20,9 +20,7 @@ mixin _$MathGameState {
   List<ProblemModel> get levelModel => throw _privateConstructorUsedError;
   int get scores => throw _privateConstructorUsedError;
   int get lives => throw _privateConstructorUsedError;
-  dynamic get isLevelFinished => throw _privateConstructorUsedError;
   Duration get timer => throw _privateConstructorUsedError;
-  GameSettingsModel? get gameSettings => throw _privateConstructorUsedError;
 
   /// Create a copy of MathGameState
   /// with the given fields replaced by the non-null parameter values.
@@ -42,12 +40,8 @@ abstract class $MathGameStateCopyWith<$Res> {
     List<ProblemModel> levelModel,
     int scores,
     int lives,
-    dynamic isLevelFinished,
     Duration timer,
-    GameSettingsModel? gameSettings,
   });
-
-  $GameSettingsModelCopyWith<$Res>? get gameSettings;
 }
 
 /// @nodoc
@@ -68,9 +62,7 @@ class _$MathGameStateCopyWithImpl<$Res, $Val extends MathGameState>
     Object? levelModel = null,
     Object? scores = null,
     Object? lives = null,
-    Object? isLevelFinished = freezed,
     Object? timer = null,
-    Object? gameSettings = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -86,35 +78,13 @@ class _$MathGameStateCopyWithImpl<$Res, $Val extends MathGameState>
                 ? _value.lives
                 : lives // ignore: cast_nullable_to_non_nullable
                       as int,
-            isLevelFinished: freezed == isLevelFinished
-                ? _value.isLevelFinished
-                : isLevelFinished // ignore: cast_nullable_to_non_nullable
-                      as dynamic,
             timer: null == timer
                 ? _value.timer
                 : timer // ignore: cast_nullable_to_non_nullable
                       as Duration,
-            gameSettings: freezed == gameSettings
-                ? _value.gameSettings
-                : gameSettings // ignore: cast_nullable_to_non_nullable
-                      as GameSettingsModel?,
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of MathGameState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $GameSettingsModelCopyWith<$Res>? get gameSettings {
-    if (_value.gameSettings == null) {
-      return null;
-    }
-
-    return $GameSettingsModelCopyWith<$Res>(_value.gameSettings!, (value) {
-      return _then(_value.copyWith(gameSettings: value) as $Val);
-    });
   }
 }
 
@@ -131,13 +101,8 @@ abstract class _$$MathGameStateImplCopyWith<$Res>
     List<ProblemModel> levelModel,
     int scores,
     int lives,
-    dynamic isLevelFinished,
     Duration timer,
-    GameSettingsModel? gameSettings,
   });
-
-  @override
-  $GameSettingsModelCopyWith<$Res>? get gameSettings;
 }
 
 /// @nodoc
@@ -157,9 +122,7 @@ class __$$MathGameStateImplCopyWithImpl<$Res>
     Object? levelModel = null,
     Object? scores = null,
     Object? lives = null,
-    Object? isLevelFinished = freezed,
     Object? timer = null,
-    Object? gameSettings = freezed,
   }) {
     return _then(
       _$MathGameStateImpl(
@@ -175,17 +138,10 @@ class __$$MathGameStateImplCopyWithImpl<$Res>
             ? _value.lives
             : lives // ignore: cast_nullable_to_non_nullable
                   as int,
-        isLevelFinished: freezed == isLevelFinished
-            ? _value.isLevelFinished!
-            : isLevelFinished,
         timer: null == timer
             ? _value.timer
             : timer // ignore: cast_nullable_to_non_nullable
                   as Duration,
-        gameSettings: freezed == gameSettings
-            ? _value.gameSettings
-            : gameSettings // ignore: cast_nullable_to_non_nullable
-                  as GameSettingsModel?,
       ),
     );
   }
@@ -198,9 +154,7 @@ class _$MathGameStateImpl implements _MathGameState {
     final List<ProblemModel> levelModel = const <ProblemModel>[],
     this.scores = 0,
     this.lives = defaultLivesCount,
-    this.isLevelFinished = false,
     this.timer = const Duration(seconds: 0),
-    this.gameSettings,
   }) : _levelModel = levelModel;
 
   final List<ProblemModel> _levelModel;
@@ -220,16 +174,11 @@ class _$MathGameStateImpl implements _MathGameState {
   final int lives;
   @override
   @JsonKey()
-  final dynamic isLevelFinished;
-  @override
-  @JsonKey()
   final Duration timer;
-  @override
-  final GameSettingsModel? gameSettings;
 
   @override
   String toString() {
-    return 'MathGameState(levelModel: $levelModel, scores: $scores, lives: $lives, isLevelFinished: $isLevelFinished, timer: $timer, gameSettings: $gameSettings)';
+    return 'MathGameState(levelModel: $levelModel, scores: $scores, lives: $lives, timer: $timer)';
   }
 
   @override
@@ -243,13 +192,7 @@ class _$MathGameStateImpl implements _MathGameState {
             ) &&
             (identical(other.scores, scores) || other.scores == scores) &&
             (identical(other.lives, lives) || other.lives == lives) &&
-            const DeepCollectionEquality().equals(
-              other.isLevelFinished,
-              isLevelFinished,
-            ) &&
-            (identical(other.timer, timer) || other.timer == timer) &&
-            (identical(other.gameSettings, gameSettings) ||
-                other.gameSettings == gameSettings));
+            (identical(other.timer, timer) || other.timer == timer));
   }
 
   @override
@@ -258,9 +201,7 @@ class _$MathGameStateImpl implements _MathGameState {
     const DeepCollectionEquality().hash(_levelModel),
     scores,
     lives,
-    const DeepCollectionEquality().hash(isLevelFinished),
     timer,
-    gameSettings,
   );
 
   /// Create a copy of MathGameState
@@ -277,9 +218,7 @@ abstract class _MathGameState implements MathGameState {
     final List<ProblemModel> levelModel,
     final int scores,
     final int lives,
-    final dynamic isLevelFinished,
     final Duration timer,
-    final GameSettingsModel? gameSettings,
   }) = _$MathGameStateImpl;
 
   @override
@@ -289,11 +228,7 @@ abstract class _MathGameState implements MathGameState {
   @override
   int get lives;
   @override
-  dynamic get isLevelFinished;
-  @override
   Duration get timer;
-  @override
-  GameSettingsModel? get gameSettings;
 
   /// Create a copy of MathGameState
   /// with the given fields replaced by the non-null parameter values.

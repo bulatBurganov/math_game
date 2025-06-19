@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'game_settings_model.freezed.dart';
 
-enum Difficulty {
+enum GameDifficulty {
   @JsonValue('easy')
   easy,
   @JsonValue('medium')
@@ -16,7 +16,7 @@ enum Difficulty {
 @freezed
 class GameSettingsModel with _$GameSettingsModel {
   factory GameSettingsModel({
-    @Default(Difficulty.easy) Difficulty level,
+    @Default(GameDifficulty.easy) GameDifficulty level,
     @Default(false) bool isMultiplicationEnabled,
     @Default(false) bool isDivisionEnabled,
   }) = _GameSettingsModel;
