@@ -18,13 +18,15 @@ class GameFlowWrapperScreen extends StatelessWidget
     return BlocListener<GameFlowBloc, GameFlowState>(
       listener: (context, state) {
         if (state is GameFlowStateShowSettings) {
-          context.router.replace(GameSetupRoute());
+          context.router.replace(const GameSettingsRoute());
         } else if (state is GameFlowStateStartGame) {
-          context.router.replace(MathGameRoute());
+          context.router.replace(const MathGameRoute());
         } else if (state is GameFlowStateFinishGame) {
           context.router.pop();
         } else if (state is GameFlowStateGameOver) {
-          context.router.replace(GameOverRoute());
+          context.router.replace(GameOverRoute(scores: state.scores));
+        } else if (state is GameFlowStateRestartGame) {
+          context.router.replace(const GameSettingsRoute());
         }
       },
       child: const AutoRouter(),

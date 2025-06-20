@@ -10,10 +10,11 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:flutter/material.dart' as _i9;
 import 'package:math_game/main_menu/main_menu_screen.dart' as _i6;
 import 'package:math_game/math_game/ui/game_flow_wrapper_screen.dart' as _i2;
 import 'package:math_game/math_game/ui/game_over_screen.dart' as _i3;
-import 'package:math_game/math_game/ui/game_setup_screen.dart' as _i4;
+import 'package:math_game/math_game/ui/game_settings_screen.dart' as _i4;
 import 'package:math_game/math_game/ui/math_game_screen.dart' as _i7;
 import 'package:math_game/router/app_wrapper_screen.dart' as _i1;
 import 'package:math_game/router/home_wrapper_screen.dart' as _i5;
@@ -52,32 +53,63 @@ class GameFlowWrapperRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.GameOverScreen]
-class GameOverRoute extends _i8.PageRouteInfo<void> {
-  const GameOverRoute({List<_i8.PageRouteInfo>? children})
-    : super(GameOverRoute.name, initialChildren: children);
+class GameOverRoute extends _i8.PageRouteInfo<GameOverRouteArgs> {
+  GameOverRoute({
+    _i9.Key? key,
+    required int scores,
+    List<_i8.PageRouteInfo>? children,
+  }) : super(
+         GameOverRoute.name,
+         args: GameOverRouteArgs(key: key, scores: scores),
+         initialChildren: children,
+       );
 
   static const String name = 'GameOverRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i3.GameOverScreen();
+      final args = data.argsAs<GameOverRouteArgs>();
+      return _i3.GameOverScreen(key: args.key, scores: args.scores);
     },
   );
 }
 
-/// generated route for
-/// [_i4.GameSetupScreen]
-class GameSetupRoute extends _i8.PageRouteInfo<void> {
-  const GameSetupRoute({List<_i8.PageRouteInfo>? children})
-    : super(GameSetupRoute.name, initialChildren: children);
+class GameOverRouteArgs {
+  const GameOverRouteArgs({this.key, required this.scores});
 
-  static const String name = 'GameSetupRoute';
+  final _i9.Key? key;
+
+  final int scores;
+
+  @override
+  String toString() {
+    return 'GameOverRouteArgs{key: $key, scores: $scores}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! GameOverRouteArgs) return false;
+    return key == other.key && scores == other.scores;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ scores.hashCode;
+}
+
+/// generated route for
+/// [_i4.GameSettingsScreen]
+class GameSettingsRoute extends _i8.PageRouteInfo<void> {
+  const GameSettingsRoute({List<_i8.PageRouteInfo>? children})
+    : super(GameSettingsRoute.name, initialChildren: children);
+
+  static const String name = 'GameSettingsRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i4.GameSetupScreen();
+      return const _i4.GameSettingsScreen();
     },
   );
 }

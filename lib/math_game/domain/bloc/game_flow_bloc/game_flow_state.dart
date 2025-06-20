@@ -15,5 +15,10 @@ class GameFlowStateFinishGame extends GameFlowState {
 }
 
 class GameFlowStateGameOver extends GameFlowState {
-  const GameFlowStateGameOver();
+  final int scores;
+  const GameFlowStateGameOver(this.scores);
+}
+
+class GameFlowStateRestartGame extends GameFlowState {
+  const GameFlowStateRestartGame();
 }

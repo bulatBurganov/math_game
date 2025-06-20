@@ -1,0 +1,21 @@
+{
+    "app_name": "Математическая игра",
+    "start_game": "Начать игру",
+    "finish_game": "Завершить игру",
+    "game_over": "Игра завершена",
+    "difficulty_easy": "Легкая",
+    "difficulty_medium": "Средняя",
+    "difficulty_hard": "Сложная",
+    "difficulty_genius": "Гений",
+    "difficulty": "Сложность",
+    "restart": "Сыграть снова",
+    "youEarnedNScores": "Вы заработали {n} {plural}",
+    "scoresOne": "очко",
+    "scoresFew": "очка",
+    "scoresMany": "очков",
+    "easyModeDescription": "Сложение и вычиание 2 чисел в диапазоне от 1 до 10",
+    "mediumModeDescription": "Сложение, вычитание и умножение 2 чисел в диапазоне от 1 до 10",
+    "hardModeDescription": "Сложение, вычитание, умножение и деление 3 чисел в диапазоне от 1 до 10",
+    "geniusModeDescription": "Настройте сложность самостоятельно",
+    "useSomething": "Использовать {somethis}"
+}

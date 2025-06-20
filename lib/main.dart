@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:math_game/generated/l10n.dart';
 import 'package:math_game/router/app_router.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -17,7 +20,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _appRouter = AppRouter();
   final _routeProvider = PlatformRouteInformationProvider(
-    initialRouteInformation: RouteInformation(
+    initialRouteInformation: const RouteInformation(
       location: Navigator.defaultRouteName,
     ),
   );
@@ -29,6 +32,13 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        S.delegate,
+      ],
+      locale: const Locale('ru', 'RU'),
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
       routeInformationProvider: _routeProvider,
