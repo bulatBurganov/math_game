@@ -45,9 +45,7 @@ class GameSettingsScreen extends StatelessWidget {
                   initialValue: state.difficulty,
                   initialAdditionalSettings: state.additionalSettings,
                   onAdditionalSettingsChanged: (settings) {
-                    context.read<GameSettingsCubit>().updateAdditionalSettings(
-                      settings,
-                    );
+                    context.read<GameSettingsCubit>().checkSettings(settings);
                   },
                   onCahnged: (difficulty) {
                     context.read<GameSettingsCubit>().updateDifficulty(

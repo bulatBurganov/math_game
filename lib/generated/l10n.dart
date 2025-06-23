@@ -239,6 +239,36 @@ class S {
       args: [somethis],
     );
   }
+
+  /// `Длина выражения`
+  String get termLength {
+    return Intl.message(
+      'Длина выражения',
+      name: 'termLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Максимальное значение`
+  String get maxValue {
+    return Intl.message(
+      'Максимальное значение',
+      name: 'maxValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Минимальное значение`
+  String get minValue {
+    return Intl.message(
+      'Минимальное значение',
+      name: 'minValue',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

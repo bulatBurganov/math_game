@@ -9,15 +9,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
     emit(state.copyWith(difficulty: difficulty));
   }
 
-  Future<void> updateAdditionalSettings(GameAdditionalSettings settings) async {
-    if (!settings.useDivide &&
-        !settings.useMinus &&
-        !settings.useMultiply &&
-        !settings.usePlus) {
-      print('object');
-      emit(state);
-    } else {
-      emit(state.copyWith(additionalSettings: settings));
-    }
+  Future<void> checkSettings(GameAdditionalSettings settings) async {
+    emit(state.copyWith(additionalSettings: settings));
   }
 }

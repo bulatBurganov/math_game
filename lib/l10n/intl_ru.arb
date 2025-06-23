@@ -17,5 +17,8 @@
     "mediumModeDescription": "Сложение, вычитание и умножение 2 чисел в диапазоне от 1 до 10",
     "hardModeDescription": "Сложение, вычитание, умножение и деление 3 чисел в диапазоне от 1 до 10",
     "geniusModeDescription": "Настройте сложность самостоятельно",
-    "useSomething": "Использовать {somethis}"
+    "useSomething": "Использовать {somethis}",
+    "termLength":"Длина выражения",
+    "maxValue": "Максимальное значение",
+    "minValue": "Минимальное значение"
 }

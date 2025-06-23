@@ -7,6 +7,7 @@ import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.da
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
 import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
+import 'package:math_game/math_game/domain/model/game_settings_model.dart';
 import 'package:math_game/math_game/domain/model/problem_model.dart';
 import 'package:math_game/math_game/utils/expression_generator.dart';
 
@@ -21,10 +22,45 @@ class MathGameCubit extends Cubit<MathGameState> {
   List<String> _operators = [];
   final _random = Random();
   int _next(int min, int max) => min + _random.nextInt(max - min);
+
   Future<void> startGame() async {
-    _generator = ExpressionGenerator(minValue: 1, maxValue: 10);
-    _operators = ['+', '-'];
-    final problems = await _addProblenms();
+    final difficulty = gameSettingsCubit.state.difficulty;
+    final userSettings = gameSettingsCubit.state.additionalSettings;
+    int minValue = 1;
+    int maxValue = 10;
+    int numTerms = 2;
+    switch (difficulty) {
+      case GameDifficulty.easy:
+        _operators = ['+', '-'];
+        break;
+
+      case GameDifficulty.medium:
+        _operators = ['+', '-', '*'];
+
+        break;
+
+      case GameDifficulty.hard:
+        _operators = ['+', '-', '*', '/'];
+        numTerms = 3;
+        break;
+
+      case GameDifficulty.genius:
+        _operators = [
+          if (userSettings.usePlus) '+',
+          if (userSettings.useMinus) '-',
+          if (userSettings.useMultiply) '*',
+          if (userSettings.useDivide) '/',
+        ];
+        minValue = userSettings.min;
+        maxValue = userSettings.max;
+        numTerms = userSettings.termLength;
+
+        break;
+    }
+
+    _generator = ExpressionGenerator(minValue: minValue, maxValue: maxValue);
+
+    final problems = await _addProblenms(numTerms);
 
     emit(
       state.copyWith(
@@ -38,7 +74,7 @@ class MathGameCubit extends Cubit<MathGameState> {
     _startTimer();
   }
 
-  Future<List<ProblemModel>> _addProblenms() async {
+  Future<List<ProblemModel>> _addProblenms(int numTerms) async {
     if (_generator == null) throw 'Generator is null';
 
     var problems = [...state.levelModel];
@@ -46,7 +82,7 @@ class MathGameCubit extends Cubit<MathGameState> {
 
     for (int i = 0; i < problemsToGenerate; i++) {
       final (expr, res) = _generator!.generate(
-        numTerms: 2,
+        numTerms: numTerms,
         operations: _operators,
       );
 

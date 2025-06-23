@@ -40,13 +40,18 @@ class MessageLookup extends MessageLookupByLibrary {
             "Настройте сложность самостоятельно"),
         "hardModeDescription": MessageLookupByLibrary.simpleMessage(
             "Сложение, вычитание, умножение и деление 3 чисел в диапазоне от 1 до 10"),
+        "maxValue":
+            MessageLookupByLibrary.simpleMessage("Максимальное значение"),
         "mediumModeDescription": MessageLookupByLibrary.simpleMessage(
             "Сложение, вычитание и умножение 2 чисел в диапазоне от 1 до 10"),
+        "minValue":
+            MessageLookupByLibrary.simpleMessage("Минимальное значение"),
         "restart": MessageLookupByLibrary.simpleMessage("Сыграть снова"),
         "scoresFew": MessageLookupByLibrary.simpleMessage("очка"),
         "scoresMany": MessageLookupByLibrary.simpleMessage("очков"),
         "scoresOne": MessageLookupByLibrary.simpleMessage("очко"),
         "start_game": MessageLookupByLibrary.simpleMessage("Начать игру"),
+        "termLength": MessageLookupByLibrary.simpleMessage("Длина выражения"),
         "useSomething": m0,
         "youEarnedNScores": m1
       };

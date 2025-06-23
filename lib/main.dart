@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:math_game/common/snack/snack_bloc.dart';
 import 'package:math_game/generated/l10n.dart';
 import 'package:math_game/router/app_router.dart';
 // ignore: depend_on_referenced_packages
@@ -27,21 +29,24 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
+    return MultiBlocProvider(
+      providers: [BlocProvider<SnackBloc>(create: (_) => SnackBloc())],
+      child: MaterialApp.router(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
+        ),
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          S.delegate,
+        ],
+        locale: const Locale('ru', 'RU'),
+        routerDelegate: _appRouter.delegate(),
+        routeInformationParser: _appRouter.defaultRouteParser(),
+        routeInformationProvider: _routeProvider,
       ),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        S.delegate,
-      ],
-      locale: const Locale('ru', 'RU'),
-      routerDelegate: _appRouter.delegate(),
-      routeInformationParser: _appRouter.defaultRouteParser(),
-      routeInformationProvider: _routeProvider,
     );
   }
 }

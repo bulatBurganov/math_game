@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:math_game/common/widgets/app_checkbox.dart';
+import 'package:math_game/common/widgets/expanded_section.dart';
 import 'package:math_game/generated/l10n.dart';
 import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_state.dart';
 import 'package:math_game/math_game/domain/model/game_settings_model.dart';
+import 'package:math_game/math_game/ui/widget/form_text_field.dart';
 
 class DifficultySelector extends StatefulWidget {
   const DifficultySelector({
@@ -30,20 +31,12 @@ class DifficultySelector extends StatefulWidget {
 
 class _DifficultySelectorState extends State<DifficultySelector> {
   int _selectedIndex = 0;
-  final _lengthController = TextEditingController();
-  final _minController = TextEditingController();
-  final _maxController = TextEditingController();
+
   @override
   void initState() {
     if (widget.initialValue != null) {
       _selectedIndex = GameDifficulty.values.indexOf(widget.initialValue!);
     }
-
-    _lengthController.text = widget.initialAdditionalSettings.termLength
-        .toString();
-    _maxController.text = widget.initialAdditionalSettings.max.toString();
-    _minController.text = widget.initialAdditionalSettings.min.toString();
-
     super.initState();
   }
 
@@ -142,132 +135,110 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                     ),
                   ),
                 ),
-                if (GameDifficulty.values[_selectedIndex] ==
-                    GameDifficulty.genius) ...[
-                  AppCheckBox(
-                    initialValue: widget.initialAdditionalSettings.usePlus,
-                    onChange: (value) {
-                      widget.onAdditionalSettingsChanged(
-                        widget.initialAdditionalSettings.copyWith(
-                          usePlus: value,
-                        ),
-                      );
-                    },
-                    title: S.of(context).useSomething('+'),
-                  ),
-                  const SizedBox(height: 4),
-                  AppCheckBox(
-                    initialValue: widget.initialAdditionalSettings.useMinus,
-                    onChange: (value) {
-                      widget.onAdditionalSettingsChanged(
-                        widget.initialAdditionalSettings.copyWith(
-                          useMinus: value,
-                        ),
-                      );
-                    },
-                    title: S.of(context).useSomething('-'),
-                  ),
-                  const SizedBox(height: 4),
-                  AppCheckBox(
-                    initialValue: widget.initialAdditionalSettings.useMultiply,
-                    onChange: (value) {
-                      widget.onAdditionalSettingsChanged(
-                        widget.initialAdditionalSettings.copyWith(
-                          useMultiply: value,
-                        ),
-                      );
-                    },
-                    title: S.of(context).useSomething('*'),
-                  ),
-                  const SizedBox(height: 4),
-                  AppCheckBox(
-                    initialValue: widget.initialAdditionalSettings.useDivide,
-                    onChange: (value) {
-                      widget.onAdditionalSettingsChanged(
-                        widget.initialAdditionalSettings.copyWith(
-                          useDivide: value,
-                        ),
-                      );
-                    },
-                    title: S.of(context).useSomething('/'),
-                  ),
-                  const SizedBox(height: 4),
 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                ExpandedSection(
+                  axis: Axis.vertical,
+                  expand: _selectedIndex == 3,
+                  child: Column(
                     children: [
-                      Text(
-                        'Количество чисел в выражении',
-                        style: TextStyle(fontSize: 16),
+                      AppCheckBox(
+                        initialValue: widget.initialAdditionalSettings.usePlus,
+                        onChange: (value) {
+                          widget.onAdditionalSettingsChanged(
+                            widget.initialAdditionalSettings.copyWith(
+                              usePlus: value,
+                            ),
+                          );
+                        },
+                        title: S.of(context).useSomething('+'),
                       ),
-                      const SizedBox(width: 16),
-                      SizedBox(
-                        width: 30,
-                        child: TextField(
-                          textInputAction: TextInputAction.done,
-                          decoration: const InputDecoration(
-                            counter: SizedBox(),
-                          ),
-                          keyboardType: TextInputType.number,
-                          controller: _lengthController,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp('[1-9]')),
-                          ],
-                          maxLines: 1,
-                          maxLength: 1,
-                        ),
+                      const SizedBox(height: 4),
+                      AppCheckBox(
+                        initialValue: widget.initialAdditionalSettings.useMinus,
+                        onChange: (value) {
+                          widget.onAdditionalSettingsChanged(
+                            widget.initialAdditionalSettings.copyWith(
+                              useMinus: value,
+                            ),
+                          );
+                        },
+                        title: S.of(context).useSomething('-'),
                       ),
-                    ],
-                  ),
+                      const SizedBox(height: 4),
+                      AppCheckBox(
+                        initialValue:
+                            widget.initialAdditionalSettings.useMultiply,
+                        onChange: (value) {
+                          widget.onAdditionalSettingsChanged(
+                            widget.initialAdditionalSettings.copyWith(
+                              useMultiply: value,
+                            ),
+                          );
+                        },
+                        title: S.of(context).useSomething('*'),
+                      ),
+                      const SizedBox(height: 4),
+                      AppCheckBox(
+                        initialValue:
+                            widget.initialAdditionalSettings.useDivide,
+                        onChange: (value) {
+                          widget.onAdditionalSettingsChanged(
+                            widget.initialAdditionalSettings.copyWith(
+                              useDivide: value,
+                            ),
+                          );
+                        },
+                        title: S.of(context).useSomething('/'),
+                      ),
+                      const SizedBox(height: 4),
 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text('Минимальное число', style: TextStyle(fontSize: 16)),
-                      const SizedBox(width: 16),
-                      SizedBox(
-                        width: 30,
-                        child: TextField(
-                          textInputAction: TextInputAction.done,
-                          decoration: const InputDecoration(
-                            counter: SizedBox(),
-                          ),
-                          keyboardType: TextInputType.number,
-                          controller: _minController,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                          ],
-                          maxLines: 1,
-                        ),
+                      FormTextField(
+                        initialValue: widget
+                            .initialAdditionalSettings
+                            .termLength
+                            .toString(),
+                        onChanged: (v) {
+                          if (v.isNotEmpty) {
+                            widget.onAdditionalSettingsChanged(
+                              widget.initialAdditionalSettings.copyWith(
+                                termLength: int.parse(v),
+                              ),
+                            );
+                          }
+                        },
+                        label: S.of(context).termLength,
+                      ),
+                      FormTextField(
+                        initialValue: widget.initialAdditionalSettings.min
+                            .toString(),
+                        onChanged: (v) {
+                          if (v.isNotEmpty) {
+                            widget.onAdditionalSettingsChanged(
+                              widget.initialAdditionalSettings.copyWith(
+                                min: int.parse(v),
+                              ),
+                            );
+                          }
+                        },
+                        label: S.of(context).minValue,
+                      ),
+                      FormTextField(
+                        initialValue: widget.initialAdditionalSettings.max
+                            .toString(),
+                        onChanged: (v) {
+                          if (v.isNotEmpty) {
+                            widget.onAdditionalSettingsChanged(
+                              widget.initialAdditionalSettings.copyWith(
+                                max: int.parse(v),
+                              ),
+                            );
+                          }
+                        },
+                        label: S.of(context).maxValue,
                       ),
                     ],
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Максимальное число',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(width: 16),
-                      SizedBox(
-                        width: 30,
-                        child: TextField(
-                          textInputAction: TextInputAction.done,
-                          decoration: const InputDecoration(
-                            counter: SizedBox(),
-                          ),
-                          keyboardType: TextInputType.number,
-                          controller: _maxController,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                          ],
-                          maxLines: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ],
             ),
           ],

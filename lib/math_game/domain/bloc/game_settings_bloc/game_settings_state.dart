@@ -24,3 +24,15 @@ class GameAdditionalSettings with _$GameAdditionalSettings {
     @Default(10) int max,
   }) = _GameAdditionalSettings;
 }
+
+// class ValidationModel<T> {
+//   final T value;
+//   final bool isValid;
+//   final String? validationMessage;
+
+//   const ValidationModel({
+//     required this.value,
+//     this.isValid = true,
+//     this.validationMessage,
+//   });
+// }
