@@ -53,7 +53,7 @@ class GameOverOverlay extends StatelessWidget {
 class MathBubbleGame extends FlameGame with TapDetector {
   int lives = 3;
   int score = 0;
-  String currentCondition = ">5";
+  String currentCondition = '>5';
   late TextComponent conditionText;
   late TextComponent scoreText;
   late TextComponent livesText;

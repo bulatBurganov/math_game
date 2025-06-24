@@ -24,7 +24,7 @@ final homeRutes = CustomRoute(
       page: GameFlowWrapperRoute.page,
       path: 'game_wrapper',
       children: [
-        AutoRoute(page: GameSetupRoute.page, path: 'game_setup'),
+        AutoRoute(page: GameSettingsRoute.page, path: 'game_settings'),
         AutoRoute(page: GameOverRoute.page, path: 'game_over'),
         AutoRoute(page: MathGameRoute.page, path: 'math_game'),
       ],

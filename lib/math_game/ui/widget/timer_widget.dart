@@ -14,8 +14,8 @@ class TimerWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _TimeColumn(time: minutes, label: "Mins"),
-        _TimeColumn(time: seconds, label: "Secs", isLast: true),
+        _TimeColumn(time: minutes, label: 'Mins'),
+        _TimeColumn(time: seconds, label: 'Secs', isLast: true),
       ],
     );
   }
@@ -119,12 +119,9 @@ class _TimeSeparator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2.0),
-      child: const Text(
-        ":",
-        style: TextStyle(color: Colors.black, fontSize: 50),
-      ),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 2.0),
+      child: Text(':', style: TextStyle(color: Colors.black, fontSize: 50)),
     );
   }
 }

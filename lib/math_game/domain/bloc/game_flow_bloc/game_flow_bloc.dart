@@ -1,42 +1,23 @@
-import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_state.dart';
 
 class GameFlowBloc extends Bloc<GameFlowEvent, GameFlowState> {
-  GameFlowBloc() : super(const GameFlowStateShowSettings()) {
-    on<GameFlowEventShowSettings>(_showSettings);
-    on<GameFlowEventStartGame>(_startGame);
-    on<GameFlowEventFinishGame>(_finshGame);
-    on<GameFlowEventGameOver>(_overGame);
-  }
-
-  FutureOr<void> _showSettings(
-    GameFlowEventShowSettings event,
-    Emitter<GameFlowState> emit,
-  ) {
-    emit(const GameFlowStateShowSettings());
-  }
-
-  FutureOr<void> _startGame(
-    GameFlowEventStartGame event,
-    Emitter<GameFlowState> emit,
-  ) {
-    emit(const GameFlowStateStartGame());
-  }
-
-  FutureOr<void> _finshGame(
-    GameFlowEventFinishGame event,
-    Emitter<GameFlowState> emit,
-  ) {
-    emit(const GameFlowStateFinishGame());
-  }
-
-  FutureOr<void> _overGame(
-    GameFlowEventGameOver event,
-    Emitter<GameFlowState> emit,
-  ) {
-    emit(const GameFlowStateGameOver());
+  GameFlowBloc() : super(const GameFlowState.showSettings()) {
+    on<GameFlowEventShowSettings>(
+      (event, emit) => emit(const GameFlowState.showSettings()),
+    );
+    on<GameFlowEventStartGame>(
+      (event, emit) => emit(const GameFlowState.startGame()),
+    );
+    on<GameFlowEventFinishGame>(
+      (event, emit) => emit(const GameFlowState.finishGame()),
+    );
+    on<GameFlowEventGameOver>(
+      (event, emit) => emit(GameFlowState.gameOver(event.scores)),
+    );
+    on<GameFlowEventRestartGame>(
+      (event, emit) => emit(const GameFlowState.restartGame()),
+    );
   }
 }

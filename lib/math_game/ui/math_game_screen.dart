@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.dart';
+import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
 import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
@@ -30,6 +31,13 @@ class _MathGameScreenView extends StatelessWidget {
     return BlocBuilder<MathGameCubit, MathGameState>(
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            leading: BackButton(
+              onPressed: () => context.read<GameFlowBloc>().add(
+                const GameFlowEventFinishGame(),
+              ),
+            ),
+          ),
           body: Builder(
             builder: (context) {
               if (state.levelModel.isEmpty) return const Offstage();
@@ -48,11 +56,11 @@ class _MathGameScreenView extends StatelessWidget {
                       children: [
                         Text(
                           'Scores: ${state.scores}',
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                         Text(
                           'Lives: ${state.lives}',
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
@@ -62,7 +70,7 @@ class _MathGameScreenView extends StatelessWidget {
                       child: Center(
                         child: Text(
                           state.levelModel.first.expression,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
@@ -80,12 +88,12 @@ class _MathGameScreenView extends StatelessWidget {
                               state.levelModel.first.answers[index],
                             );
                           },
-                          duration: Duration(milliseconds: 150),
+                          duration: const Duration(milliseconds: 150),
                           child: Text(
                             state.levelModel.first.answers[index]
                                 .toInt()
                                 .toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                             ),
