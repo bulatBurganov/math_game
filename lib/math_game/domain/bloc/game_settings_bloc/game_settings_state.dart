@@ -7,32 +7,26 @@ part 'game_settings_state.freezed.dart';
 class GameSettingsState with _$GameSettingsState {
   factory GameSettingsState({
     @Default(GameDifficulty.easy) GameDifficulty difficulty,
-    @Default(GameAdditionalSettings())
-    GameAdditionalSettings additionalSettings,
+    @Default(GameUserSettings()) GameUserSettings userSettings,
   }) = _GameSettingsState;
 }
 
 @freezed
-class GameAdditionalSettings with _$GameAdditionalSettings {
-  const factory GameAdditionalSettings({
+class GameUserSettings with _$GameUserSettings {
+  const factory GameUserSettings({
     @Default(true) bool usePlus,
     @Default(true) bool useMinus,
     @Default(false) bool useMultiply,
     @Default(false) bool useDivide,
-    @Default(2) int termLength,
-    @Default(1) int min,
-    @Default(10) int max,
+    @Default(2) int? termLength,
+    @Default(1) int? min,
+    @Default(10) int? max,
+    ValidationErrors? validationErrors,
   }) = _GameAdditionalSettings;
 }
 
-// class ValidationModel<T> {
-//   final T value;
-//   final bool isValid;
-//   final String? validationMessage;
-
-//   const ValidationModel({
-//     required this.value,
-//     this.isValid = true,
-//     this.validationMessage,
-//   });
-// }
+enum ValidationErrors {
+  selectAtLeastOneOperator,
+  minMaxAndLengthMustBeFilled,
+  maxMustBeLargerThanMin,
+}

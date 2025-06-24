@@ -3,21 +3,21 @@ import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.d
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_state.dart';
 
 class GameFlowBloc extends Bloc<GameFlowEvent, GameFlowState> {
-  GameFlowBloc() : super(const GameFlowStateShowSettings()) {
+  GameFlowBloc() : super(const GameFlowState.showSettings()) {
     on<GameFlowEventShowSettings>(
-      (event, emit) => emit(const GameFlowStateShowSettings()),
+      (event, emit) => emit(const GameFlowState.showSettings()),
     );
     on<GameFlowEventStartGame>(
-      (event, emit) => emit(const GameFlowStateStartGame()),
+      (event, emit) => emit(const GameFlowState.startGame()),
     );
     on<GameFlowEventFinishGame>(
-      (event, emit) => emit(const GameFlowStateFinishGame()),
+      (event, emit) => emit(const GameFlowState.finishGame()),
     );
     on<GameFlowEventGameOver>(
-      (event, emit) => emit(GameFlowStateGameOver(event.scores)),
+      (event, emit) => emit(GameFlowState.gameOver(event.scores)),
     );
     on<GameFlowEventRestartGame>(
-      (event, emit) => emit(const GameFlowStateRestartGame()),
+      (event, emit) => emit(const GameFlowState.restartGame()),
     );
   }
 }

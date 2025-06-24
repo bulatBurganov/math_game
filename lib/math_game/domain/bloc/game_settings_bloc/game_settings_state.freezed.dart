@@ -18,8 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GameSettingsState {
   GameDifficulty get difficulty => throw _privateConstructorUsedError;
-  GameAdditionalSettings get additionalSettings =>
-      throw _privateConstructorUsedError;
+  GameUserSettings get userSettings => throw _privateConstructorUsedError;
 
   /// Create a copy of GameSettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -35,12 +34,9 @@ abstract class $GameSettingsStateCopyWith<$Res> {
     $Res Function(GameSettingsState) then,
   ) = _$GameSettingsStateCopyWithImpl<$Res, GameSettingsState>;
   @useResult
-  $Res call({
-    GameDifficulty difficulty,
-    GameAdditionalSettings additionalSettings,
-  });
+  $Res call({GameDifficulty difficulty, GameUserSettings userSettings});
 
-  $GameAdditionalSettingsCopyWith<$Res> get additionalSettings;
+  $GameUserSettingsCopyWith<$Res> get userSettings;
 }
 
 /// @nodoc
@@ -57,17 +53,17 @@ class _$GameSettingsStateCopyWithImpl<$Res, $Val extends GameSettingsState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? difficulty = null, Object? additionalSettings = null}) {
+  $Res call({Object? difficulty = null, Object? userSettings = null}) {
     return _then(
       _value.copyWith(
             difficulty: null == difficulty
                 ? _value.difficulty
                 : difficulty // ignore: cast_nullable_to_non_nullable
                       as GameDifficulty,
-            additionalSettings: null == additionalSettings
-                ? _value.additionalSettings
-                : additionalSettings // ignore: cast_nullable_to_non_nullable
-                      as GameAdditionalSettings,
+            userSettings: null == userSettings
+                ? _value.userSettings
+                : userSettings // ignore: cast_nullable_to_non_nullable
+                      as GameUserSettings,
           )
           as $Val,
     );
@@ -77,11 +73,9 @@ class _$GameSettingsStateCopyWithImpl<$Res, $Val extends GameSettingsState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $GameAdditionalSettingsCopyWith<$Res> get additionalSettings {
-    return $GameAdditionalSettingsCopyWith<$Res>(_value.additionalSettings, (
-      value,
-    ) {
-      return _then(_value.copyWith(additionalSettings: value) as $Val);
+  $GameUserSettingsCopyWith<$Res> get userSettings {
+    return $GameUserSettingsCopyWith<$Res>(_value.userSettings, (value) {
+      return _then(_value.copyWith(userSettings: value) as $Val);
     });
   }
 }
@@ -95,13 +89,10 @@ abstract class _$$GameSettingsStateImplCopyWith<$Res>
   ) = __$$GameSettingsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    GameDifficulty difficulty,
-    GameAdditionalSettings additionalSettings,
-  });
+  $Res call({GameDifficulty difficulty, GameUserSettings userSettings});
 
   @override
-  $GameAdditionalSettingsCopyWith<$Res> get additionalSettings;
+  $GameUserSettingsCopyWith<$Res> get userSettings;
 }
 
 /// @nodoc
@@ -117,17 +108,17 @@ class __$$GameSettingsStateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? difficulty = null, Object? additionalSettings = null}) {
+  $Res call({Object? difficulty = null, Object? userSettings = null}) {
     return _then(
       _$GameSettingsStateImpl(
         difficulty: null == difficulty
             ? _value.difficulty
             : difficulty // ignore: cast_nullable_to_non_nullable
                   as GameDifficulty,
-        additionalSettings: null == additionalSettings
-            ? _value.additionalSettings
-            : additionalSettings // ignore: cast_nullable_to_non_nullable
-                  as GameAdditionalSettings,
+        userSettings: null == userSettings
+            ? _value.userSettings
+            : userSettings // ignore: cast_nullable_to_non_nullable
+                  as GameUserSettings,
       ),
     );
   }
@@ -138,7 +129,7 @@ class __$$GameSettingsStateImplCopyWithImpl<$Res>
 class _$GameSettingsStateImpl implements _GameSettingsState {
   _$GameSettingsStateImpl({
     this.difficulty = GameDifficulty.easy,
-    this.additionalSettings = const GameAdditionalSettings(),
+    this.userSettings = const GameUserSettings(),
   });
 
   @override
@@ -146,11 +137,11 @@ class _$GameSettingsStateImpl implements _GameSettingsState {
   final GameDifficulty difficulty;
   @override
   @JsonKey()
-  final GameAdditionalSettings additionalSettings;
+  final GameUserSettings userSettings;
 
   @override
   String toString() {
-    return 'GameSettingsState(difficulty: $difficulty, additionalSettings: $additionalSettings)';
+    return 'GameSettingsState(difficulty: $difficulty, userSettings: $userSettings)';
   }
 
   @override
@@ -160,12 +151,12 @@ class _$GameSettingsStateImpl implements _GameSettingsState {
             other is _$GameSettingsStateImpl &&
             (identical(other.difficulty, difficulty) ||
                 other.difficulty == difficulty) &&
-            (identical(other.additionalSettings, additionalSettings) ||
-                other.additionalSettings == additionalSettings));
+            (identical(other.userSettings, userSettings) ||
+                other.userSettings == userSettings));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, difficulty, additionalSettings);
+  int get hashCode => Object.hash(runtimeType, difficulty, userSettings);
 
   /// Create a copy of GameSettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -182,13 +173,13 @@ class _$GameSettingsStateImpl implements _GameSettingsState {
 abstract class _GameSettingsState implements GameSettingsState {
   factory _GameSettingsState({
     final GameDifficulty difficulty,
-    final GameAdditionalSettings additionalSettings,
+    final GameUserSettings userSettings,
   }) = _$GameSettingsStateImpl;
 
   @override
   GameDifficulty get difficulty;
   @override
-  GameAdditionalSettings get additionalSettings;
+  GameUserSettings get userSettings;
 
   /// Create a copy of GameSettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -199,54 +190,53 @@ abstract class _GameSettingsState implements GameSettingsState {
 }
 
 /// @nodoc
-mixin _$GameAdditionalSettings {
+mixin _$GameUserSettings {
   bool get usePlus => throw _privateConstructorUsedError;
   bool get useMinus => throw _privateConstructorUsedError;
   bool get useMultiply => throw _privateConstructorUsedError;
   bool get useDivide => throw _privateConstructorUsedError;
-  int get termLength => throw _privateConstructorUsedError;
-  int get min => throw _privateConstructorUsedError;
-  int get max => throw _privateConstructorUsedError;
+  int? get termLength => throw _privateConstructorUsedError;
+  int? get min => throw _privateConstructorUsedError;
+  int? get max => throw _privateConstructorUsedError;
+  ValidationErrors? get validationErrors => throw _privateConstructorUsedError;
 
-  /// Create a copy of GameAdditionalSettings
+  /// Create a copy of GameUserSettings
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $GameAdditionalSettingsCopyWith<GameAdditionalSettings> get copyWith =>
+  $GameUserSettingsCopyWith<GameUserSettings> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GameAdditionalSettingsCopyWith<$Res> {
-  factory $GameAdditionalSettingsCopyWith(
-    GameAdditionalSettings value,
-    $Res Function(GameAdditionalSettings) then,
-  ) = _$GameAdditionalSettingsCopyWithImpl<$Res, GameAdditionalSettings>;
+abstract class $GameUserSettingsCopyWith<$Res> {
+  factory $GameUserSettingsCopyWith(
+    GameUserSettings value,
+    $Res Function(GameUserSettings) then,
+  ) = _$GameUserSettingsCopyWithImpl<$Res, GameUserSettings>;
   @useResult
   $Res call({
     bool usePlus,
     bool useMinus,
     bool useMultiply,
     bool useDivide,
-    int termLength,
-    int min,
-    int max,
+    int? termLength,
+    int? min,
+    int? max,
+    ValidationErrors? validationErrors,
   });
 }
 
 /// @nodoc
-class _$GameAdditionalSettingsCopyWithImpl<
-  $Res,
-  $Val extends GameAdditionalSettings
->
-    implements $GameAdditionalSettingsCopyWith<$Res> {
-  _$GameAdditionalSettingsCopyWithImpl(this._value, this._then);
+class _$GameUserSettingsCopyWithImpl<$Res, $Val extends GameUserSettings>
+    implements $GameUserSettingsCopyWith<$Res> {
+  _$GameUserSettingsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GameAdditionalSettings
+  /// Create a copy of GameUserSettings
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -255,9 +245,10 @@ class _$GameAdditionalSettingsCopyWithImpl<
     Object? useMinus = null,
     Object? useMultiply = null,
     Object? useDivide = null,
-    Object? termLength = null,
-    Object? min = null,
-    Object? max = null,
+    Object? termLength = freezed,
+    Object? min = freezed,
+    Object? max = freezed,
+    Object? validationErrors = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -277,18 +268,22 @@ class _$GameAdditionalSettingsCopyWithImpl<
                 ? _value.useDivide
                 : useDivide // ignore: cast_nullable_to_non_nullable
                       as bool,
-            termLength: null == termLength
+            termLength: freezed == termLength
                 ? _value.termLength
                 : termLength // ignore: cast_nullable_to_non_nullable
-                      as int,
-            min: null == min
+                      as int?,
+            min: freezed == min
                 ? _value.min
                 : min // ignore: cast_nullable_to_non_nullable
-                      as int,
-            max: null == max
+                      as int?,
+            max: freezed == max
                 ? _value.max
                 : max // ignore: cast_nullable_to_non_nullable
-                      as int,
+                      as int?,
+            validationErrors: freezed == validationErrors
+                ? _value.validationErrors
+                : validationErrors // ignore: cast_nullable_to_non_nullable
+                      as ValidationErrors?,
           )
           as $Val,
     );
@@ -297,7 +292,7 @@ class _$GameAdditionalSettingsCopyWithImpl<
 
 /// @nodoc
 abstract class _$$GameAdditionalSettingsImplCopyWith<$Res>
-    implements $GameAdditionalSettingsCopyWith<$Res> {
+    implements $GameUserSettingsCopyWith<$Res> {
   factory _$$GameAdditionalSettingsImplCopyWith(
     _$GameAdditionalSettingsImpl value,
     $Res Function(_$GameAdditionalSettingsImpl) then,
@@ -309,23 +304,23 @@ abstract class _$$GameAdditionalSettingsImplCopyWith<$Res>
     bool useMinus,
     bool useMultiply,
     bool useDivide,
-    int termLength,
-    int min,
-    int max,
+    int? termLength,
+    int? min,
+    int? max,
+    ValidationErrors? validationErrors,
   });
 }
 
 /// @nodoc
 class __$$GameAdditionalSettingsImplCopyWithImpl<$Res>
-    extends
-        _$GameAdditionalSettingsCopyWithImpl<$Res, _$GameAdditionalSettingsImpl>
+    extends _$GameUserSettingsCopyWithImpl<$Res, _$GameAdditionalSettingsImpl>
     implements _$$GameAdditionalSettingsImplCopyWith<$Res> {
   __$$GameAdditionalSettingsImplCopyWithImpl(
     _$GameAdditionalSettingsImpl _value,
     $Res Function(_$GameAdditionalSettingsImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of GameAdditionalSettings
+  /// Create a copy of GameUserSettings
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -334,9 +329,10 @@ class __$$GameAdditionalSettingsImplCopyWithImpl<$Res>
     Object? useMinus = null,
     Object? useMultiply = null,
     Object? useDivide = null,
-    Object? termLength = null,
-    Object? min = null,
-    Object? max = null,
+    Object? termLength = freezed,
+    Object? min = freezed,
+    Object? max = freezed,
+    Object? validationErrors = freezed,
   }) {
     return _then(
       _$GameAdditionalSettingsImpl(
@@ -356,18 +352,22 @@ class __$$GameAdditionalSettingsImplCopyWithImpl<$Res>
             ? _value.useDivide
             : useDivide // ignore: cast_nullable_to_non_nullable
                   as bool,
-        termLength: null == termLength
+        termLength: freezed == termLength
             ? _value.termLength
             : termLength // ignore: cast_nullable_to_non_nullable
-                  as int,
-        min: null == min
+                  as int?,
+        min: freezed == min
             ? _value.min
             : min // ignore: cast_nullable_to_non_nullable
-                  as int,
-        max: null == max
+                  as int?,
+        max: freezed == max
             ? _value.max
             : max // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as int?,
+        validationErrors: freezed == validationErrors
+            ? _value.validationErrors
+            : validationErrors // ignore: cast_nullable_to_non_nullable
+                  as ValidationErrors?,
       ),
     );
   }
@@ -384,6 +384,7 @@ class _$GameAdditionalSettingsImpl implements _GameAdditionalSettings {
     this.termLength = 2,
     this.min = 1,
     this.max = 10,
+    this.validationErrors,
   });
 
   @override
@@ -400,17 +401,19 @@ class _$GameAdditionalSettingsImpl implements _GameAdditionalSettings {
   final bool useDivide;
   @override
   @JsonKey()
-  final int termLength;
+  final int? termLength;
   @override
   @JsonKey()
-  final int min;
+  final int? min;
   @override
   @JsonKey()
-  final int max;
+  final int? max;
+  @override
+  final ValidationErrors? validationErrors;
 
   @override
   String toString() {
-    return 'GameAdditionalSettings(usePlus: $usePlus, useMinus: $useMinus, useMultiply: $useMultiply, useDivide: $useDivide, termLength: $termLength, min: $min, max: $max)';
+    return 'GameUserSettings(usePlus: $usePlus, useMinus: $useMinus, useMultiply: $useMultiply, useDivide: $useDivide, termLength: $termLength, min: $min, max: $max, validationErrors: $validationErrors)';
   }
 
   @override
@@ -428,7 +431,9 @@ class _$GameAdditionalSettingsImpl implements _GameAdditionalSettings {
             (identical(other.termLength, termLength) ||
                 other.termLength == termLength) &&
             (identical(other.min, min) || other.min == min) &&
-            (identical(other.max, max) || other.max == max));
+            (identical(other.max, max) || other.max == max) &&
+            (identical(other.validationErrors, validationErrors) ||
+                other.validationErrors == validationErrors));
   }
 
   @override
@@ -441,9 +446,10 @@ class _$GameAdditionalSettingsImpl implements _GameAdditionalSettings {
     termLength,
     min,
     max,
+    validationErrors,
   );
 
-  /// Create a copy of GameAdditionalSettings
+  /// Create a copy of GameUserSettings
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -456,15 +462,16 @@ class _$GameAdditionalSettingsImpl implements _GameAdditionalSettings {
       );
 }
 
-abstract class _GameAdditionalSettings implements GameAdditionalSettings {
+abstract class _GameAdditionalSettings implements GameUserSettings {
   const factory _GameAdditionalSettings({
     final bool usePlus,
     final bool useMinus,
     final bool useMultiply,
     final bool useDivide,
-    final int termLength,
-    final int min,
-    final int max,
+    final int? termLength,
+    final int? min,
+    final int? max,
+    final ValidationErrors? validationErrors,
   }) = _$GameAdditionalSettingsImpl;
 
   @override
@@ -476,13 +483,15 @@ abstract class _GameAdditionalSettings implements GameAdditionalSettings {
   @override
   bool get useDivide;
   @override
-  int get termLength;
+  int? get termLength;
   @override
-  int get min;
+  int? get min;
   @override
-  int get max;
+  int? get max;
+  @override
+  ValidationErrors? get validationErrors;
 
-  /// Create a copy of GameAdditionalSettings
+  /// Create a copy of GameUserSettings
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)

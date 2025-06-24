@@ -25,7 +25,7 @@ class MathGameCubit extends Cubit<MathGameState> {
 
   Future<void> startGame() async {
     final difficulty = gameSettingsCubit.state.difficulty;
-    final userSettings = gameSettingsCubit.state.additionalSettings;
+    final userSettings = gameSettingsCubit.state.userSettings;
     int minValue = 1;
     int maxValue = 10;
     int numTerms = 2;
@@ -51,9 +51,9 @@ class MathGameCubit extends Cubit<MathGameState> {
           if (userSettings.useMultiply) '*',
           if (userSettings.useDivide) '/',
         ];
-        minValue = userSettings.min;
-        maxValue = userSettings.max;
-        numTerms = userSettings.termLength;
+        minValue = userSettings.min ?? 0;
+        maxValue = userSettings.max ?? 10;
+        numTerms = userSettings.termLength ?? 2;
 
         break;
     }

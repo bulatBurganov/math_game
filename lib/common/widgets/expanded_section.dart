@@ -4,11 +4,15 @@ class ExpandedSection extends StatefulWidget {
   final Widget child;
   final bool expand;
   final Axis axis;
+  final Duration duration;
+  final Curve curve;
   const ExpandedSection({
     super.key,
     this.expand = false,
     required this.child,
     this.axis = Axis.horizontal,
+    this.duration = const Duration(milliseconds: 300),
+    this.curve = Curves.bounceIn,
   });
 
   @override
@@ -27,11 +31,10 @@ class _ExpandedSectionState extends State<ExpandedSection>
     _runExpandCheck();
   }
 
-  ///Setting up the animation
   void prepareAnimations() {
     expandController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: widget.duration,
     );
     animation = CurvedAnimation(
       parent: expandController,

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:math_game/common/snack/snack_bloc.dart';
 import 'package:math_game/common/widgets/bounce_button.dart';
 import 'package:math_game/generated/l10n.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.dart';
@@ -15,7 +16,21 @@ class GameSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GameSettingsCubit, GameSettingsState>(
+    return BlocConsumer<GameSettingsCubit, GameSettingsState>(
+      listener: (context, state) {
+        final errors = state.userSettings.validationErrors;
+        if (state.userSettings.validationErrors != null) {
+          final message = switch (errors!) {
+            ValidationErrors.selectAtLeastOneOperator =>
+              'Доложен быть выбран как минимум 1 оператор из числа +, -, *, /',
+            ValidationErrors.maxMustBeLargerThanMin =>
+              'Максимальное значение должно превышать минимальное',
+            ValidationErrors.minMaxAndLengthMustBeFilled =>
+              'Поля длины выражения, минимального и максимального значения должны быть заполнены',
+          };
+          context.read<SnackBloc>().showStringError(message);
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -43,9 +58,11 @@ class GameSettingsScreen extends StatelessWidget {
                 const SizedBox(height: 32),
                 DifficultySelector(
                   initialValue: state.difficulty,
-                  initialAdditionalSettings: state.additionalSettings,
-                  onAdditionalSettingsChanged: (settings) {
-                    context.read<GameSettingsCubit>().checkSettings(settings);
+                  initialUserSettings: state.userSettings,
+                  onUserSettingsChanged: (settings) {
+                    context.read<GameSettingsCubit>().updateUSerSettings(
+                      settings,
+                    );
                   },
                   onCahnged: (difficulty) {
                     context.read<GameSettingsCubit>().updateDifficulty(
@@ -59,9 +76,10 @@ class GameSettingsScreen extends StatelessWidget {
                   height: 50,
                   child: BounceButton(
                     onTap: () {
-                      context.read<GameFlowBloc>().add(
-                        const GameFlowEventStartGame(),
-                      );
+                      context.read<GameSettingsCubit>().submit();
+                      // context.read<GameFlowBloc>().add(
+                      //   const GameFlowEventStartGame(),
+                      // );
                     },
                     duration: const Duration(milliseconds: 150),
                     child: Text(S.of(context).start_game),

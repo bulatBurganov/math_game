@@ -8,47 +8,53 @@ import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings
 import 'package:math_game/router/app_router.gr.dart';
 
 @RoutePage()
-class GameFlowWrapperScreen extends StatelessWidget
-    implements AutoRouteWrapper {
+class GameFlowWrapperScreen extends StatefulWidget implements AutoRouteWrapper {
   const GameFlowWrapperScreen({super.key});
+
+  @override
+  State<GameFlowWrapperScreen> createState() => _GameFlowWrapperScreenState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return this;
+  }
+}
+
+class _GameFlowWrapperScreenState extends State<GameFlowWrapperScreen> {
+  late GameFlowBloc _gameFlowBloc;
+
+  @override
+  void initState() {
+    _gameFlowBloc = GameFlowBloc()..add(const GameFlowEventShowSettings());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     print('build game wrapper');
-    return BlocListener<GameFlowBloc, GameFlowState>(
-      listener: (context, state) {
-        if (state is GameFlowStateShowSettings) {
-          context.router.replace(const GameSettingsRoute());
-        } else if (state is GameFlowStateStartGame) {
-          context.router.replace(const MathGameRoute());
-        } else if (state is GameFlowStateFinishGame) {
-          context.router.pop();
-        } else if (state is GameFlowStateGameOver) {
-          context.router.replace(GameOverRoute(scores: state.scores));
-        } else if (state is GameFlowStateRestartGame) {
-          context.router.replace(const GameSettingsRoute());
-        }
-      },
-      child: const AutoRouter(),
-    );
-  }
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<GameFlowBloc>(
-          create: (_) => GameFlowBloc()..add(GameFlowEventShowSettings()),
+        BlocProvider.value(value: _gameFlowBloc),
+        BlocProvider<GameSettingsCubit>(
+          create: (_) => GameSettingsCubit(gameFlowBloc: _gameFlowBloc),
         ),
-        BlocProvider<GameSettingsCubit>(create: (_) => GameSettingsCubit()),
       ],
-      child: this,
+      child: BlocListener<GameFlowBloc, GameFlowState>(
+        listener: (context, state) {
+          if (state is GameFlowStateShowSettings) {
+            context.router.replace(const GameSettingsRoute());
+          } else if (state is GameFlowStateStartGame) {
+            context.router.replace(const MathGameRoute());
+          } else if (state is GameFlowStateFinishGame) {
+            context.router.pop();
+          } else if (state is GameFlowStateGameOver) {
+            context.router.replace(GameOverRoute(scores: state.scores));
+          } else if (state is GameFlowStateRestartGame) {
+            context.router.replace(const GameSettingsRoute());
+          }
+        },
+        child: const AutoRouter(),
+      ),
     );
-    // return BlocListener<GameFlowBloc, GameFlowState>(
-    //   listener: (context, state) {
-
-    //   },
-    //   child: this,
-    // );
   }
 }

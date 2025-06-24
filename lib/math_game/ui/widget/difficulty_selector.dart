@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:math_game/common/widgets/app_checkbox.dart';
 import 'package:math_game/common/widgets/expanded_section.dart';
 import 'package:math_game/generated/l10n.dart';
@@ -14,16 +15,16 @@ class DifficultySelector extends StatefulWidget {
     this.height = 50,
     this.padding = 4,
     this.initialValue,
-    required this.initialAdditionalSettings,
-    required this.onAdditionalSettingsChanged,
+    required this.initialUserSettings,
+    required this.onUserSettingsChanged,
   });
   final Duration swithDuration;
   final double height;
   final double padding;
   final GameDifficulty? initialValue;
   final Function(GameDifficulty difficulty) onCahnged;
-  final GameAdditionalSettings initialAdditionalSettings;
-  final Function(GameAdditionalSettings settings) onAdditionalSettingsChanged;
+  final GameUserSettings initialUserSettings;
+  final Function(GameUserSettings settings) onUserSettingsChanged;
 
   @override
   State<DifficultySelector> createState() => _DifficultySelectorState();
@@ -138,26 +139,25 @@ class _DifficultySelectorState extends State<DifficultySelector> {
 
                 ExpandedSection(
                   axis: Axis.vertical,
+                  curve: Curves.easeInOutCubicEmphasized,
                   expand: _selectedIndex == 3,
                   child: Column(
                     children: [
                       AppCheckBox(
-                        initialValue: widget.initialAdditionalSettings.usePlus,
+                        initialValue: widget.initialUserSettings.usePlus,
                         onChange: (value) {
-                          widget.onAdditionalSettingsChanged(
-                            widget.initialAdditionalSettings.copyWith(
-                              usePlus: value,
-                            ),
+                          widget.onUserSettingsChanged(
+                            widget.initialUserSettings.copyWith(usePlus: value),
                           );
                         },
                         title: S.of(context).useSomething('+'),
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue: widget.initialAdditionalSettings.useMinus,
+                        initialValue: widget.initialUserSettings.useMinus,
                         onChange: (value) {
-                          widget.onAdditionalSettingsChanged(
-                            widget.initialAdditionalSettings.copyWith(
+                          widget.onUserSettingsChanged(
+                            widget.initialUserSettings.copyWith(
                               useMinus: value,
                             ),
                           );
@@ -166,11 +166,10 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue:
-                            widget.initialAdditionalSettings.useMultiply,
+                        initialValue: widget.initialUserSettings.useMultiply,
                         onChange: (value) {
-                          widget.onAdditionalSettingsChanged(
-                            widget.initialAdditionalSettings.copyWith(
+                          widget.onUserSettingsChanged(
+                            widget.initialUserSettings.copyWith(
                               useMultiply: value,
                             ),
                           );
@@ -179,11 +178,10 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue:
-                            widget.initialAdditionalSettings.useDivide,
+                        initialValue: widget.initialUserSettings.useDivide,
                         onChange: (value) {
-                          widget.onAdditionalSettingsChanged(
-                            widget.initialAdditionalSettings.copyWith(
+                          widget.onUserSettingsChanged(
+                            widget.initialUserSettings.copyWith(
                               useDivide: value,
                             ),
                           );
@@ -193,46 +191,39 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       const SizedBox(height: 4),
 
                       FormTextField(
-                        initialValue: widget
-                            .initialAdditionalSettings
-                            .termLength
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp('[2-9]')),
+                        ],
+                        initialValue: widget.initialUserSettings.termLength
                             .toString(),
                         onChanged: (v) {
-                          if (v.isNotEmpty) {
-                            widget.onAdditionalSettingsChanged(
-                              widget.initialAdditionalSettings.copyWith(
-                                termLength: int.parse(v),
-                              ),
-                            );
-                          }
+                          widget.onUserSettingsChanged(
+                            widget.initialUserSettings.copyWith(
+                              termLength: int.tryParse(v),
+                            ),
+                          );
                         },
                         label: S.of(context).termLength,
                       ),
                       FormTextField(
-                        initialValue: widget.initialAdditionalSettings.min
-                            .toString(),
+                        initialValue: widget.initialUserSettings.min.toString(),
                         onChanged: (v) {
-                          if (v.isNotEmpty) {
-                            widget.onAdditionalSettingsChanged(
-                              widget.initialAdditionalSettings.copyWith(
-                                min: int.parse(v),
-                              ),
-                            );
-                          }
+                          widget.onUserSettingsChanged(
+                            widget.initialUserSettings.copyWith(
+                              min: int.tryParse(v),
+                            ),
+                          );
                         },
                         label: S.of(context).minValue,
                       ),
                       FormTextField(
-                        initialValue: widget.initialAdditionalSettings.max
-                            .toString(),
+                        initialValue: widget.initialUserSettings.max.toString(),
                         onChanged: (v) {
-                          if (v.isNotEmpty) {
-                            widget.onAdditionalSettingsChanged(
-                              widget.initialAdditionalSettings.copyWith(
-                                max: int.parse(v),
-                              ),
-                            );
-                          }
+                          widget.onUserSettingsChanged(
+                            widget.initialUserSettings.copyWith(
+                              max: int.tryParse(v),
+                            ),
+                          );
                         },
                         label: S.of(context).maxValue,
                       ),
