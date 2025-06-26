@@ -22,11 +22,11 @@ class GameSettingsScreen extends StatelessWidget {
         if (state.userSettings.validationErrors != null) {
           final message = switch (errors!) {
             ValidationErrors.selectAtLeastOneOperator =>
-              'Доложен быть выбран как минимум 1 оператор из числа +, -, *, /',
+              S.of(context).selectAtLeastOneOperator,
             ValidationErrors.maxMustBeLargerThanMin =>
-              'Максимальное значение должно превышать минимальное',
+              S.of(context).maxShouldBeLargerThanMin,
             ValidationErrors.minMaxAndLengthMustBeFilled =>
-              'Поля длины выражения, минимального и максимального значения должны быть заполнены',
+              S.of(context).lenMaxMinFieldsShoulBeFilled,
           };
           context.read<SnackBloc>().showStringError(message);
         }
@@ -77,11 +77,7 @@ class GameSettingsScreen extends StatelessWidget {
                   child: BounceButton(
                     onTap: () {
                       context.read<GameSettingsCubit>().submit();
-                      // context.read<GameFlowBloc>().add(
-                      //   const GameFlowEventStartGame(),
-                      // );
                     },
-                    duration: const Duration(milliseconds: 150),
                     child: Text(S.of(context).start_game),
                   ),
                 ),

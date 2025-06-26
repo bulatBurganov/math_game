@@ -4,12 +4,16 @@ class BounceButton extends StatefulWidget {
   final Widget child;
   final Function onTap;
   final Duration duration;
+  final Curve curve;
+  final bool tapAfterAnimation;
 
   const BounceButton({
     super.key,
     required this.child,
     required this.onTap,
-    required this.duration,
+    this.duration = const Duration(milliseconds: 150),
+    this.curve = Curves.bounceIn,
+    this.tapAfterAnimation = true,
   });
 
   @override
@@ -40,11 +44,28 @@ class _BounceButtonState extends State<BounceButton>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        widget.onTap();
+      onTap: () async {
+        if (!widget.tapAfterAnimation) {
+          widget.onTap();
+        }
         _controller.forward().then((_) {
-          _controller.reverse();
+          _controller.reverse().then((_) {
+            if (widget.tapAfterAnimation) {
+              widget.onTap();
+            }
+          });
         });
+      },
+
+      onTapDown: (details) {
+        _controller.forward();
+      },
+      onTapUp: (details) {
+        _controller.reverse();
+      },
+
+      onTapCancel: () {
+        _controller.reverse();
       },
       child: AnimatedBuilder(
         animation: _animation,

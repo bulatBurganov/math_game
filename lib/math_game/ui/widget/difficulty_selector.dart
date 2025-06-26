@@ -189,7 +189,19 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         title: S.of(context).useSomething('/'),
                       ),
                       const SizedBox(height: 4),
-
+                      AppCheckBox(
+                        initialValue:
+                            widget.initialUserSettings.onlyPositiveResults,
+                        onChange: (value) {
+                          widget.onUserSettingsChanged(
+                            widget.initialUserSettings.copyWith(
+                              onlyPositiveResults: value,
+                            ),
+                          );
+                        },
+                        title: S.of(context).answerIsAlwaysPositive,
+                      ),
+                      const SizedBox(height: 4),
                       FormTextField(
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[2-9]')),

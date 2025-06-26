@@ -13,7 +13,7 @@ class MainMenuScreen extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Stack(
+        child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
@@ -39,11 +39,11 @@ class MainMenuScreen extends StatelessWidget {
                   onTap: () {
                     context.router.push(const GameFlowWrapperRoute());
                   },
-                  duration: const Duration(milliseconds: 200),
                   child: Text(S.of(context).start_game),
                 ),
               ),
             ),
+            const SizedBox(height: 24),
           ],
         ),
       ),

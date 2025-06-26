@@ -59,7 +59,6 @@ class GameOverScreen extends StatelessWidget {
                     const GameFlowEventRestartGame(),
                   );
                 },
-                duration: const Duration(milliseconds: 150),
                 child: Text(S.of(context).restart),
               ),
             ),
@@ -72,7 +71,6 @@ class GameOverScreen extends StatelessWidget {
                     const GameFlowEventFinishGame(),
                   );
                 },
-                duration: const Duration(milliseconds: 150),
                 child: Text(S.of(context).finish_game),
               ),
             ),

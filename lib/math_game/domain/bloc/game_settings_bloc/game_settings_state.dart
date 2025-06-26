@@ -22,6 +22,7 @@ class GameUserSettings with _$GameUserSettings {
     @Default(1) int? min,
     @Default(10) int? max,
     ValidationErrors? validationErrors,
+    @Default(false) bool onlyPositiveResults,
   }) = _GameAdditionalSettings;
 }
 

@@ -199,6 +199,7 @@ mixin _$GameUserSettings {
   int? get min => throw _privateConstructorUsedError;
   int? get max => throw _privateConstructorUsedError;
   ValidationErrors? get validationErrors => throw _privateConstructorUsedError;
+  bool get onlyPositiveResults => throw _privateConstructorUsedError;
 
   /// Create a copy of GameUserSettings
   /// with the given fields replaced by the non-null parameter values.
@@ -223,6 +224,7 @@ abstract class $GameUserSettingsCopyWith<$Res> {
     int? min,
     int? max,
     ValidationErrors? validationErrors,
+    bool onlyPositiveResults,
   });
 }
 
@@ -249,6 +251,7 @@ class _$GameUserSettingsCopyWithImpl<$Res, $Val extends GameUserSettings>
     Object? min = freezed,
     Object? max = freezed,
     Object? validationErrors = freezed,
+    Object? onlyPositiveResults = null,
   }) {
     return _then(
       _value.copyWith(
@@ -284,6 +287,10 @@ class _$GameUserSettingsCopyWithImpl<$Res, $Val extends GameUserSettings>
                 ? _value.validationErrors
                 : validationErrors // ignore: cast_nullable_to_non_nullable
                       as ValidationErrors?,
+            onlyPositiveResults: null == onlyPositiveResults
+                ? _value.onlyPositiveResults
+                : onlyPositiveResults // ignore: cast_nullable_to_non_nullable
+                      as bool,
           )
           as $Val,
     );
@@ -308,6 +315,7 @@ abstract class _$$GameAdditionalSettingsImplCopyWith<$Res>
     int? min,
     int? max,
     ValidationErrors? validationErrors,
+    bool onlyPositiveResults,
   });
 }
 
@@ -333,6 +341,7 @@ class __$$GameAdditionalSettingsImplCopyWithImpl<$Res>
     Object? min = freezed,
     Object? max = freezed,
     Object? validationErrors = freezed,
+    Object? onlyPositiveResults = null,
   }) {
     return _then(
       _$GameAdditionalSettingsImpl(
@@ -368,6 +377,10 @@ class __$$GameAdditionalSettingsImplCopyWithImpl<$Res>
             ? _value.validationErrors
             : validationErrors // ignore: cast_nullable_to_non_nullable
                   as ValidationErrors?,
+        onlyPositiveResults: null == onlyPositiveResults
+            ? _value.onlyPositiveResults
+            : onlyPositiveResults // ignore: cast_nullable_to_non_nullable
+                  as bool,
       ),
     );
   }
@@ -385,6 +398,7 @@ class _$GameAdditionalSettingsImpl implements _GameAdditionalSettings {
     this.min = 1,
     this.max = 10,
     this.validationErrors,
+    this.onlyPositiveResults = false,
   });
 
   @override
@@ -410,10 +424,13 @@ class _$GameAdditionalSettingsImpl implements _GameAdditionalSettings {
   final int? max;
   @override
   final ValidationErrors? validationErrors;
+  @override
+  @JsonKey()
+  final bool onlyPositiveResults;
 
   @override
   String toString() {
-    return 'GameUserSettings(usePlus: $usePlus, useMinus: $useMinus, useMultiply: $useMultiply, useDivide: $useDivide, termLength: $termLength, min: $min, max: $max, validationErrors: $validationErrors)';
+    return 'GameUserSettings(usePlus: $usePlus, useMinus: $useMinus, useMultiply: $useMultiply, useDivide: $useDivide, termLength: $termLength, min: $min, max: $max, validationErrors: $validationErrors, onlyPositiveResults: $onlyPositiveResults)';
   }
 
   @override
@@ -433,7 +450,9 @@ class _$GameAdditionalSettingsImpl implements _GameAdditionalSettings {
             (identical(other.min, min) || other.min == min) &&
             (identical(other.max, max) || other.max == max) &&
             (identical(other.validationErrors, validationErrors) ||
-                other.validationErrors == validationErrors));
+                other.validationErrors == validationErrors) &&
+            (identical(other.onlyPositiveResults, onlyPositiveResults) ||
+                other.onlyPositiveResults == onlyPositiveResults));
   }
 
   @override
@@ -447,6 +466,7 @@ class _$GameAdditionalSettingsImpl implements _GameAdditionalSettings {
     min,
     max,
     validationErrors,
+    onlyPositiveResults,
   );
 
   /// Create a copy of GameUserSettings
@@ -472,6 +492,7 @@ abstract class _GameAdditionalSettings implements GameUserSettings {
     final int? min,
     final int? max,
     final ValidationErrors? validationErrors,
+    final bool onlyPositiveResults,
   }) = _$GameAdditionalSettingsImpl;
 
   @override
@@ -490,6 +511,8 @@ abstract class _GameAdditionalSettings implements GameUserSettings {
   int? get max;
   @override
   ValidationErrors? get validationErrors;
+  @override
+  bool get onlyPositiveResults;
 
   /// Create a copy of GameUserSettings
   /// with the given fields replaced by the non-null parameter values.
