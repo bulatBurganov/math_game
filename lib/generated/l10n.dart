@@ -190,10 +190,10 @@ class S {
     );
   }
 
-  /// `Сложение и вычиание 2 чисел в диапазоне от 1 до 10`
+  /// `Сложение и вычиание 2 чисел в диапазоне от 1 до 10, результат всегда положительный`
   String get easyModeDescription {
     return Intl.message(
-      'Сложение и вычиание 2 чисел в диапазоне от 1 до 10',
+      'Сложение и вычиание 2 чисел в диапазоне от 1 до 10, результат всегда положительный',
       name: 'easyModeDescription',
       desc: '',
       args: [],
@@ -265,6 +265,46 @@ class S {
     return Intl.message(
       'Минимальное значение',
       name: 'minValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Доложен быть выбран как минимум 1 оператор из числа +, -, *, /`
+  String get selectAtLeastOneOperator {
+    return Intl.message(
+      'Доложен быть выбран как минимум 1 оператор из числа +, -, *, /',
+      name: 'selectAtLeastOneOperator',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Максимальное значение должно превышать минимальное`
+  String get maxShouldBeLargerThanMin {
+    return Intl.message(
+      'Максимальное значение должно превышать минимальное',
+      name: 'maxShouldBeLargerThanMin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Поля длины выражения, минимального и максимального значения должны быть заполнены`
+  String get lenMaxMinFieldsShoulBeFilled {
+    return Intl.message(
+      'Поля длины выражения, минимального и максимального значения должны быть заполнены',
+      name: 'lenMaxMinFieldsShoulBeFilled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Решение всегда положительное число`
+  String get answerIsAlwaysPositive {
+    return Intl.message(
+      'Решение всегда положительное число',
+      name: 'answerIsAlwaysPositive',
       desc: '',
       args: [],
     );

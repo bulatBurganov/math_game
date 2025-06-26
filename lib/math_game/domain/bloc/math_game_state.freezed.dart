@@ -21,6 +21,7 @@ mixin _$MathGameState {
   int get scores => throw _privateConstructorUsedError;
   int get lives => throw _privateConstructorUsedError;
   Duration get timer => throw _privateConstructorUsedError;
+  GameBonusModel? get bonus => throw _privateConstructorUsedError;
 
   /// Create a copy of MathGameState
   /// with the given fields replaced by the non-null parameter values.
@@ -41,6 +42,7 @@ abstract class $MathGameStateCopyWith<$Res> {
     int scores,
     int lives,
     Duration timer,
+    GameBonusModel? bonus,
   });
 }
 
@@ -63,6 +65,7 @@ class _$MathGameStateCopyWithImpl<$Res, $Val extends MathGameState>
     Object? scores = null,
     Object? lives = null,
     Object? timer = null,
+    Object? bonus = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -82,6 +85,10 @@ class _$MathGameStateCopyWithImpl<$Res, $Val extends MathGameState>
                 ? _value.timer
                 : timer // ignore: cast_nullable_to_non_nullable
                       as Duration,
+            bonus: freezed == bonus
+                ? _value.bonus
+                : bonus // ignore: cast_nullable_to_non_nullable
+                      as GameBonusModel?,
           )
           as $Val,
     );
@@ -102,6 +109,7 @@ abstract class _$$MathGameStateImplCopyWith<$Res>
     int scores,
     int lives,
     Duration timer,
+    GameBonusModel? bonus,
   });
 }
 
@@ -123,6 +131,7 @@ class __$$MathGameStateImplCopyWithImpl<$Res>
     Object? scores = null,
     Object? lives = null,
     Object? timer = null,
+    Object? bonus = freezed,
   }) {
     return _then(
       _$MathGameStateImpl(
@@ -142,6 +151,10 @@ class __$$MathGameStateImplCopyWithImpl<$Res>
             ? _value.timer
             : timer // ignore: cast_nullable_to_non_nullable
                   as Duration,
+        bonus: freezed == bonus
+            ? _value.bonus
+            : bonus // ignore: cast_nullable_to_non_nullable
+                  as GameBonusModel?,
       ),
     );
   }
@@ -155,6 +168,7 @@ class _$MathGameStateImpl implements _MathGameState {
     this.scores = 0,
     this.lives = defaultLivesCount,
     this.timer = const Duration(seconds: 0),
+    this.bonus,
   }) : _levelModel = levelModel;
 
   final List<ProblemModel> _levelModel;
@@ -175,10 +189,12 @@ class _$MathGameStateImpl implements _MathGameState {
   @override
   @JsonKey()
   final Duration timer;
+  @override
+  final GameBonusModel? bonus;
 
   @override
   String toString() {
-    return 'MathGameState(levelModel: $levelModel, scores: $scores, lives: $lives, timer: $timer)';
+    return 'MathGameState(levelModel: $levelModel, scores: $scores, lives: $lives, timer: $timer, bonus: $bonus)';
   }
 
   @override
@@ -192,7 +208,8 @@ class _$MathGameStateImpl implements _MathGameState {
             ) &&
             (identical(other.scores, scores) || other.scores == scores) &&
             (identical(other.lives, lives) || other.lives == lives) &&
-            (identical(other.timer, timer) || other.timer == timer));
+            (identical(other.timer, timer) || other.timer == timer) &&
+            (identical(other.bonus, bonus) || other.bonus == bonus));
   }
 
   @override
@@ -202,6 +219,7 @@ class _$MathGameStateImpl implements _MathGameState {
     scores,
     lives,
     timer,
+    bonus,
   );
 
   /// Create a copy of MathGameState
@@ -219,6 +237,7 @@ abstract class _MathGameState implements MathGameState {
     final int scores,
     final int lives,
     final Duration timer,
+    final GameBonusModel? bonus,
   }) = _$MathGameStateImpl;
 
   @override
@@ -229,6 +248,8 @@ abstract class _MathGameState implements MathGameState {
   int get lives;
   @override
   Duration get timer;
+  @override
+  GameBonusModel? get bonus;
 
   /// Create a copy of MathGameState
   /// with the given fields replaced by the non-null parameter values.

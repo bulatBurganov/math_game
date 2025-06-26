@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
 
-class TimerWidget extends StatelessWidget {
+class TimerWidget extends StatefulWidget {
   final Duration duration;
 
   const TimerWidget({super.key, required this.duration});
+
+  @override
+  State<TimerWidget> createState() => _TimerWidgetState();
+}
+
+class _TimerWidgetState extends State<TimerWidget>
+    with SingleTickerProviderStateMixin {
   String _twoDigits(int n) => n.toString().padLeft(2, '0');
 
   @override
   Widget build(BuildContext context) {
-    final minutes = _twoDigits(duration.inMinutes.remainder(60));
-    final seconds = _twoDigits(duration.inSeconds.remainder(60));
+    final minutes = _twoDigits(widget.duration.inMinutes.remainder(60));
+    final seconds = _twoDigits(widget.duration.inSeconds.remainder(60));
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        _TimeColumn(time: minutes, label: 'Mins'),
-        _TimeColumn(time: seconds, label: 'Secs', isLast: true),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _TimeColumn(time: minutes, label: 'Mins'),
+            _TimeColumn(time: seconds, label: 'Secs', isLast: true),
+          ],
+        ),
       ],
     );
   }
