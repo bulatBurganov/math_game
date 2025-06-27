@@ -75,4 +75,19 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
 
     gameFlowBloc.add(const GameFlowEventStartGame());
   }
+
+  Future<void> setPreset(GamePresets? preset) async {
+    if (preset == null) return;
+    switch (preset) {
+      case GamePresets.multiplicationTable:
+        print('object');
+        emit(
+          state.copyWith(userSettings: GameUserSettings.multiplicationTable()),
+        );
+        break;
+      default:
+        log('preset droppped');
+        break;
+    }
+  }
 }

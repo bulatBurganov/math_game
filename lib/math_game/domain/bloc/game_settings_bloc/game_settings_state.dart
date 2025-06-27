@@ -12,16 +12,7 @@ class GameSettingsState with _$GameSettingsState {
 
   factory GameSettingsState.multiplicationTablePreset() => GameSettingsState(
     difficulty: GameDifficulty.user,
-    userSettings: const GameUserSettings(
-      useDivide: false,
-      usePlus: false,
-      useMinus: false,
-      useMultiply: true,
-      termLength: 2,
-      min: 1,
-      max: 9,
-      onlyPositiveResults: true,
-    ),
+    userSettings: GameUserSettings.multiplicationTable(),
   );
 }
 
@@ -38,6 +29,17 @@ class GameUserSettings with _$GameUserSettings {
     ValidationErrors? validationErrors,
     @Default(false) bool onlyPositiveResults,
   }) = _GameAdditionalSettings;
+
+  factory GameUserSettings.multiplicationTable() => const GameUserSettings(
+    useDivide: false,
+    usePlus: false,
+    useMinus: false,
+    useMultiply: true,
+    termLength: 2,
+    min: 1,
+    max: 9,
+    onlyPositiveResults: true,
+  );
 }
 
 enum ValidationErrors {
@@ -45,3 +47,5 @@ enum ValidationErrors {
   minMaxAndLengthMustBeFilled,
   maxMustBeLargerThanMin,
 }
+
+enum GamePresets { none, multiplicationTable }

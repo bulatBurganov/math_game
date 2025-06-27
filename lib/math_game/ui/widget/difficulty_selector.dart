@@ -17,6 +17,7 @@ class DifficultySelector extends StatefulWidget {
     this.initialValue,
     required this.initialUserSettings,
     required this.onUserSettingsChanged,
+    required this.onPresetChanged,
   });
   final Duration swithDuration;
   final double height;
@@ -25,6 +26,7 @@ class DifficultySelector extends StatefulWidget {
   final Function(GameDifficulty difficulty) onCahnged;
   final GameUserSettings initialUserSettings;
   final Function(GameUserSettings settings) onUserSettingsChanged;
+  final Function(GamePresets?) onPresetChanged;
 
   @override
   State<DifficultySelector> createState() => _DifficultySelectorState();
@@ -143,6 +145,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                   expand: _selectedIndex == 3,
                   child: Column(
                     children: [
+                      _PresetSelector(onChanged: widget.onPresetChanged),
                       AppCheckBox(
                         initialValue: widget.initialUserSettings.usePlus,
                         onChange: (value) {
@@ -278,5 +281,39 @@ class _DifficultySelectorState extends State<DifficultySelector> {
       GameDifficulty.hard => S.of(context).hardModeDescription,
       GameDifficulty.user => S.of(context).userModeDescription,
     };
+  }
+}
+
+class _PresetSelector extends StatefulWidget {
+  final Function(GamePresets? preset) onChanged;
+
+  const _PresetSelector({required this.onChanged});
+  @override
+  State<_PresetSelector> createState() => _PresetSelectorState();
+}
+
+class _PresetSelectorState extends State<_PresetSelector> {
+  GamePresets? selected;
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<GamePresets>(
+      value: selected,
+      hint: const Text('Пресет'),
+      items: GamePresets.values
+          .map(
+            (e) => DropdownMenuItem<GamePresets>(value: e, child: Text(e.name)),
+          )
+          .toList(),
+      onChanged: (v) {
+        setState(() {
+          if (v == GamePresets.none) {
+            v = null;
+          }
+          selected = v;
+
+          widget.onChanged(v);
+        });
+      },
+    );
   }
 }

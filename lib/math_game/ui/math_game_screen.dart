@@ -89,15 +89,9 @@ class _MathGameScreenView extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return BounceButton(
                           tapAfterAnimation: false,
-                          child: Text(
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            state.levelModel.first.answers[index]
-                                .toInt()
-                                .toString(),
-                          ),
+                          text: state.levelModel.first.answers[index]
+                              .toInt()
+                              .toString(),
                           onTap: () {
                             context.read<MathGameCubit>().checkAnswer(
                               state.levelModel.first.answers[index],

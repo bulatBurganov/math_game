@@ -32,7 +32,7 @@ class _FormTextFieldState extends State<FormTextField> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(widget.label, style: TextStyle(fontSize: 16)),
+        Text(widget.label, style: const TextStyle(fontSize: 16)),
         const SizedBox(width: 16),
         SizedBox(
           width: 30,

@@ -34,7 +34,11 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp.router(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.greenAccent,
+            brightness: Brightness.light,
+          ),
+          // brightness: const ColorScheme.dark().brightness,
         ),
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
@@ -50,25 +54,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-// class GameScreen extends StatelessWidget {
-//   final MathBubbleGame game;
-//   const GameScreen({super.key, required this.game});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Stack(
-//         children: [
-//           GameWidget(
-//             game: game,
-//             overlayBuilderMap: {
-//               'GameOver': (context, game) =>
-//                   GameOverOverlay(game: game as MathBubbleGame),
-//             },
-//           ), // Игровой виджет
-//         ],
-//       ),
-//     );
-//   }
-// }

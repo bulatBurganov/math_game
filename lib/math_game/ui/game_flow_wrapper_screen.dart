@@ -10,8 +10,7 @@ import 'package:math_game/router/app_router.gr.dart';
 
 @RoutePage()
 class GameFlowWrapperScreen extends StatefulWidget implements AutoRouteWrapper {
-  final GamePresets? presets;
-  const GameFlowWrapperScreen({super.key, this.presets});
+  const GameFlowWrapperScreen({super.key});
 
   @override
   State<GameFlowWrapperScreen> createState() => _GameFlowWrapperScreenState();
@@ -31,13 +30,10 @@ class _GameFlowWrapperScreenState extends State<GameFlowWrapperScreen> {
     _gameFlowBloc = GameFlowBloc();
     _gameSettingsCubit = GameSettingsCubit(
       gameFlowBloc: _gameFlowBloc,
-      initialState: _getInitialGameSettings(),
+      initialState: GameSettingsState(),
     );
-    if (widget.presets == null) {
-      _gameFlowBloc.add(const GameFlowEventShowSettings());
-    } else {
-      _gameFlowBloc.add(const GameFlowEventStartGame());
-    }
+
+    _gameFlowBloc.add(const GameFlowEventShowSettings());
 
     super.initState();
   }
@@ -60,26 +56,11 @@ class _GameFlowWrapperScreenState extends State<GameFlowWrapperScreen> {
           } else if (state is GameFlowStateGameOver) {
             context.router.replace(GameOverRoute(scores: state.scores));
           } else if (state is GameFlowStateRestartGame) {
-            if (widget.presets != null) {
-              context.router.replace(const MathGameRoute());
-            } else {
-              context.router.replace(const GameSettingsRoute());
-            }
+            context.router.replace(const GameSettingsRoute());
           }
         },
         child: const AutoRouter(),
       ),
     );
   }
-
-  GameSettingsState _getInitialGameSettings() {
-    if (widget.presets == null) {
-      return GameSettingsState();
-    } else if (widget.presets == GamePresets.multiplicationTable) {
-      return GameSettingsState.multiplicationTablePreset();
-    }
-    return GameSettingsState();
-  }
 }
-
-enum GamePresets { multiplicationTable }

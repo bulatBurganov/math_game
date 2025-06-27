@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 
 class BounceButton extends StatefulWidget {
-  final Widget child;
+  final String text;
+  final Color? buttonColor;
+  final Color? textColor;
+  final double textSize;
   final Function onTap;
   final Duration duration;
   final Curve curve;
   final bool tapAfterAnimation;
+  final FontWeight? fontWeight;
 
   const BounceButton({
     super.key,
-    required this.child,
+    required this.text,
     required this.onTap,
     this.duration = const Duration(milliseconds: 150),
     this.curve = Curves.bounceIn,
     this.tapAfterAnimation = true,
+    this.buttonColor,
+    this.textColor,
+    this.textSize = 16,
+    this.fontWeight,
   });
 
   @override
@@ -76,22 +84,22 @@ class _BounceButtonState extends State<BounceButton>
               alignment: Alignment.center,
               duration: widget.duration,
               decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade500,
-                    offset: const Offset(6, 0),
-                    blurRadius: 16,
-                    spreadRadius: 1,
-                  ),
-                ],
-                color: Theme.of(context).primaryColor,
+                color:
+                    widget.buttonColor ?? Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: child,
             ),
           );
         },
-        child: widget.child,
+        child: Text(
+          widget.text,
+          style: TextStyle(
+            fontSize: widget.textSize,
+            color: widget.textColor ?? Theme.of(context).colorScheme.onPrimary,
+            fontWeight: widget.fontWeight ?? FontWeight.bold,
+          ),
+        ),
       ),
     );
   }
