@@ -8,7 +8,10 @@ import 'package:math_game/math_game/domain/model/game_settings_model.dart';
 
 class GameSettingsCubit extends Cubit<GameSettingsState> {
   final GameFlowBloc gameFlowBloc;
-  GameSettingsCubit({required this.gameFlowBloc}) : super(GameSettingsState());
+  GameSettingsCubit({
+    required this.gameFlowBloc,
+    required GameSettingsState initialState,
+  }) : super(initialState);
 
   Future<void> updateDifficulty(GameDifficulty difficulty) async {
     emit(

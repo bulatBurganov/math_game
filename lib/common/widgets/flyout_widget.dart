@@ -54,7 +54,6 @@ class _FlyoutWidgetState extends State<FlyoutWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('build');
     return Stack(
       alignment: Alignment.center,
       children: [

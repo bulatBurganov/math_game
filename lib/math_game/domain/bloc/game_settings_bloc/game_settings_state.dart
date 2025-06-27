@@ -9,6 +9,20 @@ class GameSettingsState with _$GameSettingsState {
     @Default(GameDifficulty.easy) GameDifficulty difficulty,
     @Default(GameUserSettings()) GameUserSettings userSettings,
   }) = _GameSettingsState;
+
+  factory GameSettingsState.multiplicationTablePreset() => GameSettingsState(
+    difficulty: GameDifficulty.user,
+    userSettings: const GameUserSettings(
+      useDivide: false,
+      usePlus: false,
+      useMinus: false,
+      useMultiply: true,
+      termLength: 2,
+      min: 1,
+      max: 9,
+      onlyPositiveResults: true,
+    ),
+  );
 }
 
 @freezed

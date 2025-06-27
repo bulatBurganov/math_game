@@ -255,7 +255,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
       GameDifficulty.easy => Colors.green,
       GameDifficulty.medium => Colors.yellowAccent[700]!,
       GameDifficulty.hard => Colors.red,
-      GameDifficulty.genius => Colors.orangeAccent,
+      GameDifficulty.user => Colors.orangeAccent,
     };
   }
 
@@ -264,7 +264,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
       GameDifficulty.easy => S.of(context).difficulty_easy,
       GameDifficulty.medium => S.of(context).difficulty_medium,
       GameDifficulty.hard => S.of(context).difficulty_hard,
-      GameDifficulty.genius => S.of(context).difficulty_genius,
+      GameDifficulty.user => S.of(context).difficulty_user,
     };
   }
 
@@ -276,7 +276,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
       GameDifficulty.easy => S.of(context).easyModeDescription,
       GameDifficulty.medium => S.of(context).mediumModeDescription,
       GameDifficulty.hard => S.of(context).hardModeDescription,
-      GameDifficulty.genius => S.of(context).geniusModeDescription,
+      GameDifficulty.user => S.of(context).userModeDescription,
     };
   }
 }

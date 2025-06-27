@@ -56,7 +56,7 @@ class MathGameCubit extends Cubit<MathGameState> {
 
         break;
 
-      case GameDifficulty.genius:
+      case GameDifficulty.user:
         _operators = [
           if (userSettings.usePlus) '+',
           if (userSettings.useMinus) '-',
@@ -89,7 +89,6 @@ class MathGameCubit extends Cubit<MathGameState> {
   }
 
   Future<List<ProblemModel>> _addProblems() async {
-    print('generate problems');
     if (_generator == null) throw 'Generator is null';
 
     var problems = [...state.levelModel];
@@ -111,9 +110,6 @@ class MathGameCubit extends Cubit<MathGameState> {
           }
         }
       }
-
-      print('$expr = $res');
-
       problems.add(
         ProblemModel(
           expr,
@@ -169,8 +165,6 @@ class MathGameCubit extends Cubit<MathGameState> {
         emit(state.copyWith(lives: lives, bonus: null));
       }
     }
-
-    print(state.levelModel.length);
   }
 
   _finishGame(int? livesCount) {

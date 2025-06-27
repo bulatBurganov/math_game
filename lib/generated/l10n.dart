@@ -50,10 +50,10 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Математическая игра`
+  /// `Математический\nтренажер`
   String get app_name {
     return Intl.message(
-      'Математическая игра',
+      'Математический\nтренажер',
       name: 'app_name',
       desc: '',
       args: [],
@@ -120,11 +120,11 @@ class S {
     );
   }
 
-  /// `Гений`
-  String get difficulty_genius {
+  /// `Настроить`
+  String get difficulty_user {
     return Intl.message(
-      'Гений',
-      name: 'difficulty_genius',
+      'Настроить',
+      name: 'difficulty_user',
       desc: '',
       args: [],
     );
@@ -221,10 +221,10 @@ class S {
   }
 
   /// `Настройте сложность самостоятельно`
-  String get geniusModeDescription {
+  String get userModeDescription {
     return Intl.message(
       'Настройте сложность самостоятельно',
-      name: 'geniusModeDescription',
+      name: 'userModeDescription',
       desc: '',
       args: [],
     );
@@ -305,6 +305,16 @@ class S {
     return Intl.message(
       'Решение всегда положительное число',
       name: 'answerIsAlwaysPositive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Тренажер таблицы умножения`
+  String get multiplicationTablePreset {
+    return Intl.message(
+      'Тренажер таблицы умножения',
+      name: 'multiplicationTablePreset',
       desc: '',
       args: [],
     );

@@ -76,7 +76,15 @@ class _BounceButtonState extends State<BounceButton>
               alignment: Alignment.center,
               duration: widget.duration,
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColorLight,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade500,
+                    offset: const Offset(6, 0),
+                    blurRadius: 16,
+                    spreadRadius: 1,
+                  ),
+                ],
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: child,

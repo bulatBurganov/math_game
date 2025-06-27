@@ -28,18 +28,17 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "answerIsAlwaysPositive": MessageLookupByLibrary.simpleMessage(
             "Решение всегда положительное число"),
-        "app_name": MessageLookupByLibrary.simpleMessage("Математическая игра"),
+        "app_name":
+            MessageLookupByLibrary.simpleMessage("Математический\nтренажер"),
         "difficulty": MessageLookupByLibrary.simpleMessage("Сложность"),
         "difficulty_easy": MessageLookupByLibrary.simpleMessage("Легкая"),
-        "difficulty_genius": MessageLookupByLibrary.simpleMessage("Гений"),
         "difficulty_hard": MessageLookupByLibrary.simpleMessage("Сложная"),
         "difficulty_medium": MessageLookupByLibrary.simpleMessage("Средняя"),
+        "difficulty_user": MessageLookupByLibrary.simpleMessage("Настроить"),
         "easyModeDescription": MessageLookupByLibrary.simpleMessage(
             "Сложение и вычиание 2 чисел в диапазоне от 1 до 10, результат всегда положительный"),
         "finish_game": MessageLookupByLibrary.simpleMessage("Завершить игру"),
         "game_over": MessageLookupByLibrary.simpleMessage("Игра завершена"),
-        "geniusModeDescription": MessageLookupByLibrary.simpleMessage(
-            "Настройте сложность самостоятельно"),
         "hardModeDescription": MessageLookupByLibrary.simpleMessage(
             "Сложение, вычитание, умножение и деление 3 чисел в диапазоне от 1 до 10"),
         "lenMaxMinFieldsShoulBeFilled": MessageLookupByLibrary.simpleMessage(
@@ -52,6 +51,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Сложение, вычитание и умножение 2 чисел в диапазоне от 1 до 10"),
         "minValue":
             MessageLookupByLibrary.simpleMessage("Минимальное значение"),
+        "multiplicationTablePreset":
+            MessageLookupByLibrary.simpleMessage("Тренажер таблицы умножения"),
         "restart": MessageLookupByLibrary.simpleMessage("Сыграть снова"),
         "scoresFew": MessageLookupByLibrary.simpleMessage("очка"),
         "scoresMany": MessageLookupByLibrary.simpleMessage("очков"),
@@ -61,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "start_game": MessageLookupByLibrary.simpleMessage("Начать игру"),
         "termLength": MessageLookupByLibrary.simpleMessage("Длина выражения"),
         "useSomething": m0,
+        "userModeDescription": MessageLookupByLibrary.simpleMessage(
+            "Настройте сложность самостоятельно"),
         "youEarnedNScores": m1
       };
 }

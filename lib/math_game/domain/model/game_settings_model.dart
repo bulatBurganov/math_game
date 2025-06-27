@@ -9,8 +9,8 @@ enum GameDifficulty {
   medium,
   @JsonValue('hard')
   hard,
-  @JsonValue('genius')
-  genius,
+  @JsonValue('user')
+  user,
 }
 
 @freezed

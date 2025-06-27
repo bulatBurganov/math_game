@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp.router(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         ),
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
