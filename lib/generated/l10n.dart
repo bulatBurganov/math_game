@@ -310,11 +310,21 @@ class S {
     );
   }
 
-  /// `Тренажер таблицы умножения`
-  String get multiplicationTablePreset {
+  /// `Выберите пресет`
+  String get selectPreset {
     return Intl.message(
-      'Тренажер таблицы умножения',
-      name: 'multiplicationTablePreset',
+      'Выберите пресет',
+      name: 'selectPreset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Таблица умножения`
+  String get multiplicationTable {
+    return Intl.message(
+      'Таблица умножения',
+      name: 'multiplicationTable',
       desc: '',
       args: [],
     );

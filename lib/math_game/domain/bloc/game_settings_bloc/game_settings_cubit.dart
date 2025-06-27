@@ -23,8 +23,11 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
   }
 
   Future<void> updateUSerSettings(GameUserSettings settings) async {
+    if (state.userSettings.preset != null) {}
     emit(
-      state.copyWith(userSettings: settings.copyWith(validationErrors: null)),
+      state.copyWith(
+        userSettings: settings.copyWith(validationErrors: null, preset: null),
+      ),
     );
   }
 
@@ -74,5 +77,23 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
     }
 
     gameFlowBloc.add(const GameFlowEventStartGame());
+  }
+
+  Future<void> setPreset(GamePresets? preset) async {
+    switch (preset) {
+      case GamePresets.multiplicationTable:
+        emit(
+          state.copyWith(userSettings: GameUserSettings.multiplicationTable()),
+        );
+        break;
+      default:
+        emit(
+          state.copyWith(
+            userSettings: state.userSettings.copyWith(preset: null),
+          ),
+        );
+        log('preset droppped');
+        break;
+    }
   }
 }

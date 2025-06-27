@@ -25,5 +25,6 @@
     "maxShouldBeLargerThanMin":"Максимальное значение должно превышать минимальное",
     "lenMaxMinFieldsShoulBeFilled":"Поля длины выражения, минимального и максимального значения должны быть заполнены",
     "answerIsAlwaysPositive": "Решение всегда положительное число",
-    "multiplicationTablePreset": "Тренажер таблицы умножения"
+    "selectPreset": "Выберите пресет",
+    "multiplicationTable": "Таблица умножения"
 }

@@ -69,8 +69,10 @@ class GameSettingsScreen extends StatelessWidget {
                       difficulty,
                     );
                   },
+                  onPresetChanged: (v) {
+                    context.read<GameSettingsCubit>().setPreset(v);
+                  },
                 ),
-
                 const Spacer(),
                 SizedBox(
                   height: 50,
@@ -78,7 +80,7 @@ class GameSettingsScreen extends StatelessWidget {
                     onTap: () {
                       context.read<GameSettingsCubit>().submit();
                     },
-                    child: Text(S.of(context).start_game),
+                    text: S.of(context).start_game,
                   ),
                 ),
               ],

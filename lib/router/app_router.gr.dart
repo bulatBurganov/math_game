@@ -37,53 +37,18 @@ class AppWrapperRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.GameFlowWrapperScreen]
-class GameFlowWrapperRoute extends _i8.PageRouteInfo<GameFlowWrapperRouteArgs> {
-  GameFlowWrapperRoute({
-    _i9.Key? key,
-    _i2.GamePresets? presets,
-    List<_i8.PageRouteInfo>? children,
-  }) : super(
-         GameFlowWrapperRoute.name,
-         args: GameFlowWrapperRouteArgs(key: key, presets: presets),
-         initialChildren: children,
-       );
+class GameFlowWrapperRoute extends _i8.PageRouteInfo<void> {
+  const GameFlowWrapperRoute({List<_i8.PageRouteInfo>? children})
+    : super(GameFlowWrapperRoute.name, initialChildren: children);
 
   static const String name = 'GameFlowWrapperRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<GameFlowWrapperRouteArgs>(
-        orElse: () => const GameFlowWrapperRouteArgs(),
-      );
-      return _i8.WrappedRoute(
-        child: _i2.GameFlowWrapperScreen(key: args.key, presets: args.presets),
-      );
+      return _i8.WrappedRoute(child: const _i2.GameFlowWrapperScreen());
     },
   );
-}
-
-class GameFlowWrapperRouteArgs {
-  const GameFlowWrapperRouteArgs({this.key, this.presets});
-
-  final _i9.Key? key;
-
-  final _i2.GamePresets? presets;
-
-  @override
-  String toString() {
-    return 'GameFlowWrapperRouteArgs{key: $key, presets: $presets}';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other is! GameFlowWrapperRouteArgs) return false;
-    return key == other.key && presets == other.presets;
-  }
-
-  @override
-  int get hashCode => key.hashCode ^ presets.hashCode;
 }
 
 /// generated route for

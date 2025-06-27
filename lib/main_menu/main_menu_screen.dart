@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:math_game/common/widgets/bounce_button.dart';
 import 'package:math_game/generated/l10n.dart';
-import 'package:math_game/math_game/ui/game_flow_wrapper_screen.dart';
 import 'package:math_game/router/app_router.gr.dart';
 
 @RoutePage()
@@ -49,25 +48,13 @@ class MainMenuScreen extends StatelessWidget {
                 height: 50,
                 child: BounceButton(
                   onTap: () {
-                    context.router.push(GameFlowWrapperRoute());
+                    context.router.push(const GameFlowWrapperRoute());
                   },
-                  child: Text(S.of(context).start_game),
+                  text: S.of(context).start_game,
                 ),
               ),
               const SizedBox(height: 24),
-              SizedBox(
-                height: 50,
-                child: BounceButton(
-                  onTap: () {
-                    context.router.push(
-                      GameFlowWrapperRoute(
-                        presets: GamePresets.multiplicationTable,
-                      ),
-                    );
-                  },
-                  child: Text(S.of(context).multiplicationTablePreset),
-                ),
-              ),
+
               const Spacer(),
             ],
           ),
