@@ -21,41 +21,31 @@ class MainMenuScreen extends StatelessWidget {
         cycle: const Duration(seconds: 150),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
             children: [
+              Center(
+                child: SizedBox(
+                  height: 50,
+                  child: BounceButton(
+                    onTap: () {
+                      context.router.push(const GameFlowWrapperRoute());
+                    },
+                    text: S.of(context).start_game,
+                  ),
+                ),
+              ),
               Align(
-                alignment: Alignment.topCenter,
+                alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: EdgeInsetsGeometry.only(
-                    top: MediaQuery.of(context).padding.top + 50,
+                    bottom: MediaQuery.of(context).padding.bottom,
                   ),
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Text(
-                      S.of(context).app_name,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: Image.asset('assets/images/brain.png'),
                   ),
                 ),
               ),
-              const Spacer(),
-              SizedBox(
-                height: 50,
-                child: BounceButton(
-                  onTap: () {
-                    context.router.push(const GameFlowWrapperRoute());
-                  },
-                  text: S.of(context).start_game,
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              const Spacer(),
             ],
           ),
         ),

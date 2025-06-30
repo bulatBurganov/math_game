@@ -194,6 +194,8 @@ class _BubbleAnimationState extends State<BubbleAnimation>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.flyout == null || widget.flyout?.isEmpty == true)
+      return const Offstage();
     return AnimatedBuilder(
       animation: _controller,
       child: Text(
