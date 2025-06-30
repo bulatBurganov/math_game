@@ -17,6 +17,7 @@ class DifficultySelector extends StatefulWidget {
     this.initialValue,
     required this.initialUserSettings,
     required this.onUserSettingsChanged,
+    required this.onPresetChanged,
   });
   final Duration swithDuration;
   final double height;
@@ -25,6 +26,7 @@ class DifficultySelector extends StatefulWidget {
   final Function(GameDifficulty difficulty) onCahnged;
   final GameUserSettings initialUserSettings;
   final Function(GameUserSettings settings) onUserSettingsChanged;
+  final Function(GamePresets?) onPresetChanged;
 
   @override
   State<DifficultySelector> createState() => _DifficultySelectorState();
@@ -32,7 +34,6 @@ class DifficultySelector extends StatefulWidget {
 
 class _DifficultySelectorState extends State<DifficultySelector> {
   int _selectedIndex = 0;
-
   @override
   void initState() {
     if (widget.initialValue != null) {
@@ -142,9 +143,14 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                   curve: Curves.easeInOutCubicEmphasized,
                   expand: _selectedIndex == 3,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      _PresetSelector(
+                        onChanged: widget.onPresetChanged,
+                        value: widget.initialUserSettings.preset,
+                      ),
                       AppCheckBox(
-                        initialValue: widget.initialUserSettings.usePlus,
+                        value: widget.initialUserSettings.usePlus,
                         onChange: (value) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(usePlus: value),
@@ -154,7 +160,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue: widget.initialUserSettings.useMinus,
+                        value: widget.initialUserSettings.useMinus,
                         onChange: (value) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -166,7 +172,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue: widget.initialUserSettings.useMultiply,
+                        value: widget.initialUserSettings.useMultiply,
                         onChange: (value) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -178,7 +184,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue: widget.initialUserSettings.useDivide,
+                        value: widget.initialUserSettings.useDivide,
                         onChange: (value) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -190,8 +196,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue:
-                            widget.initialUserSettings.onlyPositiveResults,
+                        value: widget.initialUserSettings.onlyPositiveResults,
                         onChange: (value) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -206,8 +211,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[2-9]')),
                         ],
-                        initialValue: widget.initialUserSettings.termLength
-                            .toString(),
+                        value: widget.initialUserSettings.termLength.toString(),
                         onChanged: (v) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -218,7 +222,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         label: S.of(context).termLength,
                       ),
                       FormTextField(
-                        initialValue: widget.initialUserSettings.min.toString(),
+                        value: widget.initialUserSettings.min?.toString(),
                         onChanged: (v) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -229,7 +233,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         label: S.of(context).minValue,
                       ),
                       FormTextField(
-                        initialValue: widget.initialUserSettings.max.toString(),
+                        value: widget.initialUserSettings.max.toString(),
                         onChanged: (v) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -255,7 +259,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
       GameDifficulty.easy => Colors.green,
       GameDifficulty.medium => Colors.yellowAccent[700]!,
       GameDifficulty.hard => Colors.red,
-      GameDifficulty.genius => Colors.orangeAccent,
+      GameDifficulty.user => Colors.orangeAccent,
     };
   }
 
@@ -264,7 +268,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
       GameDifficulty.easy => S.of(context).difficulty_easy,
       GameDifficulty.medium => S.of(context).difficulty_medium,
       GameDifficulty.hard => S.of(context).difficulty_hard,
-      GameDifficulty.genius => S.of(context).difficulty_genius,
+      GameDifficulty.user => S.of(context).difficulty_user,
     };
   }
 
@@ -276,7 +280,64 @@ class _DifficultySelectorState extends State<DifficultySelector> {
       GameDifficulty.easy => S.of(context).easyModeDescription,
       GameDifficulty.medium => S.of(context).mediumModeDescription,
       GameDifficulty.hard => S.of(context).hardModeDescription,
-      GameDifficulty.genius => S.of(context).geniusModeDescription,
+      GameDifficulty.user => S.of(context).userModeDescription,
     };
   }
+}
+
+class _PresetSelector extends StatefulWidget {
+  final Function(GamePresets? preset) onChanged;
+  final GamePresets? value;
+
+  const _PresetSelector({required this.onChanged, required this.value});
+  @override
+  State<_PresetSelector> createState() => _PresetSelectorState();
+}
+
+class _PresetSelectorState extends State<_PresetSelector> {
+  GamePresets? selected;
+
+  @override
+  void didUpdateWidget(covariant _PresetSelector oldWidget) {
+    if (widget.value != oldWidget.value) {
+      setState(() {
+        selected = widget.value;
+      });
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<GamePresets>(
+      borderRadius: BorderRadius.circular(12),
+      underline: const Offstage(),
+      value: selected,
+      hint: Text(S.of(context).selectPreset),
+      items: GamePresets.values
+          .map(
+            (e) => DropdownMenuItem<GamePresets>(
+              value: e,
+              child: Text(_getPresetName(e)),
+            ),
+          )
+          .toList(),
+      onChanged: (v) {
+        setState(() {
+          if (v == GamePresets.none) {
+            v = null;
+          }
+          selected = v;
+
+          widget.onChanged(v);
+        });
+      },
+    );
+  }
+
+  String _getPresetName(GamePresets? preset) => switch (preset) {
+    GamePresets.multiplicationTable => S.of(context).multiplicationTable,
+    null => S.of(context).selectPreset,
+    GamePresets.none => S.of(context).selectPreset,
+  };
 }

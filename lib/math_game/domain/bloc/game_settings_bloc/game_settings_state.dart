@@ -9,6 +9,11 @@ class GameSettingsState with _$GameSettingsState {
     @Default(GameDifficulty.easy) GameDifficulty difficulty,
     @Default(GameUserSettings()) GameUserSettings userSettings,
   }) = _GameSettingsState;
+
+  factory GameSettingsState.multiplicationTablePreset() => GameSettingsState(
+    difficulty: GameDifficulty.user,
+    userSettings: GameUserSettings.multiplicationTable(),
+  );
 }
 
 @freezed
@@ -23,7 +28,20 @@ class GameUserSettings with _$GameUserSettings {
     @Default(10) int? max,
     ValidationErrors? validationErrors,
     @Default(false) bool onlyPositiveResults,
+    GamePresets? preset,
   }) = _GameAdditionalSettings;
+
+  factory GameUserSettings.multiplicationTable() => const GameUserSettings(
+    useDivide: false,
+    usePlus: false,
+    useMinus: false,
+    useMultiply: true,
+    termLength: 2,
+    min: 1,
+    max: 9,
+    onlyPositiveResults: true,
+    preset: GamePresets.multiplicationTable,
+  );
 }
 
 enum ValidationErrors {
@@ -31,3 +49,5 @@ enum ValidationErrors {
   minMaxAndLengthMustBeFilled,
   maxMustBeLargerThanMin,
 }
+
+enum GamePresets { none, multiplicationTable }

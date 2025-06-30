@@ -5,6 +5,7 @@ import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.da
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_state.dart';
 import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_cubit.dart';
+import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_state.dart';
 import 'package:math_game/router/app_router.gr.dart';
 
 @RoutePage()
@@ -22,22 +23,27 @@ class GameFlowWrapperScreen extends StatefulWidget implements AutoRouteWrapper {
 
 class _GameFlowWrapperScreenState extends State<GameFlowWrapperScreen> {
   late GameFlowBloc _gameFlowBloc;
+  late GameSettingsCubit _gameSettingsCubit;
 
   @override
   void initState() {
-    _gameFlowBloc = GameFlowBloc()..add(const GameFlowEventShowSettings());
+    _gameFlowBloc = GameFlowBloc();
+    _gameSettingsCubit = GameSettingsCubit(
+      gameFlowBloc: _gameFlowBloc,
+      initialState: GameSettingsState(),
+    );
+
+    _gameFlowBloc.add(const GameFlowEventShowSettings());
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print('build game wrapper');
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: _gameFlowBloc),
-        BlocProvider<GameSettingsCubit>(
-          create: (_) => GameSettingsCubit(gameFlowBloc: _gameFlowBloc),
-        ),
+        BlocProvider.value(value: _gameSettingsCubit),
       ],
       child: BlocListener<GameFlowBloc, GameFlowState>(
         listener: (context, state) {

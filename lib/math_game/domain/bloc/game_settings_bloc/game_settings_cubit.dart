@@ -8,7 +8,10 @@ import 'package:math_game/math_game/domain/model/game_settings_model.dart';
 
 class GameSettingsCubit extends Cubit<GameSettingsState> {
   final GameFlowBloc gameFlowBloc;
-  GameSettingsCubit({required this.gameFlowBloc}) : super(GameSettingsState());
+  GameSettingsCubit({
+    required this.gameFlowBloc,
+    required GameSettingsState initialState,
+  }) : super(initialState);
 
   Future<void> updateDifficulty(GameDifficulty difficulty) async {
     emit(
@@ -20,8 +23,11 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
   }
 
   Future<void> updateUSerSettings(GameUserSettings settings) async {
+    if (state.userSettings.preset != null) {}
     emit(
-      state.copyWith(userSettings: settings.copyWith(validationErrors: null)),
+      state.copyWith(
+        userSettings: settings.copyWith(validationErrors: null, preset: null),
+      ),
     );
   }
 
@@ -71,5 +77,23 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
     }
 
     gameFlowBloc.add(const GameFlowEventStartGame());
+  }
+
+  Future<void> setPreset(GamePresets? preset) async {
+    switch (preset) {
+      case GamePresets.multiplicationTable:
+        emit(
+          state.copyWith(userSettings: GameUserSettings.multiplicationTable()),
+        );
+        break;
+      default:
+        emit(
+          state.copyWith(
+            userSettings: state.userSettings.copyWith(preset: null),
+          ),
+        );
+        log('preset droppped');
+        break;
+    }
   }
 }
