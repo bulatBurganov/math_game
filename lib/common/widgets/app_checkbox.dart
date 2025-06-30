@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class AppCheckBox extends StatefulWidget {
   const AppCheckBox({
-    Key? key,
+    super.key,
     this.onChange,
     this.size = 24,
-    required this.initialValue,
+    required this.value,
     this.title,
-  }) : super(key: key);
+  });
 
   final ValueChanged<bool>? onChange;
-  final bool initialValue;
+  final bool value;
   final double size;
   final String? title;
 
@@ -19,12 +19,22 @@ class AppCheckBox extends StatefulWidget {
 }
 
 class _AppCheckBoxState extends State<AppCheckBox> {
-  late bool value;
+  late bool _value;
 
   @override
   void initState() {
-    value = widget.initialValue;
+    _value = widget.value;
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant AppCheckBox oldWidget) {
+    if (widget.value != oldWidget.value) {
+      setState(() {
+        _value = widget.value;
+      });
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -32,8 +42,8 @@ class _AppCheckBoxState extends State<AppCheckBox> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          value = !value;
-          widget.onChange?.call(value);
+          _value = !_value;
+          widget.onChange?.call(_value);
         });
       },
       child: Row(
@@ -41,11 +51,11 @@ class _AppCheckBoxState extends State<AppCheckBox> {
           Container(
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              color: value
+              color: _value
                   ? Theme.of(context).primaryColor
                   : Colors.transparent,
               border: Border.all(
-                color: value
+                color: _value
                     ? Colors.transparent
                     : Theme.of(context).primaryColor,
               ),
@@ -55,7 +65,7 @@ class _AppCheckBoxState extends State<AppCheckBox> {
             height: widget.size,
             child: InkWell(
               child: Center(
-                child: value
+                child: _value
                     ? Icon(
                         Icons.check,
                         size: widget.size * 0.8,

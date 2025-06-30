@@ -28,6 +28,7 @@ class GameUserSettings with _$GameUserSettings {
     @Default(10) int? max,
     ValidationErrors? validationErrors,
     @Default(false) bool onlyPositiveResults,
+    GamePresets? preset,
   }) = _GameAdditionalSettings;
 
   factory GameUserSettings.multiplicationTable() => const GameUserSettings(
@@ -39,6 +40,7 @@ class GameUserSettings with _$GameUserSettings {
     min: 1,
     max: 9,
     onlyPositiveResults: true,
+    preset: GamePresets.multiplicationTable,
   );
 }
 

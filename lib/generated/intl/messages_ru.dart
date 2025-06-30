@@ -52,14 +52,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "Сложение, вычитание и умножение 2 чисел в диапазоне от 1 до 10"),
         "minValue":
             MessageLookupByLibrary.simpleMessage("Минимальное значение"),
-        "multiplicationTablePreset":
-            MessageLookupByLibrary.simpleMessage("Тренажер таблицы умножения"),
+        "multiplicationTable":
+            MessageLookupByLibrary.simpleMessage("Таблица умножения"),
         "restart": MessageLookupByLibrary.simpleMessage("Сыграть снова"),
         "scoresFew": MessageLookupByLibrary.simpleMessage("очка"),
         "scoresMany": MessageLookupByLibrary.simpleMessage("очков"),
         "scoresOne": MessageLookupByLibrary.simpleMessage("очко"),
         "selectAtLeastOneOperator": MessageLookupByLibrary.simpleMessage(
             "Доложен быть выбран как минимум 1 оператор из числа +, -, *, /"),
+        "selectPreset": MessageLookupByLibrary.simpleMessage("Выберите пресет"),
         "start_game": MessageLookupByLibrary.simpleMessage("Начать игру"),
         "termLength": MessageLookupByLibrary.simpleMessage("Длина выражения"),
         "useSomething": m0,

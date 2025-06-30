@@ -84,6 +84,7 @@ class _MathGameScreenView extends StatelessWidget {
                     ),
 
                     GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.levelModel.first.answers.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {

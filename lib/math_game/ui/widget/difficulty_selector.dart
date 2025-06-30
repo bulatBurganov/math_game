@@ -34,7 +34,6 @@ class DifficultySelector extends StatefulWidget {
 
 class _DifficultySelectorState extends State<DifficultySelector> {
   int _selectedIndex = 0;
-
   @override
   void initState() {
     if (widget.initialValue != null) {
@@ -144,10 +143,14 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                   curve: Curves.easeInOutCubicEmphasized,
                   expand: _selectedIndex == 3,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _PresetSelector(onChanged: widget.onPresetChanged),
+                      _PresetSelector(
+                        onChanged: widget.onPresetChanged,
+                        value: widget.initialUserSettings.preset,
+                      ),
                       AppCheckBox(
-                        initialValue: widget.initialUserSettings.usePlus,
+                        value: widget.initialUserSettings.usePlus,
                         onChange: (value) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(usePlus: value),
@@ -157,7 +160,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue: widget.initialUserSettings.useMinus,
+                        value: widget.initialUserSettings.useMinus,
                         onChange: (value) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -169,7 +172,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue: widget.initialUserSettings.useMultiply,
+                        value: widget.initialUserSettings.useMultiply,
                         onChange: (value) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -181,7 +184,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue: widget.initialUserSettings.useDivide,
+                        value: widget.initialUserSettings.useDivide,
                         onChange: (value) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -193,8 +196,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                       ),
                       const SizedBox(height: 4),
                       AppCheckBox(
-                        initialValue:
-                            widget.initialUserSettings.onlyPositiveResults,
+                        value: widget.initialUserSettings.onlyPositiveResults,
                         onChange: (value) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -209,8 +211,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[2-9]')),
                         ],
-                        initialValue: widget.initialUserSettings.termLength
-                            .toString(),
+                        value: widget.initialUserSettings.termLength.toString(),
                         onChanged: (v) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -221,7 +222,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         label: S.of(context).termLength,
                       ),
                       FormTextField(
-                        initialValue: widget.initialUserSettings.min.toString(),
+                        value: widget.initialUserSettings.min?.toString(),
                         onChanged: (v) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -232,7 +233,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         label: S.of(context).minValue,
                       ),
                       FormTextField(
-                        initialValue: widget.initialUserSettings.max.toString(),
+                        value: widget.initialUserSettings.max.toString(),
                         onChanged: (v) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -286,22 +287,39 @@ class _DifficultySelectorState extends State<DifficultySelector> {
 
 class _PresetSelector extends StatefulWidget {
   final Function(GamePresets? preset) onChanged;
+  final GamePresets? value;
 
-  const _PresetSelector({required this.onChanged});
+  const _PresetSelector({required this.onChanged, required this.value});
   @override
   State<_PresetSelector> createState() => _PresetSelectorState();
 }
 
 class _PresetSelectorState extends State<_PresetSelector> {
   GamePresets? selected;
+
+  @override
+  void didUpdateWidget(covariant _PresetSelector oldWidget) {
+    if (widget.value != oldWidget.value) {
+      setState(() {
+        selected = widget.value;
+      });
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     return DropdownButton<GamePresets>(
+      borderRadius: BorderRadius.circular(12),
+      underline: const Offstage(),
       value: selected,
-      hint: const Text('Пресет'),
+      hint: Text(S.of(context).selectPreset),
       items: GamePresets.values
           .map(
-            (e) => DropdownMenuItem<GamePresets>(value: e, child: Text(e.name)),
+            (e) => DropdownMenuItem<GamePresets>(
+              value: e,
+              child: Text(_getPresetName(e)),
+            ),
           )
           .toList(),
       onChanged: (v) {
@@ -316,4 +334,10 @@ class _PresetSelectorState extends State<_PresetSelector> {
       },
     );
   }
+
+  String _getPresetName(GamePresets? preset) => switch (preset) {
+    GamePresets.multiplicationTable => S.of(context).multiplicationTable,
+    null => S.of(context).selectPreset,
+    GamePresets.none => S.of(context).selectPreset,
+  };
 }
