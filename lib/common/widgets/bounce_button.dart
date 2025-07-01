@@ -80,15 +80,22 @@ class _BounceButtonState extends State<BounceButton>
         builder: (context, child) {
           return Transform.scale(
             scale: _animation.value,
-            child: AnimatedContainer(
-              alignment: Alignment.center,
-              duration: widget.duration,
-              decoration: BoxDecoration(
-                color:
-                    widget.buttonColor ?? Theme.of(context).colorScheme.primary,
-                borderRadius: BorderRadius.circular(20),
+            child: Material(
+              borderRadius: BorderRadius.circular(20),
+
+              elevation: 4,
+              clipBehavior: Clip.antiAlias,
+              child: AnimatedContainer(
+                alignment: Alignment.center,
+                duration: widget.duration,
+
+                decoration: BoxDecoration(
+                  color:
+                      widget.buttonColor ??
+                      Theme.of(context).colorScheme.primary,
+                ),
+                child: child,
               ),
-              child: child,
             ),
           );
         },

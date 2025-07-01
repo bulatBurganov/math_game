@@ -9,7 +9,6 @@ import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings
 import 'package:math_game/math_game/domain/bloc/math_game_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
 import 'package:math_game/math_game/domain/model/bonus_model.dart';
-import 'package:math_game/math_game/ui/widget/timer_widget.dart';
 
 @RoutePage()
 class MathGameScreen extends StatelessWidget {
@@ -42,10 +41,13 @@ class _MathGameScreenView extends StatelessWidget {
           ),
           body: Builder(
             builder: (context) {
+              print(state.timeLeft);
               if (state.levelModel.isEmpty) return const Offstage();
               return Padding(
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).padding.bottom,
+                  left: 16,
+                  right: 16,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -60,51 +62,77 @@ class _MathGameScreenView extends StatelessWidget {
                         ),
                         _IconAndTextWidget(
                           text: 'Жизни: ${state.lives}',
-                          icon: Icon(Icons.favorite, color: Colors.red),
+                          icon: const Icon(Icons.favorite, color: Colors.red),
                         ),
                       ],
                     ),
                     const SizedBox(height: 8),
-                    Container(
-                      color: Theme.of(context).colorScheme.primary,
-                      child: TimerWidget(duration: state.timer),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: FlyoutWidget(
-                          flyout: _getBonusText(state.bonus),
-                          child: Text(
-                            state.levelModel.first.expression,
-                            style: const TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.levelModel.first.answers.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return BounceButton(
-                          tapAfterAnimation: false,
-                          text: state.levelModel.first.answers[index]
-                              .toInt()
-                              .toString(),
-                          onTap: () {
-                            context.read<MathGameCubit>().checkAnswer(
-                              state.levelModel.first.answers[index],
-                            );
-                          },
+                    TweenAnimationBuilder<double>(
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.linear,
+                      tween: Tween<double>(begin: 0, end: state.timeLeft),
+                      builder: (context, value, _) {
+                        return LinearProgressIndicator(
+                          value: value,
+                          minHeight: 24,
+                          borderRadius: BorderRadius.circular(25),
                         );
                       },
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8,
-                        mainAxisExtent: MediaQuery.of(context).size.height / 8,
+                    ),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: Card(
+                        elevation: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: FlyoutWidget(
+                                    flyout: _getBonusText(state.bonus),
+                                    child: Text(
+                                      state.levelModel.first.expression,
+                                      style: const TextStyle(
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount:
+                                    state.levelModel.first.answers.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return BounceButton(
+                                    textSize: 24,
+                                    tapAfterAnimation: false,
+                                    text: state.levelModel.first.answers[index]
+                                        .toInt()
+                                        .toString(),
+                                    onTap: () {
+                                      context.read<MathGameCubit>().checkAnswer(
+                                        state.levelModel.first.answers[index],
+                                      );
+                                    },
+                                  );
+                                },
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 8,
+                                      crossAxisSpacing: 8,
+                                      mainAxisExtent:
+                                          MediaQuery.of(context).size.height /
+                                          8,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -146,6 +174,5 @@ class _IconAndTextWidget extends StatelessWidget {
         ),
       ],
     );
-    ;
   }
 }

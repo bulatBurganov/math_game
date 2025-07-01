@@ -23,7 +23,6 @@ class MathGameCubit extends Cubit<MathGameState> {
   ExpressionGenerator? _generator;
   List<String> _operators = [];
   final _random = Random();
-  int _correctCount = 0;
   int _termLen = 0;
   bool _onlyPositiveAnswer = false;
 
@@ -85,7 +84,7 @@ class MathGameCubit extends Cubit<MathGameState> {
       ),
     );
 
-    // _startTimer();
+    _startTimer();
   }
 
   Future<List<ProblemModel>> _addProblems() async {
@@ -142,12 +141,13 @@ class MathGameCubit extends Cubit<MathGameState> {
         if (list.length < 5) {
           list = await _addProblems();
         }
-        _correctCount++;
         emit(
           state.copyWith(
             levelModel: list,
             scores: state.scores + defaultScoreIncrement,
             bonus: GameBonusModelExtraTime(count: 2),
+            timer: state.timer + const Duration(seconds: 2),
+            timeLeft: ((state.timer.inSeconds + 2) / _levelDuration.inSeconds),
           ),
         );
       } else {
@@ -175,12 +175,18 @@ class MathGameCubit extends Cubit<MathGameState> {
   }
 
   void _timerCallback(Timer? timer) {
-    final seconds = state.timer.inSeconds - 1 + (_correctCount * 2);
-    _correctCount = 0;
+    final seconds = state.timer.inSeconds - 1;
     if (seconds < 0) {
       _finishGame(null);
     } else {
-      emit(state.copyWith(timer: Duration(seconds: seconds), bonus: null));
+      final left = (seconds / _levelDuration.inSeconds);
+      emit(
+        state.copyWith(
+          timer: Duration(seconds: seconds),
+          bonus: null,
+          timeLeft: left,
+        ),
+      );
     }
   }
 

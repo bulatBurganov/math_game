@@ -51,64 +51,67 @@ class _DifficultySelectorState extends State<DifficultySelector> {
             widget.padding / 2;
         return Column(
           children: [
-            Container(
-              height: widget.height,
-              padding: EdgeInsets.all(widget.padding),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Stack(
-                children: [
-                  AnimatedPositioned(
-                    curve: Curves.easeInOutCubicEmphasized,
-                    duration: widget.swithDuration,
-                    left: itemWidth * _selectedIndex,
-                    child: Container(
-                      width: itemWidth,
-                      height: widget.height - widget.padding * 2,
-                      decoration: BoxDecoration(
-                        color: _getColorByDifficulty(
-                          GameDifficulty.values[_selectedIndex],
+            Material(
+              elevation: 4,
+              clipBehavior: Clip.antiAlias,
+              borderRadius: BorderRadius.circular(24),
+
+              child: Container(
+                height: widget.height,
+                padding: EdgeInsets.all(widget.padding),
+                decoration: BoxDecoration(color: Colors.grey[200]),
+                child: Stack(
+                  children: [
+                    AnimatedPositioned(
+                      curve: Curves.easeInOutCubicEmphasized,
+                      duration: widget.swithDuration,
+                      left: itemWidth * _selectedIndex,
+                      child: Container(
+                        width: itemWidth,
+                        height: widget.height - widget.padding * 2,
+                        decoration: BoxDecoration(
+                          color: _getColorByDifficulty(
+                            GameDifficulty.values[_selectedIndex],
+                          ),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                  ),
-                  Row(
-                    children: List.generate(
-                      GameDifficulty.values.length,
-                      (index) => Expanded(
-                        child: GestureDetector(
-                          onTap: () => setState(() {
-                            _selectedIndex = index;
-                            widget.onCahnged(GameDifficulty.values[index]);
-                          }),
-                          child: Container(
-                            color: Colors.transparent,
-                            height: widget.height - widget.padding * 2,
-                            alignment: Alignment.center,
-                            child: AnimatedDefaultTextStyle(
-                              curve: Curves.easeInOutCubicEmphasized,
-                              duration: widget.swithDuration,
-                              style: TextStyle(
-                                color:
-                                    (_selectedIndex == index &&
-                                        _selectedIndex != 1)
-                                    ? Colors.white
-                                    : Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              child: Text(
-                                key: ValueKey<String>(
-                                  GameDifficulty.values[index].name,
+                    Row(
+                      children: List.generate(
+                        GameDifficulty.values.length,
+                        (index) => Expanded(
+                          child: GestureDetector(
+                            onTap: () => setState(() {
+                              _selectedIndex = index;
+                              widget.onCahnged(GameDifficulty.values[index]);
+                            }),
+                            child: Container(
+                              color: Colors.transparent,
+                              height: widget.height - widget.padding * 2,
+                              alignment: Alignment.center,
+                              child: AnimatedDefaultTextStyle(
+                                curve: Curves.easeInOutCubicEmphasized,
+                                duration: widget.swithDuration,
+                                style: TextStyle(
+                                  color:
+                                      (_selectedIndex == index &&
+                                          _selectedIndex != 1)
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                textAlign: TextAlign.center,
-                                _getDifficultyName(
-                                  GameDifficulty.values[index],
-                                  context,
+                                child: Text(
+                                  key: ValueKey<String>(
+                                    GameDifficulty.values[index].name,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  _getDifficultyName(
+                                    GameDifficulty.values[index],
+                                    context,
+                                  ),
                                 ),
                               ),
                             ),
@@ -116,8 +119,8 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 8),
