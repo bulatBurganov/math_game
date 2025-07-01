@@ -53,7 +53,7 @@ class GameOverOverlay extends StatelessWidget {
 class MathBubbleGame extends FlameGame with TapDetector {
   int lives = 3;
   int score = 0;
-  String currentCondition = ">5";
+  String currentCondition = '>5';
   late TextComponent conditionText;
   late TextComponent scoreText;
   late TextComponent livesText;
@@ -155,8 +155,6 @@ class MathBubbleGame extends FlameGame with TapDetector {
 
   @override
   void onTapDown(TapDownInfo info) {
-    // print('ontapDown');
-    // Не обрабатываем тапы, если игра окончена
     if (overlays.isActive('GameOver')) return;
 
     final tapPosition = info.eventPosition.global;
@@ -170,14 +168,12 @@ class MathBubbleGame extends FlameGame with TapDetector {
   }
 
   void handleBubbleTap(Bubble bubble) {
-    print('tap $bubble');
     if (isConditionSatisfied(bubble)) {
       score += 10;
       bubble.pop();
     } else {
       lives--;
       if (lives <= 0) {
-        print('game over');
         gameOver();
       }
     }
@@ -192,7 +188,6 @@ class MathBubbleGame extends FlameGame with TapDetector {
       conditionText.text = bubble.equation;
       return bubble.equation == currentCondition;
     } else if (bubble is LiveBubble) {
-      print('live tapped');
       lives++;
       return true;
     }

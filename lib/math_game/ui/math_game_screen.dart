@@ -1,11 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:math_game/common/widgets/bounce_button.dart';
+import 'package:math_game/common/widgets/flyout_widget.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.dart';
+import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
 import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
-import 'package:math_game/common/widgets/bounce_button.dart';
+import 'package:math_game/math_game/domain/model/bonus_model.dart';
 import 'package:math_game/math_game/ui/widget/timer_widget.dart';
 
 @RoutePage()
@@ -30,6 +33,13 @@ class _MathGameScreenView extends StatelessWidget {
     return BlocBuilder<MathGameCubit, MathGameState>(
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            leading: BackButton(
+              onPressed: () => context.read<GameFlowBloc>().add(
+                const GameFlowEventFinishGame(),
+              ),
+            ),
+          ),
           body: Builder(
             builder: (context) {
               if (state.levelModel.isEmpty) return const Offstage();
@@ -48,11 +58,11 @@ class _MathGameScreenView extends StatelessWidget {
                       children: [
                         Text(
                           'Scores: ${state.scores}',
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                         Text(
                           'Lives: ${state.lives}',
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
@@ -60,36 +70,33 @@ class _MathGameScreenView extends StatelessWidget {
                     TimerWidget(duration: state.timer),
                     Expanded(
                       child: Center(
-                        child: Text(
-                          state.levelModel.first.expression,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                        child: FlyoutWidget(
+                          flyout: _getBonusText(state.bonus),
+                          child: Text(
+                            state.levelModel.first.expression,
+                            style: const TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
                     ),
-
                     GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.levelModel.first.answers.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return BounceButton(
+                          tapAfterAnimation: false,
+                          text: state.levelModel.first.answers[index]
+                              .toInt()
+                              .toString(),
                           onTap: () {
                             context.read<MathGameCubit>().checkAnswer(
                               state.levelModel.first.answers[index],
                             );
                           },
-                          duration: Duration(milliseconds: 150),
-                          child: Text(
-                            state.levelModel.first.answers[index]
-                                .toInt()
-                                .toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
                         );
                       },
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -107,5 +114,16 @@ class _MathGameScreenView extends StatelessWidget {
         );
       },
     );
+  }
+
+  String? _getBonusText(GameBonusModel? bonus) {
+    switch (bonus) {
+      case GameBonusModelExtraTime():
+        return '+ ${bonus.count} сек.';
+      case GameBonusModelExtraLive():
+        return '+ ${bonus.count} ❤';
+      default:
+        return null;
+    }
   }
 }
