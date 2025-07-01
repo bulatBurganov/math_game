@@ -85,7 +85,7 @@ class MathGameCubit extends Cubit<MathGameState> {
       ),
     );
 
-    _startTimer();
+    // _startTimer();
   }
 
   Future<List<ProblemModel>> _addProblems() async {
@@ -101,13 +101,11 @@ class MathGameCubit extends Cubit<MathGameState> {
       );
 
       if (_onlyPositiveAnswer) {
-        if (res < 0) {
-          while (res < 0) {
-            (expr, res) = _generator!.generate(
-              numTerms: _termLen,
-              operations: _operators,
-            );
-          }
+        while (res < 0) {
+          (expr, res) = _generator!.generate(
+            numTerms: _termLen,
+            operations: _operators,
+          );
         }
       }
       problems.add(
@@ -123,16 +121,15 @@ class MathGameCubit extends Cubit<MathGameState> {
   }
 
   List<double> _generateAnswerVariants(double res) {
-    final answers = <double>[];
-    for (int i = 0; i < 3; i++) {
-      if (_random.nextBool()) {
-        answers.add(res + _next(1, 4).toDouble());
+    final set = <double>{res};
+    while (set.length != 4) {
+      if (_random.nextBool() && _onlyPositiveAnswer) {
+        set.add(res + _next(1, 4).toDouble());
       } else {
-        answers.add((res - _next(1, 4).toDouble()));
+        set.add((res - _next(1, 4).toDouble()));
       }
     }
-
-    answers.add(res);
+    final answers = set.toList();
     answers.shuffle();
     return answers;
   }
@@ -185,5 +182,12 @@ class MathGameCubit extends Cubit<MathGameState> {
     } else {
       emit(state.copyWith(timer: Duration(seconds: seconds), bonus: null));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _timer?.cancel();
+    _timer = null;
+    return super.close();
   }
 }

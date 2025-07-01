@@ -45,8 +45,6 @@ class _MathGameScreenView extends StatelessWidget {
               if (state.levelModel.isEmpty) return const Offstage();
               return Padding(
                 padding: EdgeInsets.only(
-                  left: 16,
-                  right: 16,
                   bottom: MediaQuery.of(context).padding.bottom,
                 ),
                 child: Column(
@@ -56,18 +54,21 @@ class _MathGameScreenView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Scores: ${state.scores}',
-                          style: const TextStyle(fontSize: 16),
+                        _IconAndTextWidget(
+                          text: 'Очки: ${state.scores}',
+                          icon: const Icon(Icons.star),
                         ),
-                        Text(
-                          'Lives: ${state.lives}',
-                          style: const TextStyle(fontSize: 16),
+                        _IconAndTextWidget(
+                          text: 'Жизни: ${state.lives}',
+                          icon: Icon(Icons.favorite, color: Colors.red),
                         ),
                       ],
                     ),
                     const SizedBox(height: 8),
-                    TimerWidget(duration: state.timer),
+                    Container(
+                      color: Theme.of(context).colorScheme.primary,
+                      child: TimerWidget(duration: state.timer),
+                    ),
                     Expanded(
                       child: Center(
                         child: FlyoutWidget(
@@ -125,5 +126,26 @@ class _MathGameScreenView extends StatelessWidget {
       default:
         return null;
     }
+  }
+}
+
+class _IconAndTextWidget extends StatelessWidget {
+  final String text;
+  final Widget icon;
+  const _IconAndTextWidget({required this.text, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        icon,
+        const SizedBox(width: 4),
+        Text(
+          text,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
+    ;
   }
 }

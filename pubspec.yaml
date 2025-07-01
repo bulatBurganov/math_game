@@ -1,5 +1,5 @@
 name: math_game
-description: "A new Flutter project."
+description: "simple math game"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -44,6 +44,7 @@ dependencies:
 dev_dependencies:
   auto_route_generator: ^10.2.3
   build_runner: ^2.4.13
+  flutter_flavorizr: ^2.4.1
   flutter_launcher_icons: ^0.14.4
   flutter_lints: ^5.0.0
   flutter_test:
@@ -98,4 +99,35 @@ flutter_launcher_icons:
   ios: true
   remove_alpha_ios: true
   image_path: "assets/images/app_icon.png"
-  min_sdk_android: 21 
+  min_sdk_android: 21
+
+
+flavorizr:
+  app:
+    android:
+      flavorDimensions: "flavor-type"
+
+  flavors:
+    prod:
+      app:
+        name: "МатБлиц"
+      android:
+        applicationId: "com.bzstudio.mathblitz"
+      ios:
+        bundleId: "com.bzstudio.mathblitz"
+
+    dev:
+      app:
+        name: "МатБлиц Dev"
+      android:
+        applicationId: "com.bzstudio.mathblitz.dev"
+      ios:
+        bundleId: "com.bzstudio.mathblitz"
+
+    stage:
+      app:
+        name: "МатБлиц Stage"
+      android:
+        applicationId: "com.bzstudio.mathblitz.stage"
+      ios:
+        bundleId: "com.bzstudio.mathblitz"

@@ -92,7 +92,9 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                               curve: Curves.easeInOutCubicEmphasized,
                               duration: widget.swithDuration,
                               style: TextStyle(
-                                color: _selectedIndex == index
+                                color:
+                                    (_selectedIndex == index &&
+                                        _selectedIndex != 1)
                                     ? Colors.white
                                     : Colors.black,
                                 fontWeight: FontWeight.w600,
