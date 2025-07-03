@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [BlocProvider<SnackBloc>(create: (_) => SnackBloc())],
       child: MaterialApp.router(
-        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.greenAccent,
@@ -41,6 +41,7 @@ class _MyAppState extends State<MyApp> {
           ),
           // brightness: const ColorScheme.dark().brightness,
         ),
+
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,

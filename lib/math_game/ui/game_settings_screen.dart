@@ -44,7 +44,7 @@ class GameSettingsScreen extends StatelessWidget {
             padding: EdgeInsets.only(
               left: 16,
               right: 16,
-              bottom: MediaQuery.of(context).padding.bottom,
+              bottom: MediaQuery.of(context).padding.bottom + 8,
             ),
             child: Column(
               children: [
