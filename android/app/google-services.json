@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "956446673721",
+    "project_id": "math-blitz-d568e",
+    "storage_bucket": "math-blitz-d568e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956446673721:android:e79963cc8a989d74e0b6e8",
+        "android_client_info": {
+          "package_name": "com.bzstudio.mathblitz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAN-Jg3zllWh-PddVNppWY_1N8Zysi9wKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956446673721:android:dcf9e90e2066a87ce0b6e8",
+        "android_client_info": {
+          "package_name": "com.bzstudio.mathblitz.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAN-Jg3zllWh-PddVNppWY_1N8Zysi9wKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956446673721:android:53ec50737a82ec73e0b6e8",
+        "android_client_info": {
+          "package_name": "com.bzstudio.mathblitz.stage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAN-Jg3zllWh-PddVNppWY_1N8Zysi9wKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
