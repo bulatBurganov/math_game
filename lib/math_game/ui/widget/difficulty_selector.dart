@@ -123,26 +123,21 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             Column(
               children: [
                 SizedBox(
-                  height: 50,
-                  child: AnimatedSwitcher(
-                    switchInCurve: Curves.fastEaseInToSlowEaseOut,
-                    duration: widget.swithDuration,
-                    child: Text(
-                      key: ValueKey(GameDifficulty.values[_selectedIndex]),
-                      _getDifficultyDescription(
-                        context,
-                        GameDifficulty.values[_selectedIndex],
-                      ),
-                      style: const TextStyle(fontSize: 16),
-                      textAlign: TextAlign.center,
+                  child: Text(
+                    key: ValueKey(GameDifficulty.values[_selectedIndex]),
+                    _getDifficultyDescription(
+                      context,
+                      GameDifficulty.values[_selectedIndex],
                     ),
+                    style: const TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-
+                const SizedBox(height: 8),
                 ExpandedSection(
                   axis: Axis.vertical,
                   curve: Curves.easeInOutCubicEmphasized,
@@ -216,7 +211,8 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[2-9]')),
                         ],
-                        value: widget.initialUserSettings.termLength.toString(),
+                        value: widget.initialUserSettings.termLength
+                            ?.toString(),
                         onChanged: (v) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -226,6 +222,8 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         },
                         label: S.of(context).termLength,
                       ),
+                      const SizedBox(height: 4),
+
                       FormTextField(
                         value: widget.initialUserSettings.min?.toString(),
                         onChanged: (v) {
@@ -237,8 +235,10 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                         },
                         label: S.of(context).minValue,
                       ),
+                      const SizedBox(height: 4),
+
                       FormTextField(
-                        value: widget.initialUserSettings.max.toString(),
+                        value: widget.initialUserSettings.max?.toString(),
                         onChanged: (v) {
                           widget.onUserSettingsChanged(
                             widget.initialUserSettings.copyWith(
@@ -343,6 +343,6 @@ class _PresetSelectorState extends State<_PresetSelector> {
   String _getPresetName(GamePresets? preset) => switch (preset) {
     GamePresets.multiplicationTable => S.of(context).multiplicationTable,
     null => S.of(context).selectPreset,
-    GamePresets.none => S.of(context).selectPreset,
+    GamePresets.none => S.of(context).presetNotSelected,
   };
 }

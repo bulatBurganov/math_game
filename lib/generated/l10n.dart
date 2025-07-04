@@ -329,6 +329,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Пресет не выбран`
+  String get presetNotSelected {
+    return Intl.message(
+      'Пресет не выбран',
+      name: 'presetNotSelected',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -22,7 +22,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
     );
   }
 
-  Future<void> updateUSerSettings(GameUserSettings settings) async {
+  Future<void> updateUserSettings(GameUserSettings settings) async {
     if (state.userSettings.preset != null) {}
     emit(
       state.copyWith(

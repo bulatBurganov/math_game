@@ -31,6 +31,7 @@ class _FormTextFieldState extends State<FormTextField> {
   @override
   void didUpdateWidget(covariant FormTextField oldWidget) {
     if (oldWidget.value != widget.value) {
+      print('${widget.value} ${widget.value.runtimeType}');
       _controller.text = widget.value ?? '';
     }
     super.didUpdateWidget(oldWidget);
@@ -49,12 +50,22 @@ class _FormTextFieldState extends State<FormTextField> {
       children: [
         Text(widget.label, style: const TextStyle(fontSize: 16)),
         const SizedBox(width: 16),
-        SizedBox(
-          width: 30,
+        Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            border: Border.all(width: 1, color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: TextFormField(
+            textAlign: TextAlign.center,
             onChanged: widget.onChanged,
             textInputAction: TextInputAction.done,
-            decoration: const InputDecoration(counter: SizedBox()),
+            decoration: const InputDecoration(
+              isDense: true,
+              constraints: BoxConstraints(maxWidth: 48, maxHeight: 32),
+              counter: SizedBox(),
+              border: InputBorder.none,
+            ),
             keyboardType: TextInputType.number,
             controller: _controller,
             inputFormatters: widget.inputFormatters,
