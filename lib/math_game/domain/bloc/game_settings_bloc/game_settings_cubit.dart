@@ -5,6 +5,7 @@ import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.da
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
 import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_state.dart';
 import 'package:math_game/math_game/domain/model/game_settings_model.dart';
+import 'package:math_game/math_game/utils/expression_generator.dart';
 
 class GameSettingsCubit extends Cubit<GameSettingsState> {
   final GameFlowBloc gameFlowBloc;
@@ -76,7 +77,51 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
       }
     }
 
-    gameFlowBloc.add(const GameFlowEventStartGame());
+    gameFlowBloc.add(
+      GameFlowEventStartGame(_getGeneratorBySettings(userSettings)),
+    );
+  }
+
+  ExpressionGenerator _getGeneratorBySettings(GameUserSettings userSettings) {
+    int minValue = 1;
+    int maxValue = 10;
+    var operators = <String>[];
+    int expressionLength = 0;
+    switch (state.difficulty) {
+      case GameDifficulty.easy:
+        operators = ['+', '-'];
+        expressionLength = 2;
+        break;
+
+      case GameDifficulty.medium:
+        operators = ['+', '-', '*'];
+        expressionLength = 2;
+        break;
+
+      case GameDifficulty.hard:
+        operators = ['+', '-', '*', '/'];
+        expressionLength = 3;
+        break;
+
+      case GameDifficulty.user:
+        operators = [
+          if (userSettings.usePlus) '+',
+          if (userSettings.useMinus) '-',
+          if (userSettings.useMultiply) '*',
+          if (userSettings.useDivide) '/',
+        ];
+        minValue = userSettings.min ?? 0;
+        maxValue = userSettings.max ?? 10;
+        expressionLength = userSettings.termLength ?? 2;
+        break;
+    }
+
+    return ArithmeticExpressionGenerator(
+      minValue: minValue,
+      maxValue: maxValue,
+      expressionLength: expressionLength,
+      operations: operators,
+    );
   }
 
   Future<void> setPreset(GamePresets? preset) async {

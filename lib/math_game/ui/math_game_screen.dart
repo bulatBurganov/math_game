@@ -5,21 +5,22 @@ import 'package:math_game/common/widgets/bounce_button.dart';
 import 'package:math_game/common/widgets/flyout_widget.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
-import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
 import 'package:math_game/math_game/domain/model/bonus_model.dart';
+import 'package:math_game/math_game/utils/expression_generator.dart';
 
 @RoutePage()
 class MathGameScreen extends StatelessWidget {
-  const MathGameScreen({super.key});
+  final ExpressionGenerator generator;
+  const MathGameScreen({super.key, required this.generator});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MathGameCubit(
         gameFlowBloc: context.read<GameFlowBloc>(),
-        gameSettingsCubit: context.read<GameSettingsCubit>(),
+        generator: generator,
       )..startGame(),
       child: _MathGameScreenView(),
     );

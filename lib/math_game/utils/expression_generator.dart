@@ -1,30 +1,39 @@
 import 'dart:math' as math;
 
-class ExpressionGenerator {
+abstract class ExpressionGenerator {
+  (String expression, int value) generate();
+}
+
+class ArithmeticExpressionGenerator implements ExpressionGenerator {
   final _random = math.Random();
-  final int _minValue;
-  final int _maxValue;
+  final int minValue;
+  final int maxValue;
+  final int expressionLength;
+  final List<String> operations;
 
-  ExpressionGenerator({int minValue = 1, int maxValue = 10})
-    : _minValue = minValue,
-      _maxValue = maxValue,
-      assert(minValue <= maxValue),
-      assert(minValue != 0 || maxValue != 0);
+  ArithmeticExpressionGenerator({
+    this.minValue = 1,
+    this.maxValue = 10,
+    required this.expressionLength,
+    this.operations = const ['+', '-', '*', '/'],
+  }) : assert(minValue <= maxValue),
+       assert(minValue != 0 || maxValue != 0);
 
-  (String expression, int value) generate({
-    required int numTerms,
-    List<String> operations = const ['+', '-', '*', '/'],
-  }) {
-    if (numTerms < 2) throw ArgumentError('numTerms must be at least 2');
-    if (operations.isEmpty)
+  @override
+  (String expression, int value) generate() {
+    if (expressionLength < 2) {
+      throw ArgumentError('numTerms must be at least 2');
+    }
+    if (operations.isEmpty) {
       throw ArgumentError('Operations list cannot be empty');
+    }
 
     int currentValue = _generateNumber();
     String expression = currentValue.toString();
     final bool onlyDivision =
         operations.length == 1 && operations.contains('/');
 
-    for (int i = 1; i < numTerms; i++) {
+    for (int i = 1; i < expressionLength; i++) {
       final int number = onlyDivision
           ? _generateDivisor(currentValue)
           : _generateNumber();
@@ -45,15 +54,15 @@ class ExpressionGenerator {
   }
 
   int _generateNumber() {
-    return _minValue + _random.nextInt(_maxValue - _minValue + 1);
+    return minValue + _random.nextInt(maxValue - minValue + 1);
   }
 
   int _generateDivisor(int value) {
     final divisors = _findDivisors(value);
     if (divisors.isEmpty) {
-      if (_minValue <= 1 && _maxValue >= 1) return 1;
+      if (minValue <= 1 && maxValue >= 1) return 1;
       throw StateError(
-        'No valid divisors for $value in range [$_minValue, $_maxValue]',
+        'No valid divisors for $value in range [$minValue, $maxValue]',
       );
     }
     return divisors[_random.nextInt(divisors.length)];
@@ -62,8 +71,8 @@ class ExpressionGenerator {
   List<int> _findDivisors(int value) {
     final divisors = <int>[];
     final absValue = value.abs();
-    final min = math.max(_minValue, 1);
-    final maxVal = math.min(absValue, _maxValue);
+    final min = math.max(minValue, 1);
+    final maxVal = math.min(absValue, maxValue);
 
     for (int i = min; i <= maxVal; i++) {
       if (absValue % i == 0) {

@@ -20,7 +20,7 @@ mixin _$GameFlowState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() showSettings,
-    required TResult Function() startGame,
+    required TResult Function(ExpressionGenerator generator) startGame,
     required TResult Function() finishGame,
     required TResult Function(int scores) gameOver,
     required TResult Function() restartGame,
@@ -28,7 +28,7 @@ mixin _$GameFlowState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? showSettings,
-    TResult? Function()? startGame,
+    TResult? Function(ExpressionGenerator generator)? startGame,
     TResult? Function()? finishGame,
     TResult? Function(int scores)? gameOver,
     TResult? Function()? restartGame,
@@ -36,7 +36,7 @@ mixin _$GameFlowState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? showSettings,
-    TResult Function()? startGame,
+    TResult Function(ExpressionGenerator generator)? startGame,
     TResult Function()? finishGame,
     TResult Function(int scores)? gameOver,
     TResult Function()? restartGame,
@@ -136,7 +136,7 @@ class _$GameFlowStateShowSettingsImpl implements GameFlowStateShowSettings {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() showSettings,
-    required TResult Function() startGame,
+    required TResult Function(ExpressionGenerator generator) startGame,
     required TResult Function() finishGame,
     required TResult Function(int scores) gameOver,
     required TResult Function() restartGame,
@@ -148,7 +148,7 @@ class _$GameFlowStateShowSettingsImpl implements GameFlowStateShowSettings {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? showSettings,
-    TResult? Function()? startGame,
+    TResult? Function(ExpressionGenerator generator)? startGame,
     TResult? Function()? finishGame,
     TResult? Function(int scores)? gameOver,
     TResult? Function()? restartGame,
@@ -160,7 +160,7 @@ class _$GameFlowStateShowSettingsImpl implements GameFlowStateShowSettings {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? showSettings,
-    TResult Function()? startGame,
+    TResult Function(ExpressionGenerator generator)? startGame,
     TResult Function()? finishGame,
     TResult Function(int scores)? gameOver,
     TResult Function()? restartGame,
@@ -223,6 +223,8 @@ abstract class _$$GameFlowStateStartGameImplCopyWith<$Res> {
     _$GameFlowStateStartGameImpl value,
     $Res Function(_$GameFlowStateStartGameImpl) then,
   ) = __$$GameFlowStateStartGameImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ExpressionGenerator generator});
 }
 
 /// @nodoc
@@ -236,64 +238,93 @@ class __$$GameFlowStateStartGameImplCopyWithImpl<$Res>
 
   /// Create a copy of GameFlowState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? generator = null}) {
+    return _then(
+      _$GameFlowStateStartGameImpl(
+        null == generator
+            ? _value.generator
+            : generator // ignore: cast_nullable_to_non_nullable
+                  as ExpressionGenerator,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 
 class _$GameFlowStateStartGameImpl implements GameFlowStateStartGame {
-  const _$GameFlowStateStartGameImpl();
+  const _$GameFlowStateStartGameImpl(this.generator);
+
+  @override
+  final ExpressionGenerator generator;
 
   @override
   String toString() {
-    return 'GameFlowState.startGame()';
+    return 'GameFlowState.startGame(generator: $generator)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GameFlowStateStartGameImpl);
+            other is _$GameFlowStateStartGameImpl &&
+            (identical(other.generator, generator) ||
+                other.generator == generator));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, generator);
+
+  /// Create a copy of GameFlowState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GameFlowStateStartGameImplCopyWith<_$GameFlowStateStartGameImpl>
+  get copyWith =>
+      __$$GameFlowStateStartGameImplCopyWithImpl<_$GameFlowStateStartGameImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() showSettings,
-    required TResult Function() startGame,
+    required TResult Function(ExpressionGenerator generator) startGame,
     required TResult Function() finishGame,
     required TResult Function(int scores) gameOver,
     required TResult Function() restartGame,
   }) {
-    return startGame();
+    return startGame(generator);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? showSettings,
-    TResult? Function()? startGame,
+    TResult? Function(ExpressionGenerator generator)? startGame,
     TResult? Function()? finishGame,
     TResult? Function(int scores)? gameOver,
     TResult? Function()? restartGame,
   }) {
-    return startGame?.call();
+    return startGame?.call(generator);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? showSettings,
-    TResult Function()? startGame,
+    TResult Function(ExpressionGenerator generator)? startGame,
     TResult Function()? finishGame,
     TResult Function(int scores)? gameOver,
     TResult Function()? restartGame,
     required TResult orElse(),
   }) {
     if (startGame != null) {
-      return startGame();
+      return startGame(generator);
     }
     return orElse();
   }
@@ -340,7 +371,16 @@ class _$GameFlowStateStartGameImpl implements GameFlowStateStartGame {
 }
 
 abstract class GameFlowStateStartGame implements GameFlowState {
-  const factory GameFlowStateStartGame() = _$GameFlowStateStartGameImpl;
+  const factory GameFlowStateStartGame(final ExpressionGenerator generator) =
+      _$GameFlowStateStartGameImpl;
+
+  ExpressionGenerator get generator;
+
+  /// Create a copy of GameFlowState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GameFlowStateStartGameImplCopyWith<_$GameFlowStateStartGameImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -388,7 +428,7 @@ class _$GameFlowStateFinishGameImpl implements GameFlowStateFinishGame {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() showSettings,
-    required TResult Function() startGame,
+    required TResult Function(ExpressionGenerator generator) startGame,
     required TResult Function() finishGame,
     required TResult Function(int scores) gameOver,
     required TResult Function() restartGame,
@@ -400,7 +440,7 @@ class _$GameFlowStateFinishGameImpl implements GameFlowStateFinishGame {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? showSettings,
-    TResult? Function()? startGame,
+    TResult? Function(ExpressionGenerator generator)? startGame,
     TResult? Function()? finishGame,
     TResult? Function(int scores)? gameOver,
     TResult? Function()? restartGame,
@@ -412,7 +452,7 @@ class _$GameFlowStateFinishGameImpl implements GameFlowStateFinishGame {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? showSettings,
-    TResult Function()? startGame,
+    TResult Function(ExpressionGenerator generator)? startGame,
     TResult Function()? finishGame,
     TResult Function(int scores)? gameOver,
     TResult Function()? restartGame,
@@ -544,7 +584,7 @@ class _$GameFlowStateGameOverImpl implements GameFlowStateGameOver {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() showSettings,
-    required TResult Function() startGame,
+    required TResult Function(ExpressionGenerator generator) startGame,
     required TResult Function() finishGame,
     required TResult Function(int scores) gameOver,
     required TResult Function() restartGame,
@@ -556,7 +596,7 @@ class _$GameFlowStateGameOverImpl implements GameFlowStateGameOver {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? showSettings,
-    TResult? Function()? startGame,
+    TResult? Function(ExpressionGenerator generator)? startGame,
     TResult? Function()? finishGame,
     TResult? Function(int scores)? gameOver,
     TResult? Function()? restartGame,
@@ -568,7 +608,7 @@ class _$GameFlowStateGameOverImpl implements GameFlowStateGameOver {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? showSettings,
-    TResult Function()? startGame,
+    TResult Function(ExpressionGenerator generator)? startGame,
     TResult Function()? finishGame,
     TResult Function(int scores)? gameOver,
     TResult Function()? restartGame,
@@ -679,7 +719,7 @@ class _$GameFlowStateRestartGameImpl implements GameFlowStateRestartGame {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() showSettings,
-    required TResult Function() startGame,
+    required TResult Function(ExpressionGenerator generator) startGame,
     required TResult Function() finishGame,
     required TResult Function(int scores) gameOver,
     required TResult Function() restartGame,
@@ -691,7 +731,7 @@ class _$GameFlowStateRestartGameImpl implements GameFlowStateRestartGame {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? showSettings,
-    TResult? Function()? startGame,
+    TResult? Function(ExpressionGenerator generator)? startGame,
     TResult? Function()? finishGame,
     TResult? Function(int scores)? gameOver,
     TResult? Function()? restartGame,
@@ -703,7 +743,7 @@ class _$GameFlowStateRestartGameImpl implements GameFlowStateRestartGame {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? showSettings,
-    TResult Function()? startGame,
+    TResult Function(ExpressionGenerator generator)? startGame,
     TResult Function()? finishGame,
     TResult Function(int scores)? gameOver,
     TResult Function()? restartGame,
