@@ -10,14 +10,20 @@ class ArithmeticExpressionGenerator implements ExpressionGenerator {
   final int maxValue;
   final int expressionLength;
   final List<String> operations;
+  final bool positiveNumbersOnly;
 
   ArithmeticExpressionGenerator({
     this.minValue = 1,
     this.maxValue = 10,
     required this.expressionLength,
     this.operations = const ['+', '-', '*', '/'],
+    this.positiveNumbersOnly = false,
   }) : assert(minValue <= maxValue),
-       assert(minValue != 0 || maxValue != 0);
+       assert(minValue != 0 || maxValue != 0),
+       assert(
+         !positiveNumbersOnly || minValue > 0,
+         'minValue must be positive when positiveNumbersOnly is true',
+       );
 
   @override
   (String expression, int value) generate() {
@@ -30,27 +36,100 @@ class ArithmeticExpressionGenerator implements ExpressionGenerator {
 
     int currentValue = _generateNumber();
     String expression = currentValue.toString();
+    int lastPriority = 2; // Приоритет числа считается высоким (2)
     final bool onlyDivision =
         operations.length == 1 && operations.contains('/');
 
     for (int i = 1; i < expressionLength; i++) {
-      final int number = onlyDivision
-          ? _generateDivisor(currentValue)
-          : _generateNumber();
+      final int number;
+      final String operation;
 
-      final String operation = _selectOperation(
-        currentValue,
-        number,
-        operations,
-        onlyDivision,
-      );
+      if (onlyDivision) {
+        number = _generateDivisor(currentValue);
+        operation = '/';
+      } else if (positiveNumbersOnly) {
+        final possibleOperations = _getPossibleOperations(currentValue);
+        if (possibleOperations.isEmpty) {
+          operation = '+';
+          number = _generateNumber();
+        } else {
+          operation =
+              possibleOperations[_random.nextInt(possibleOperations.length)];
+          number = _generateNumberForOperation(currentValue, operation);
+        }
+      } else {
+        number = _generateNumber();
+        operation = _selectOperation(
+          currentValue,
+          number,
+          operations,
+          onlyDivision,
+        );
+      }
+
+      final newOpPriority = _getPriority(operation);
+      final needsParentheses = lastPriority < newOpPriority;
 
       currentValue = _applyOperation(currentValue, number, operation);
-
-      expression = _buildExpression(expression, number, operation, i);
+      expression = _buildExpression(
+        expression,
+        number,
+        operation,
+        needsParentheses,
+      );
+      lastPriority = newOpPriority;
     }
 
     return (expression, currentValue);
+  }
+
+  int _getPriority(String op) {
+    switch (op) {
+      case '+':
+      case '-':
+        return 1;
+      case '*':
+      case '/':
+        return 2;
+      default:
+        throw ArgumentError('Invalid operation: $op');
+    }
+  }
+
+  List<String> _getPossibleOperations(int currentValue) {
+    final possibleOperations = <String>[];
+
+    for (final op in operations) {
+      if (op == '+') {
+        possibleOperations.add(op);
+      } else if (op == '-') {
+        if (currentValue > minValue) {
+          possibleOperations.add(op);
+        }
+      } else if (op == '*') {
+        possibleOperations.add(op);
+      } else if (op == '/') {
+        if (_findDivisors(currentValue).isNotEmpty) {
+          possibleOperations.add(op);
+        }
+      }
+    }
+
+    return possibleOperations;
+  }
+
+  int _generateNumberForOperation(int currentValue, String operation) {
+    if (operation == '-') {
+      final maxNum = math.min(maxValue, currentValue - 1);
+      if (maxNum < minValue) {
+        return minValue;
+      }
+      return minValue + _random.nextInt(maxNum - minValue + 1);
+    } else if (operation == '/') {
+      return _generateDivisor(currentValue);
+    } else {
+      return _generateNumber();
+    }
   }
 
   int _generateNumber() {
@@ -124,9 +203,8 @@ class ArithmeticExpressionGenerator implements ExpressionGenerator {
     String currentExpr,
     int number,
     String operation,
-    int step,
+    bool needsParentheses,
   ) {
-    final needsParentheses = step > 1;
     final expr = needsParentheses ? '($currentExpr)' : currentExpr;
     return '$expr $operation $number';
   }

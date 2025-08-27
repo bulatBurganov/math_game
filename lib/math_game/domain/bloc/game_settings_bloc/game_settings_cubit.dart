@@ -121,6 +121,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
       maxValue: maxValue,
       expressionLength: expressionLength,
       operations: operators,
+      positiveNumbersOnly: userSettings.onlyPositiveResults,
     );
   }
 
