@@ -26,5 +26,7 @@
     "lenMaxMinFieldsShoulBeFilled":"Поля длины выражения, минимального и максимального значения должны быть заполнены",
     "answerIsAlwaysPositive": "Решение всегда положительное число",
     "selectPreset": "Выберите пресет",
-    "multiplicationTable": "Таблица умножения"
+    "multiplicationTable": "Таблица умножения",
+    "presetNotSelected": "Пресет не выбран"
+
 }

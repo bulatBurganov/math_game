@@ -50,7 +50,7 @@ class _GameFlowWrapperScreenState extends State<GameFlowWrapperScreen> {
           if (state is GameFlowStateShowSettings) {
             context.router.replace(const GameSettingsRoute());
           } else if (state is GameFlowStateStartGame) {
-            context.router.replace(const MathGameRoute());
+            context.router.replace(MathGameRoute(generator: (state).generator));
           } else if (state is GameFlowStateFinishGame) {
             context.router.pop();
           } else if (state is GameFlowStateGameOver) {

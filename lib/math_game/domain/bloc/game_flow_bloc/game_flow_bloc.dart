@@ -8,7 +8,7 @@ class GameFlowBloc extends Bloc<GameFlowEvent, GameFlowState> {
       (event, emit) => emit(const GameFlowState.showSettings()),
     );
     on<GameFlowEventStartGame>(
-      (event, emit) => emit(const GameFlowState.startGame()),
+      (event, emit) => emit(GameFlowState.startGame(event.generator)),
     );
     on<GameFlowEventFinishGame>(
       (event, emit) => emit(const GameFlowState.finishGame()),

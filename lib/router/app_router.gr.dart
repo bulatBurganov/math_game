@@ -16,6 +16,7 @@ import 'package:math_game/math_game/ui/game_flow_wrapper_screen.dart' as _i2;
 import 'package:math_game/math_game/ui/game_over_screen.dart' as _i3;
 import 'package:math_game/math_game/ui/game_settings_screen.dart' as _i4;
 import 'package:math_game/math_game/ui/math_game_screen.dart' as _i7;
+import 'package:math_game/math_game/utils/expression_generator.dart' as _i10;
 import 'package:math_game/router/app_wrapper_screen.dart' as _i1;
 import 'package:math_game/router/home_wrapper_screen.dart' as _i5;
 
@@ -148,16 +149,47 @@ class MainMenuRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.MathGameScreen]
-class MathGameRoute extends _i8.PageRouteInfo<void> {
-  const MathGameRoute({List<_i8.PageRouteInfo>? children})
-    : super(MathGameRoute.name, initialChildren: children);
+class MathGameRoute extends _i8.PageRouteInfo<MathGameRouteArgs> {
+  MathGameRoute({
+    _i9.Key? key,
+    required _i10.ExpressionGenerator generator,
+    List<_i8.PageRouteInfo>? children,
+  }) : super(
+         MathGameRoute.name,
+         args: MathGameRouteArgs(key: key, generator: generator),
+         initialChildren: children,
+       );
 
   static const String name = 'MathGameRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i7.MathGameScreen();
+      final args = data.argsAs<MathGameRouteArgs>();
+      return _i7.MathGameScreen(key: args.key, generator: args.generator);
     },
   );
+}
+
+class MathGameRouteArgs {
+  const MathGameRouteArgs({this.key, required this.generator});
+
+  final _i9.Key? key;
+
+  final _i10.ExpressionGenerator generator;
+
+  @override
+  String toString() {
+    return 'MathGameRouteArgs{key: $key, generator: $generator}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! MathGameRouteArgs) return false;
+    return key == other.key && generator == other.generator;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ generator.hashCode;
 }

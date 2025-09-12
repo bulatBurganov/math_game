@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCbugcNQyUpwqwrdYl1Th_TcK9S75kd2Co</string>
+	<key>GCM_SENDER_ID</key>
+	<string>956446673721</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bzstudio.mathblitz</string>
+	<key>PROJECT_ID</key>
+	<string>math-blitz-d568e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>math-blitz-d568e.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:956446673721:ios:14d7ab8b74b236c0e0b6e8</string>
+</dict>
+</plist>

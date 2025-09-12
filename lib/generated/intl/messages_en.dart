@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Минимальное значение"),
         "multiplicationTable":
             MessageLookupByLibrary.simpleMessage("Таблица умножения"),
+        "presetNotSelected":
+            MessageLookupByLibrary.simpleMessage("Пресет не выбран"),
         "restart": MessageLookupByLibrary.simpleMessage("Сыграть снова"),
         "scoresFew": MessageLookupByLibrary.simpleMessage("очка"),
         "scoresMany": MessageLookupByLibrary.simpleMessage("очков"),

@@ -5,74 +5,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_game/math_game/constants/game_constants.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_bloc.dart';
 import 'package:math_game/math_game/domain/bloc/game_flow_bloc/game_flow_event.dart';
-import 'package:math_game/math_game/domain/bloc/game_settings_bloc/game_settings_cubit.dart';
 import 'package:math_game/math_game/domain/bloc/math_game_state.dart';
 import 'package:math_game/math_game/domain/model/bonus_model.dart';
-import 'package:math_game/math_game/domain/model/game_settings_model.dart';
 import 'package:math_game/math_game/domain/model/problem_model.dart';
 import 'package:math_game/math_game/utils/expression_generator.dart';
 
 class MathGameCubit extends Cubit<MathGameState> {
-  MathGameCubit({required this.gameFlowBloc, required this.gameSettingsCubit})
+  MathGameCubit({required this.gameFlowBloc, required this.generator})
     : super(MathGameState());
   final GameFlowBloc gameFlowBloc;
-  final GameSettingsCubit gameSettingsCubit;
-
+  final ExpressionGenerator generator;
   final _levelDuration = const Duration(seconds: 20);
   Timer? _timer;
-  ExpressionGenerator? _generator;
-  List<String> _operators = [];
   final _random = Random();
-  int _correctCount = 0;
-  int _termLen = 0;
-  bool _onlyPositiveAnswer = false;
 
   int _next(int min, int max) => min + _random.nextInt(max - min);
 
   Future<void> startGame() async {
-    final difficulty = gameSettingsCubit.state.difficulty;
-    final userSettings = gameSettingsCubit.state.userSettings;
-    int minValue = 1;
-    int maxValue = 10;
-
-    switch (difficulty) {
-      case GameDifficulty.easy:
-        _operators = ['+', '-'];
-        _termLen = 2;
-        _onlyPositiveAnswer = true;
-        break;
-
-      case GameDifficulty.medium:
-        _operators = ['+', '-', '*'];
-        _termLen = 2;
-        _onlyPositiveAnswer = false;
-
-        break;
-
-      case GameDifficulty.hard:
-        _operators = ['+', '-', '*', '/'];
-        _termLen = 3;
-        _onlyPositiveAnswer = false;
-
-        break;
-
-      case GameDifficulty.user:
-        _operators = [
-          if (userSettings.usePlus) '+',
-          if (userSettings.useMinus) '-',
-          if (userSettings.useMultiply) '*',
-          if (userSettings.useDivide) '/',
-        ];
-        minValue = userSettings.min ?? 0;
-        maxValue = userSettings.max ?? 10;
-        _termLen = userSettings.termLength ?? 2;
-        _onlyPositiveAnswer = userSettings.onlyPositiveResults;
-
-        break;
-    }
-
-    _generator = ExpressionGenerator(minValue: minValue, maxValue: maxValue);
-
     final problems = await _addProblems();
 
     emit(
@@ -89,27 +38,12 @@ class MathGameCubit extends Cubit<MathGameState> {
   }
 
   Future<List<ProblemModel>> _addProblems() async {
-    if (_generator == null) throw 'Generator is null';
-
     var problems = [...state.levelModel];
     int problemsToGenerate = problems.isEmpty ? 10 : 5;
 
     for (int i = 0; i < problemsToGenerate; i++) {
-      var (expr, res) = _generator!.generate(
-        numTerms: _termLen,
-        operations: _operators,
-      );
+      var (expr, res) = generator.generate();
 
-      if (_onlyPositiveAnswer) {
-        if (res < 0) {
-          while (res < 0) {
-            (expr, res) = _generator!.generate(
-              numTerms: _termLen,
-              operations: _operators,
-            );
-          }
-        }
-      }
       problems.add(
         ProblemModel(
           expr,
@@ -123,16 +57,15 @@ class MathGameCubit extends Cubit<MathGameState> {
   }
 
   List<double> _generateAnswerVariants(double res) {
-    final answers = <double>[];
-    for (int i = 0; i < 3; i++) {
+    final set = <double>{res};
+    while (set.length != 4) {
       if (_random.nextBool()) {
-        answers.add(res + _next(1, 4).toDouble());
+        set.add(res + _next(1, 4).toDouble());
       } else {
-        answers.add((res - _next(1, 4).toDouble()));
+        set.add((res - _next(1, 4).toDouble()));
       }
     }
-
-    answers.add(res);
+    final answers = set.toList();
     answers.shuffle();
     return answers;
   }
@@ -145,12 +78,13 @@ class MathGameCubit extends Cubit<MathGameState> {
         if (list.length < 5) {
           list = await _addProblems();
         }
-        _correctCount++;
         emit(
           state.copyWith(
             levelModel: list,
             scores: state.scores + defaultScoreIncrement,
             bonus: GameBonusModelExtraTime(count: 2),
+            timer: state.timer + const Duration(seconds: 2),
+            timeLeft: ((state.timer.inSeconds + 2) / _levelDuration.inSeconds),
           ),
         );
       } else {
@@ -178,12 +112,25 @@ class MathGameCubit extends Cubit<MathGameState> {
   }
 
   void _timerCallback(Timer? timer) {
-    final seconds = state.timer.inSeconds - 1 + (_correctCount * 2);
-    _correctCount = 0;
+    final seconds = state.timer.inSeconds - 1;
     if (seconds < 0) {
       _finishGame(null);
     } else {
-      emit(state.copyWith(timer: Duration(seconds: seconds), bonus: null));
+      final left = (seconds / _levelDuration.inSeconds);
+      emit(
+        state.copyWith(
+          timer: Duration(seconds: seconds),
+          bonus: null,
+          timeLeft: left,
+        ),
+      );
     }
+  }
+
+  @override
+  Future<void> close() {
+    _timer?.cancel();
+    _timer = null;
+    return super.close();
   }
 }

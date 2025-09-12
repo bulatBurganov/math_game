@@ -21,6 +21,7 @@ mixin _$MathGameState {
   int get scores => throw _privateConstructorUsedError;
   int get lives => throw _privateConstructorUsedError;
   Duration get timer => throw _privateConstructorUsedError;
+  double get timeLeft => throw _privateConstructorUsedError;
   GameBonusModel? get bonus => throw _privateConstructorUsedError;
 
   /// Create a copy of MathGameState
@@ -42,6 +43,7 @@ abstract class $MathGameStateCopyWith<$Res> {
     int scores,
     int lives,
     Duration timer,
+    double timeLeft,
     GameBonusModel? bonus,
   });
 }
@@ -65,6 +67,7 @@ class _$MathGameStateCopyWithImpl<$Res, $Val extends MathGameState>
     Object? scores = null,
     Object? lives = null,
     Object? timer = null,
+    Object? timeLeft = null,
     Object? bonus = freezed,
   }) {
     return _then(
@@ -85,6 +88,10 @@ class _$MathGameStateCopyWithImpl<$Res, $Val extends MathGameState>
                 ? _value.timer
                 : timer // ignore: cast_nullable_to_non_nullable
                       as Duration,
+            timeLeft: null == timeLeft
+                ? _value.timeLeft
+                : timeLeft // ignore: cast_nullable_to_non_nullable
+                      as double,
             bonus: freezed == bonus
                 ? _value.bonus
                 : bonus // ignore: cast_nullable_to_non_nullable
@@ -109,6 +116,7 @@ abstract class _$$MathGameStateImplCopyWith<$Res>
     int scores,
     int lives,
     Duration timer,
+    double timeLeft,
     GameBonusModel? bonus,
   });
 }
@@ -131,6 +139,7 @@ class __$$MathGameStateImplCopyWithImpl<$Res>
     Object? scores = null,
     Object? lives = null,
     Object? timer = null,
+    Object? timeLeft = null,
     Object? bonus = freezed,
   }) {
     return _then(
@@ -151,6 +160,10 @@ class __$$MathGameStateImplCopyWithImpl<$Res>
             ? _value.timer
             : timer // ignore: cast_nullable_to_non_nullable
                   as Duration,
+        timeLeft: null == timeLeft
+            ? _value.timeLeft
+            : timeLeft // ignore: cast_nullable_to_non_nullable
+                  as double,
         bonus: freezed == bonus
             ? _value.bonus
             : bonus // ignore: cast_nullable_to_non_nullable
@@ -168,6 +181,7 @@ class _$MathGameStateImpl implements _MathGameState {
     this.scores = 0,
     this.lives = defaultLivesCount,
     this.timer = const Duration(seconds: 0),
+    this.timeLeft = 1.0,
     this.bonus,
   }) : _levelModel = levelModel;
 
@@ -190,11 +204,14 @@ class _$MathGameStateImpl implements _MathGameState {
   @JsonKey()
   final Duration timer;
   @override
+  @JsonKey()
+  final double timeLeft;
+  @override
   final GameBonusModel? bonus;
 
   @override
   String toString() {
-    return 'MathGameState(levelModel: $levelModel, scores: $scores, lives: $lives, timer: $timer, bonus: $bonus)';
+    return 'MathGameState(levelModel: $levelModel, scores: $scores, lives: $lives, timer: $timer, timeLeft: $timeLeft, bonus: $bonus)';
   }
 
   @override
@@ -209,6 +226,8 @@ class _$MathGameStateImpl implements _MathGameState {
             (identical(other.scores, scores) || other.scores == scores) &&
             (identical(other.lives, lives) || other.lives == lives) &&
             (identical(other.timer, timer) || other.timer == timer) &&
+            (identical(other.timeLeft, timeLeft) ||
+                other.timeLeft == timeLeft) &&
             (identical(other.bonus, bonus) || other.bonus == bonus));
   }
 
@@ -219,6 +238,7 @@ class _$MathGameStateImpl implements _MathGameState {
     scores,
     lives,
     timer,
+    timeLeft,
     bonus,
   );
 
@@ -237,6 +257,7 @@ abstract class _MathGameState implements MathGameState {
     final int scores,
     final int lives,
     final Duration timer,
+    final double timeLeft,
     final GameBonusModel? bonus,
   }) = _$MathGameStateImpl;
 
@@ -248,6 +269,8 @@ abstract class _MathGameState implements MathGameState {
   int get lives;
   @override
   Duration get timer;
+  @override
+  double get timeLeft;
   @override
   GameBonusModel? get bonus;
 

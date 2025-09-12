@@ -33,6 +33,21 @@ class GameSettingsScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
+          bottomNavigationBar: Container(
+            margin: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              bottom: MediaQuery.of(context).padding.bottom,
+              top: 8,
+            ),
+            height: 50,
+            child: BounceButton(
+              onTap: () {
+                context.read<GameSettingsCubit>().submit();
+              },
+              text: S.of(context).start_game,
+            ),
+          ),
           appBar: AppBar(
             leading: BackButton(
               onPressed: () => context.read<GameFlowBloc>().add(
@@ -41,49 +56,38 @@ class GameSettingsScreen extends StatelessWidget {
             ),
           ),
           body: Padding(
-            padding: EdgeInsets.only(
-              left: 16,
-              right: 16,
-              bottom: MediaQuery.of(context).padding.bottom,
-            ),
-            child: Column(
-              children: [
-                Text(
-                  S.of(context).difficulty,
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    S.of(context).difficulty,
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 32),
-                DifficultySelector(
-                  initialValue: state.difficulty,
-                  initialUserSettings: state.userSettings,
-                  onUserSettingsChanged: (settings) {
-                    context.read<GameSettingsCubit>().updateUSerSettings(
-                      settings,
-                    );
-                  },
-                  onCahnged: (difficulty) {
-                    context.read<GameSettingsCubit>().updateDifficulty(
-                      difficulty,
-                    );
-                  },
-                  onPresetChanged: (v) {
-                    context.read<GameSettingsCubit>().setPreset(v);
-                  },
-                ),
-                const Spacer(),
-                SizedBox(
-                  height: 50,
-                  child: BounceButton(
-                    onTap: () {
-                      context.read<GameSettingsCubit>().submit();
+                  const SizedBox(height: 24),
+                  DifficultySelector(
+                    initialValue: state.difficulty,
+                    initialUserSettings: state.userSettings,
+                    onUserSettingsChanged: (settings) {
+                      context.read<GameSettingsCubit>().updateUserSettings(
+                        settings,
+                      );
                     },
-                    text: S.of(context).start_game,
+                    onCahnged: (difficulty) {
+                      context.read<GameSettingsCubit>().updateDifficulty(
+                        difficulty,
+                      );
+                    },
+                    onPresetChanged: (v) {
+                      context.read<GameSettingsCubit>().setPreset(v);
+                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

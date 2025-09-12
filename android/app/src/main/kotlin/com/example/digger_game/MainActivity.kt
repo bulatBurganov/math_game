@@ -1,4 +1,4 @@
-package com.example.math_game
+package com.bzstudio.mathblitz
 
 import io.flutter.embedding.android.FlutterActivity
 

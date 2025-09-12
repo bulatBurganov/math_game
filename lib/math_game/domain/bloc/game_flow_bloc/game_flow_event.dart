@@ -1,3 +1,5 @@
+import 'package:math_game/math_game/utils/expression_generator.dart';
+
 abstract class GameFlowEvent {
   const GameFlowEvent();
 }
@@ -7,7 +9,8 @@ class GameFlowEventShowSettings extends GameFlowEvent {
 }
 
 class GameFlowEventStartGame extends GameFlowEvent {
-  const GameFlowEventStartGame();
+  final ExpressionGenerator generator;
+  const GameFlowEventStartGame(this.generator);
 }
 
 class GameFlowEventFinishGame extends GameFlowEvent {
